@@ -1,0 +1,8 @@
+# Approve only dependency install scripts required by this application.
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - "@prisma/engines"
+  - "@prisma/client"
+  - prisma
+  - esbuild
+  - sharp

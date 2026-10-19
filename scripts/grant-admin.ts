@@ -10,7 +10,7 @@ const userId = z
 const environment = databaseEnvironmentSchema.safeParse(process.env);
 if (!userId.success || !environment.success) {
   console.error(
-    "Usage: npm run admin:grant -- --user-id AUTH_USER_UUID. Configure DATABASE_URL and DIRECT_URL first.",
+    "Usage: pnpm admin:grant --user-id AUTH_USER_UUID. Configure DATABASE_URL and DIRECT_URL first.",
   );
   process.exitCode = 1;
 } else {

@@ -4,12 +4,12 @@ Next.js App Router + TypeScript strict + Prisma 7 + Supabase PostgreSQL/Auth + s
 
 ## Local setup
 
-Node 22.12+ and npm. `npm ci`, copy `.env.example` to `.env.local`, fill credentials, then:
+Node 22.12+ and pnpm 10.34.7. Enable Corepack with `corepack enable`, then run `pnpm install --frozen-lockfile`, copy `.env.example` to `.env.local`, fill credentials, then:
 
 ```sh
-npm run db:deploy
-npm run db:seed
-npm run dev
+pnpm db:deploy
+pnpm db:seed
+pnpm dev
 ```
 
 The seed imports the two supplied English CVs into shared project/experience/skill content and two independently ordered CV variants. It never overwrites an existing English document. No factual claims are generated beyond the supplied CVs. Review the English proficiency and experience statements before publishing.
@@ -23,7 +23,7 @@ Public routes always read published content from PostgreSQL, never drafts or a b
 3. After migrations, grant the UUID from your trusted local terminal:
 
 ```sh
-npm run admin:grant -- --user-id AUTH_USER_UUID
+pnpm admin:grant --user-id AUTH_USER_UUID
 ```
 
 This verifies that the user exists in Supabase Auth before granting access. Alternatively, run in the SQL editor, replacing the placeholder:
@@ -43,9 +43,9 @@ Every admin page and mutation calls verified `auth.getUser()` and checks the UUI
 
 ## Deploy to Vercel
 
-1. Import `sdc-ren/portfolio` into Vercel; framework Next.js, root directory repository root, Node.js 22.x, install `npm ci`, build `npm run build`.
+1. Import `sdc-ren/portfolio` into Vercel; framework Next.js, root directory repository root, Node.js 22.x, install `pnpm install --frozen-lockfile`, build `pnpm build`.
 2. Configure production env variables from `.env.example`. Set `NEXT_PUBLIC_SITE_URL` to the actual HTTPS domain. Avoid sharing the production DB with preview deployments; use a separate Supabase project/branch for previews.
-3. Apply `npm run db:deploy` and `npm run db:seed` from a trusted local terminal with the target environment configured **before the first deployment**. Database migrations intentionally do not run during Vercel builds, which can run concurrently.
+3. Apply `pnpm db:deploy` and `pnpm db:seed` from a trusted local terminal with the target environment configured **before the first deployment**. Database migrations intentionally do not run during Vercel builds, which can run concurrently.
 4. Provision the Auth admin UUID as above.
 5. Deploy. Verify `/en`, project details, both CV pages, PDF download, admin sign-in, draft isolation and publishing.
 6. Set Supabase Auth Site URL to your production domain. Password sign-in here does not need an OAuth callback. If you later add magic links/OAuth, implement a code exchange route and allow only explicit redirect URLs. The initial version has no reset-password UI; recovery can be handled through the Supabase dashboard.
@@ -67,12 +67,12 @@ The shared document model is deliberate for a single-owner portfolio: all relate
 ## Verification
 
 ```sh
-npm run typecheck
-npm test
-npm run build
+pnpm typecheck
+pnpm test
+pnpm build
 ```
 
-CI runs all three. The setup checker validates environment structure without printing credentials; use `npm run setup:check -- --database` for an explicit live connection/schema/admin check. Production database, Auth, RLS behavior and concurrent edits must also be exercised against a configured Supabase project before considering deployment verified. The initial implementation intentionally omits multi-user roles, a page builder, arbitrary HTML, media uploads and public contact forms. Add media storage only when real project screenshots are available.
+CI runs all three. The setup checker validates environment structure without printing credentials; use `pnpm setup:check --database` for an explicit live connection/schema/admin check. Production database, Auth, RLS behavior and concurrent edits must also be exercised against a configured Supabase project before considering deployment verified. The initial implementation intentionally omits multi-user roles, a page builder, arbitrary HTML, media uploads and public contact forms. Add media storage only when real project screenshots are available.
 
 ## First deployment, step by step
 
@@ -81,13 +81,26 @@ On Vercel's New Project screen: repository `sdc-ren/portfolio`, branch `main`, p
 Add all environment variables from `.env.example`, and from a local checkout with the same database configured run:
 
 ```sh
-npm ci
-npm run setup:check
-npm run db:setup
-npm run admin:grant -- --user-id AUTH_USER_UUID
-npm run setup:check -- --database
+pnpm install --frozen-lockfile
+pnpm setup:check
+pnpm db:setup
+pnpm admin:grant --user-id AUTH_USER_UUID
+pnpm setup:check --database
 ```
 
 Create the email/password account in Supabase Auth first, then use its UUID in the grant command. The grant command is idempotent. Never place the UUID of an untrusted account in the allowlist. Both CLI scripts only print configuration names or generic status, never passwords or database URLs.
 
 Then redeploy Vercel. Every subsequent push to `main` uses Vercel's normal Git integration when enabled. No manual PR merge is required for subsequent direct commits. Preview databases and production databases should remain separate.
+
+## Package manager
+
+The project uses pnpm, pinned via `packageManager` in `package.json`. Commit `pnpm-lock.yaml`; do not generate npm or Yarn lockfiles. `pnpm-workspace.yaml` explicitly permits install scripts for Prisma engines, esbuild, sharp and the Sass watcher. The root postinstall generates Prisma Client and prepares the PDF fonts.
+
+For an existing checkout that previously used npm, remove the old `node_modules` directory once, then run:
+
+```sh
+corepack enable
+pnpm install --frozen-lockfile
+```
+
+On Vercel, clear any old Install Command override containing `npm ci`. Use automatic package-manager detection from `pnpm-lock.yaml`; set Build Command to `pnpm build` (or leave automatic). To use the exact pinned pnpm patch, enable Corepack in Vercel with `ENABLE_EXPERIMENTAL_COREPACK=1`. Then redeploy.

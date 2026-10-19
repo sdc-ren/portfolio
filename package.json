@@ -20,7 +20,7 @@
     "format:check": "prettier --check .",
     "setup:check": "node --import tsx scripts/check-setup.ts",
     "admin:grant": "node --import tsx scripts/grant-admin.ts",
-    "db:setup": "npm run db:deploy && npm run db:seed"
+    "db:setup": "pnpm db:deploy && pnpm db:seed"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",
@@ -55,5 +55,6 @@
     "tailwindcss": "^4.1.0",
     "tsx": "^4.20.0",
     "typescript": "^5.9.0"
-  }
+  },
+  "packageManager": "pnpm@10.34.7"
 }
