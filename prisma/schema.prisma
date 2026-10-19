@@ -1,0 +1,19 @@
+generator client {
+ provider = "prisma-client"
+ output = "../src/generated/prisma"
+}
+datasource db {
+ provider = "postgresql"
+}
+model AdminUser {
+ id String @id @db.Uuid
+ createdAt DateTime @default(now())
+}
+model Content {
+ locale String @id
+ draft Json
+ published Json?
+ revision Int @default(0)
+ publishedAt DateTime?
+ updatedAt DateTime @updatedAt
+}
