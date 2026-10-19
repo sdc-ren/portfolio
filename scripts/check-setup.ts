@@ -6,11 +6,7 @@ if (!result.ok) {
   for (const issue of result.issues)
     console.error(`${issue.key}: ${issue.message}`);
   process.exitCode = 1;
-} else if (result.demo)
-  console.log(
-    "Read-only demo mode is enabled. Database and admin are not verified.",
-  );
-else {
+} else {
   console.log(
     "Required environment variables are present and structurally valid.",
   );

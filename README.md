@@ -14,7 +14,7 @@ npm run dev
 
 The seed imports the two supplied English CVs into shared project/experience/skill content and two independently ordered CV variants. It never overwrites an existing English document. No factual claims are generated beyond the supplied CVs. Review the English proficiency and experience statements before publishing.
 
-For a DB-free preview, set `DEMO_MODE=true` in `.env.local`. This is explicit read-only seed content, not an automatic fallback after database errors. Disable it in production. Public routes read published content, never drafts.
+Public routes always read published content from PostgreSQL, never drafts or a bundled-data fallback. The imported CV content is used only by the seed command and tests.
 
 ## Supabase and admin setup
 
@@ -44,7 +44,7 @@ Every admin page and mutation calls verified `auth.getUser()` and checks the UUI
 ## Deploy to Vercel
 
 1. Import `sdc-ren/portfolio` into Vercel; framework Next.js, root directory repository root, Node.js 22.x, install `npm ci`, build `npm run build`.
-2. Configure production env variables from `.env.example`. Set `NEXT_PUBLIC_SITE_URL` to the actual HTTPS domain and `DEMO_MODE=false`. Avoid sharing the production DB with preview deployments; use a separate Supabase project/branch for previews.
+2. Configure production env variables from `.env.example`. Set `NEXT_PUBLIC_SITE_URL` to the actual HTTPS domain. Avoid sharing the production DB with preview deployments; use a separate Supabase project/branch for previews.
 3. Apply `npm run db:deploy` and `npm run db:seed` from a trusted local terminal with the target environment configured **before the first deployment**. Database migrations intentionally do not run during Vercel builds, which can run concurrently.
 4. Provision the Auth admin UUID as above.
 5. Deploy. Verify `/en`, project details, both CV pages, PDF download, admin sign-in, draft isolation and publishing.
@@ -78,9 +78,7 @@ CI runs all three. The setup checker validates environment structure without pri
 
 On Vercel's New Project screen: repository `sdc-ren/portfolio`, branch `main`, preset **Next.js**, root `./`, project name `sondc-portfolio` (or your preferred name).
 
-To preview the public design immediately, add only `DEMO_MODE=true` and deploy. The portfolio and dynamically generated CV PDFs will use the imported English content. This does not enable admin access or write to Supabase.
-
-For the live CMS, add all environment variables from `.env.example`, switch `DEMO_MODE=false`, and from a local checkout with the same database configured run:
+Add all environment variables from `.env.example`, and from a local checkout with the same database configured run:
 
 ```sh
 npm ci

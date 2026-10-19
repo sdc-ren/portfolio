@@ -3,14 +3,11 @@ import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { contentSchema, localeSchema } from "@/features/content/schema";
-import { isDemo } from "@/features/content/repository";
 import { z } from "zod";
 import { normalizeContentInput } from "@/features/content/normalize";
 import { defaultUiForLocale } from "@/features/content/ui";
 export async function saveContent(input: unknown) {
   await requireAdmin();
-  if (isDemo())
-    return { ok: false, error: "Disable DEMO_MODE before editing." };
   const parsed = z
     .object({
       locale: localeSchema,
@@ -45,8 +42,6 @@ export async function saveContent(input: unknown) {
 }
 export async function createLocale(input: unknown) {
   await requireAdmin();
-  if (isDemo())
-    return { ok: false, error: "Disable DEMO_MODE before editing." };
   const { locale, source } = z
     .object({ locale: localeSchema, source: localeSchema })
     .parse(input);

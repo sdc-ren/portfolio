@@ -33,15 +33,12 @@ export const authEnvironmentSchema = z.object({
     .min(1, "Publishable key is required"),
 });
 export function checkEnvironment(env: Environment) {
-  if (env.DEMO_MODE === "true")
-    return { ok: true as const, demo: true, issues: [] };
   const result = databaseEnvironmentSchema
     .merge(authEnvironmentSchema)
     .extend({ NEXT_PUBLIC_SITE_URL: httpUrl })
     .safeParse(env);
   return {
     ok: result.success,
-    demo: false,
     issues: result.success
       ? []
       : result.error.issues.map((issue) => ({

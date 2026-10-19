@@ -21,13 +21,13 @@ test("Production setup requires database, Auth and canonical site URL", () => {
     false,
   );
 });
-test("Explicit demo mode does not pretend to verify database or admin", () => {
-  assert.deepEqual(checkEnvironment({ DEMO_MODE: "true" }), {
-    ok: true,
-    demo: true,
-    issues: [],
-  });
-  assert.equal(checkEnvironment({}).ok, false);
+test("Missing environment configuration is rejected", () => {
+  const result = checkEnvironment({});
+  assert.equal(result.ok, false);
+  assert.ok(result.issues.some((issue) => issue.key === "DATABASE_URL"));
+  assert.ok(
+    result.issues.some((issue) => issue.key === "NEXT_PUBLIC_SUPABASE_URL"),
+  );
 });
 test("Migration configuration rejects transaction pooler port", () => {
   assert.equal(
