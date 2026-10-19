@@ -33,11 +33,11 @@ export function CvDocument({
         </p>
       </header>
       <section>
-        <h2>Professional Summary</h2>
+        <h2>{data.ui.cvSummary}</h2>
         <p>{cv.summary}</p>
       </section>
       <section>
-        <h2>Technical Skills</h2>
+        <h2>{data.ui.cvSkills}</h2>
         <div className={styles.grid}>
           {selectByIds(data.skills, cv.skillIds).map((s) => (
             <p key={s.id}>
@@ -47,7 +47,7 @@ export function CvDocument({
         </div>
       </section>
       <section>
-        <h2>Professional Experience</h2>
+        <h2>{data.ui.cvExperience}</h2>
         {selectByIds(data.experience, cv.experienceIds).map((e) => (
           <article key={e.id}>
             <h3>
@@ -65,7 +65,7 @@ export function CvDocument({
         ))}
       </section>
       <section>
-        <h2>Selected Projects</h2>
+        <h2>{data.ui.cvProjects}</h2>
         {selectByIds(data.projects, cv.projectIds).map((p) => (
           <article key={p.id}>
             <h3>{p.title}</h3>
@@ -81,7 +81,7 @@ export function CvDocument({
         ))}
       </section>
       <section>
-        <h2>Education & Languages</h2>
+        <h2>{data.ui.cvEducation}</h2>
         {data.education.map((e) => (
           <p key={e.id}>
             <b>{e.institution}</b> — {e.qualification}, {e.year}

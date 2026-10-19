@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPublished, getLocales } from "@/features/content/repository";
+import {
+  getPublished,
+  getLanguageOptions,
+} from "@/features/content/repository";
 export const dynamic = "force-dynamic";
 export default async function Layout({
   children,
@@ -12,12 +15,12 @@ export default async function Layout({
   const { locale } = await params;
   const data = await getPublished(locale);
   if (!data) notFound();
-  const locales = await getLocales();
+  const locales = await getLanguageOptions();
   return (
     <div lang={locale}>
       <header className="border-b border-slate-800">
         <nav
-          aria-label="Main navigation"
+          aria-label={data.ui.navLabel}
           className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-5 px-6 py-6"
         >
           <Link
@@ -28,17 +31,19 @@ export default async function Layout({
             <span className="text-teal-300">.</span>
           </Link>
           <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400">
-            <Link href={`/${locale}/projects`}>Projects</Link>
-            <Link href={`/${locale}#experience`}>Experience</Link>
-            <Link href={`/${locale}/cv/${data.cvs[0].id}`}>CV</Link>
+            <Link href={`/${locale}/projects`}>{data.ui.navProjects}</Link>
+            <Link href={`/${locale}#experience`}>{data.ui.navExperience}</Link>
+            <Link href={`/${locale}/cv/${data.cvs[0].id}`}>
+              {data.ui.navCv}
+            </Link>
             {locales.length > 1 &&
               locales.map((l) => (
                 <Link
-                  key={l}
-                  href={`/${l}`}
-                  aria-current={locale === l ? "page" : undefined}
+                  key={l.locale}
+                  href={`/${l.locale}`}
+                  aria-current={locale === l.locale ? "page" : undefined}
                 >
-                  {l.toUpperCase()}
+                  {l.label}
                 </Link>
               ))}
           </div>
@@ -50,7 +55,7 @@ export default async function Layout({
           © {new Date().getFullYear()} {data.profile.name}.{" "}
           {data.settings.footer}
         </span>
-        <Link href={`mailto:${data.profile.email}`}>Let’s talk ↗</Link>
+        <Link href={`mailto:${data.profile.email}`}>{data.ui.letsTalk} ↗</Link>
       </footer>
     </div>
   );

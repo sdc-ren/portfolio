@@ -20,7 +20,13 @@ For a DB-free preview, set `DEMO_MODE=true` in `.env.local`. This is explicit re
 
 1. Enable email/password in Supabase Auth. Disable public signups for this single-owner CMS.
 2. Create an administrator in Supabase Dashboard → Authentication → Users. Copy its UUID.
-3. After migrations, run in the SQL editor, replacing the placeholder:
+3. After migrations, grant the UUID from your trusted local terminal:
+
+```sh
+npm run admin:grant -- --user-id AUTH_USER_UUID
+```
+
+This verifies that the user exists in Supabase Auth before granting access. Alternatively, run in the SQL editor, replacing the placeholder:
 
 ```sql
 INSERT INTO "AdminUser" ("id") VALUES ('AUTH_USER_UUID');
@@ -50,13 +56,13 @@ Build does not need a live DB: public pages are dynamically rendered. Runtime re
 
 `/admin`: edit profile, technology and role catalogs, skill groups, experience, projects, education, spoken languages, CV variants and site metadata. Add/remove/reorder records. Stable IDs drive project URLs and CV selections; the CV editor provides checkboxes and ordering controls. Referential validation rejects deleting an item still used by a CV. Markdown is rendered without raw HTML execution.
 
-Save draft keeps public content unchanged; Preview draft shows a CV from current edits. Publish atomically saves and promotes the full locale document. Revision-based optimistic concurrency rejects stale tabs. Language creation copies a draft; translate it before publishing. Navigation/control text currently uses English; managed profile/project/CV content supports independent locale documents. Default URL is `/en` and English is the initial seeded language. There is no automatic machine translation.
+Save draft keeps public content unchanged; Preview draft shows a CV from current edits. Publish atomically saves and promotes the full locale document. Revision-based optimistic concurrency rejects stale tabs. Language creation copies a draft; translate it before publishing. Public navigation, buttons, page headings and CV/PDF section labels are editable in the `ui` section of each locale. New Vietnamese drafts receive Vietnamese UI labels; profile/project prose is copied and must be translated by the editor. Admin controls remain English. Default URL is `/en` and English is the initial seeded language. There is no automatic machine translation.
 
 The shared document model is deliberate for a single-owner portfolio: all related content publishes atomically. If this grows into multi-user editing or a large content catalog, migrate collections to normalized tables and introduce editorial roles rather than extending the JSON document indefinitely.
 
 ## PDF
 
-`/api/cv/[locale]/[variant]` generates an actual downloadable PDF from current published data using React PDF, in the Node.js runtime. Bundled DejaVu fonts support Vietnamese; Vercel output tracing includes them. No headless Chromium or external font request is required. Web CV has separate SCSS print styles. PDF and web share data and order, not identical pagination. PDF headers/section labels are English in this initial version.
+`/api/cv/[locale]/[variant]` generates an actual downloadable PDF from current published data using React PDF, in the Node.js runtime. Bundled DejaVu fonts support Vietnamese; Vercel output tracing includes them. No headless Chromium or external font request is required. Web CV has separate SCSS print styles. PDF and web share data and order, not identical pagination. PDF section labels use the locale’s managed `ui` content.
 
 ## Verification
 
@@ -66,4 +72,24 @@ npm test
 npm run build
 ```
 
-CI runs all three. Production database, Auth, RLS behavior and concurrent edits must also be exercised against a configured Supabase project before considering deployment verified. The initial implementation intentionally omits multi-user roles, a page builder, arbitrary HTML, media uploads and public contact forms. Add media storage only when real project screenshots are available.
+CI runs all three. The setup checker validates environment structure without printing credentials; use `npm run setup:check -- --database` for an explicit live connection/schema/admin check. Production database, Auth, RLS behavior and concurrent edits must also be exercised against a configured Supabase project before considering deployment verified. The initial implementation intentionally omits multi-user roles, a page builder, arbitrary HTML, media uploads and public contact forms. Add media storage only when real project screenshots are available.
+
+## First deployment, step by step
+
+On Vercel's New Project screen: repository `sdc-ren/portfolio`, branch `main`, preset **Next.js**, root `./`, project name `sondc-portfolio` (or your preferred name).
+
+To preview the public design immediately, add only `DEMO_MODE=true` and deploy. The portfolio and dynamically generated CV PDFs will use the imported English content. This does not enable admin access or write to Supabase.
+
+For the live CMS, add all environment variables from `.env.example`, switch `DEMO_MODE=false`, and from a local checkout with the same database configured run:
+
+```sh
+npm ci
+npm run setup:check
+npm run db:setup
+npm run admin:grant -- --user-id AUTH_USER_UUID
+npm run setup:check -- --database
+```
+
+Create the email/password account in Supabase Auth first, then use its UUID in the grant command. The grant command is idempotent. Never place the UUID of an untrusted account in the allowlist. Both CLI scripts only print configuration names or generic status, never passwords or database URLs.
+
+Then redeploy Vercel. Every subsequent push to `main` uses Vercel's normal Git integration when enabled. No manual PR merge is required for subsequent direct commits. Preview databases and production databases should remain separate.

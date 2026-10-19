@@ -34,20 +34,36 @@ export default async function Page({
           <p className="mt-8 max-w-2xl text-base leading-8 text-slate-400">
             {d.profile.summary}
           </p>
+          <ul className="mt-6 flex flex-wrap gap-2" aria-label={d.ui.navCv}>
+            {d.roles.map((role) => (
+              <li
+                key={role}
+                className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400"
+              >
+                {role}
+              </li>
+            ))}
+          </ul>
           <div className="mt-9 flex flex-wrap gap-3">
             <Button asChild>
               <Link href={`/${locale}/projects`}>
-                Explore my work <ArrowRight size={16} />
+                {d.ui.exploreWork} <ArrowRight size={16} />
               </Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={`/${locale}/cv/${d.cvs[0].id}`}>View CV</Link>
+              <Link href={`/${locale}/cv/${d.cvs[0].id}`}>{d.ui.viewCv}</Link>
             </Button>
           </div>
         </div>
         <aside className="self-end rounded-2xl border border-slate-800 p-6">
           <div className="mb-7 text-6xl font-bold tracking-tighter text-teal-300">
-            DS<span className="text-slate-600">/</span>
+            {d.profile.name
+              .split(/\s+/)
+              .filter(Boolean)
+              .map((word) => word[0])
+              .slice(0, 3)
+              .join("")}
+            <span className="text-slate-600">/</span>
           </div>
           <p className="mb-5 text-sm text-slate-400">
             {d.profile.name}
@@ -65,7 +81,7 @@ export default async function Page({
                 <Linkedin size={20} />
               </a>
             )}
-            <a href={`mailto:${d.profile.email}`} aria-label="Email">
+            <a href={`mailto:${d.profile.email}`} aria-label={d.ui.emailLabel}>
               <Mail size={20} />
             </a>
           </div>
@@ -75,14 +91,14 @@ export default async function Page({
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="mb-3 text-xs uppercase tracking-widest text-teal-300">
-              Selected work
+              {d.ui.selectedWork}
             </p>
             <h2 className="text-3xl font-semibold text-white">
-              Things I’ve helped build.
+              {d.ui.workHeading}
             </h2>
           </div>
           <Link href={`/${locale}/projects`} className="text-sm text-slate-400">
-            All projects ↗
+            {d.ui.allProjects} ↗
           </Link>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
@@ -99,14 +115,10 @@ export default async function Page({
       >
         <div>
           <p className="mb-3 text-xs uppercase tracking-widest text-teal-300">
-            Experience
+            {d.ui.navExperience}
           </p>
           <h2 className="text-3xl font-semibold text-white">
-            Engineering.
-            <br />
-            Ownership.
-            <br />
-            Delivery.
+            {d.ui.experienceHeading}
           </h2>
         </div>
         <div className="space-y-10">
@@ -128,10 +140,10 @@ export default async function Page({
       </section>
       <section className="border-t border-slate-800 py-16">
         <p className="mb-3 text-xs uppercase tracking-widest text-teal-300">
-          Toolkit
+          {d.ui.toolkit}
         </p>
         <h2 className="mb-8 text-3xl font-semibold text-white">
-          Tools that serve the work.
+          {d.ui.toolkitHeading}
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
           {d.skills.map((s) => (
@@ -147,13 +159,13 @@ export default async function Page({
       <section className="flex flex-wrap items-center justify-between gap-6 border-t border-slate-800 py-16">
         <div>
           <h2 className="mb-3 text-3xl font-semibold text-white">
-            Have something in mind?
+            {d.ui.contactHeading}
           </h2>
           <p className="text-slate-400">{d.profile.email}</p>
         </div>
         <Button asChild variant="outline">
           <a href={`mailto:${d.profile.email}`}>
-            Get in touch <ArrowRight size={16} />
+            {d.ui.contactButton} <ArrowRight size={16} />
           </a>
         </Button>
       </section>

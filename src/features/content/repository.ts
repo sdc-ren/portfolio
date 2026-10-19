@@ -20,3 +20,16 @@ export async function getLocales() {
   });
   return rows.filter((r) => r.published !== null).map((r) => r.locale);
 }
+
+export const getLanguageOptions = cache(async () => {
+  const locales = await getLocales();
+  const rows = await Promise.all(
+    locales.map(async (locale) => ({
+      locale,
+      content: await getPublished(locale),
+    })),
+  );
+  return rows.flatMap(({ locale, content }) =>
+    content ? [{ locale, label: content.settings.languageLabel }] : [],
+  );
+});

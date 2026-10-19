@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { uiSchema } from "./ui";
 const text = z.string().trim().min(1).max(20000);
 const short = z.string().trim().min(1).max(200);
 const slug = z
@@ -26,6 +27,7 @@ export const projectSchema = z.object({
 });
 export const contentSchema = z
   .object({
+    ui: uiSchema,
     profile: z.object({
       name: short,
       role: short,
@@ -110,6 +112,12 @@ export const contentSchema = z
         ["skillIds", "skills"],
         ["experienceIds", "experience"],
       ] as const) {
+        if (new Set(cv[field]).size !== cv[field].length)
+          ctx.addIssue({
+            code: "custom",
+            path: ["cvs", i, field],
+            message: "CV selections must not contain duplicate IDs",
+          });
         const ids = new Set(data[collection].map((v) => v.id));
         if (cv[field].some((id) => !ids.has(id)))
           ctx.addIssue({

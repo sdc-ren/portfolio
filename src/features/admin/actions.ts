@@ -5,6 +5,8 @@ import { getDb } from "@/lib/db";
 import { contentSchema, localeSchema } from "@/features/content/schema";
 import { isDemo } from "@/features/content/repository";
 import { z } from "zod";
+import { normalizeContentInput } from "@/features/content/normalize";
+import { defaultUiForLocale } from "@/features/content/ui";
 export async function saveContent(input: unknown) {
   await requireAdmin();
   if (isDemo())
@@ -14,7 +16,7 @@ export async function saveContent(input: unknown) {
       locale: localeSchema,
       revision: z.number().int().nonnegative(),
       publish: z.boolean(),
-      data: contentSchema,
+      data: z.preprocess(normalizeContentInput, contentSchema),
     })
     .safeParse(input);
   if (!parsed.success)
@@ -51,10 +53,12 @@ export async function createLocale(input: unknown) {
   const db = getDb();
   const row = await db.content.findUnique({ where: { locale: source } });
   if (!row) return { ok: false, error: "Source language not found." };
+  const draft = contentSchema.parse(row.draft);
+  draft.ui = defaultUiForLocale(locale);
+  draft.settings.languageLabel =
+    locale === "vi" ? "Tiếng Việt" : locale.toUpperCase();
   try {
-    await db.content.create({
-      data: { locale, draft: contentSchema.parse(row.draft) },
-    });
+    await db.content.create({ data: { locale, draft } });
   } catch (e) {
     if (e instanceof Error && "code" in e && e.code === "P2002")
       return { ok: false, error: "Language already exists." };

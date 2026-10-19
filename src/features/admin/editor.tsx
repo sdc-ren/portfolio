@@ -2,6 +2,7 @@
 import {
   createContext,
   useContext,
+  useId,
   useEffect,
   useState,
   useTransition,
@@ -12,6 +13,10 @@ import { Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
 import type { PortfolioContent } from "@/features/content/schema";
 import { saveContent, createLocale } from "./actions";
 import { Button } from "@/components/ui/button";
+import {
+  normalizeContentInput,
+  uniqueItemId,
+} from "@/features/content/normalize";
 import { CvDocument } from "@/features/cv/document";
 type Json = string | boolean | Json[] | { [key: string]: Json };
 const labels: Record<string, string> = {
@@ -83,6 +88,7 @@ function Field({
   disabled?: boolean;
 }) {
   const content = useContext(ContentContext);
+  const fieldId = useId();
   const label =
     labels[name] ??
     name.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
@@ -110,11 +116,21 @@ function Field({
             onChange={(e) => onChange(e.target.value)}
           />
         ) : (
-          <input
-            value={value}
-            disabled={disabled}
-            onChange={(e) => onChange(e.target.value)}
-          />
+          <>
+            <input
+              value={value}
+              disabled={disabled}
+              list={name === "role" ? fieldId : undefined}
+              onChange={(e) => onChange(e.target.value)}
+            />
+            {name === "role" && (
+              <datalist id={fieldId}>
+                {content?.roles.map((role) => (
+                  <option key={role} value={role} />
+                ))}
+              </datalist>
+            )}
+          </>
         )}
       </label>
     );
@@ -210,15 +226,37 @@ function Field({
       value.some((v) => typeof v === "object" && !Array.isArray(v));
     if (!objects)
       return (
-        <label>
-          <span>{label} · one per line</span>
-          <textarea
-            rows={4}
-            value={(value as string[]).join("\n")}
-            disabled={disabled}
-            onChange={(e) => onChange(e.target.value.split("\n"))}
-          />
-        </label>
+        <div>
+          <label>
+            <span>{label} · one per line</span>
+            <textarea
+              rows={4}
+              value={(value as string[]).join("\n")}
+              disabled={disabled}
+              onChange={(e) => onChange(e.target.value.split("\n"))}
+            />
+          </label>
+          {name === "tech" && (
+            <span className="mt-3 flex flex-wrap gap-2">
+              {content?.technologies
+                .filter((tech) => !(value as string[]).includes(tech))
+                .map((tech) => (
+                  <Button
+                    key={tech}
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    disabled={disabled}
+                    onClick={() =>
+                      onChange([...(value as string[]).filter(Boolean), tech])
+                    }
+                  >
+                    + {tech}
+                  </Button>
+                ))}
+            </span>
+          )}
+        </div>
       );
     const move = (i: number, delta: number) => {
       const next = [...value];
@@ -287,7 +325,11 @@ function Field({
           type="button"
           variant="outline"
           disabled={disabled}
-          onClick={() => onChange([...value, structuredClone(templates[name])])}
+          onClick={() => {
+            const item = structuredClone(templates[name]) as { id: string };
+            item.id = uniqueItemId(item.id, value as { id: string }[]);
+            onChange([...value, item]);
+          }}
         >
           <Plus size={16} />
           Add {name}
@@ -343,8 +385,15 @@ export function Editor({
     start(async () => {
       setStatus("");
       try {
-        const r = await saveContent({ locale, revision, publish, data });
+        const normalized = normalizeContentInput(data) as PortfolioContent;
+        const r = await saveContent({
+          locale,
+          revision,
+          publish,
+          data: normalized,
+        });
         if (r.ok && r.revision !== undefined) {
+          setData(normalized);
           setRevision(r.revision);
           setDirty(false);
           setStatus(

@@ -10,7 +10,6 @@ export async function requireAdmin() {
   } = await supabase.auth.getUser();
   if (error || !user) redirect("/admin/login");
   const admin = await getDb().adminUser.findUnique({ where: { id: user.id } });
-  if (!admin)
-    throw new Error("This account does not have administrator access.");
+  if (!admin) redirect("/admin/access-denied");
   return user;
 }

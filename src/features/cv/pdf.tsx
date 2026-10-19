@@ -87,11 +87,11 @@ export async function createCvPdf(
             ))}
         </View>
         <Text style={s.heading} minPresenceAhead={40}>
-          Professional Summary
+          {data.ui.cvSummary}
         </Text>
         <Text>{cv.summary}</Text>
         <Text style={s.heading} minPresenceAhead={40}>
-          Technical Skills
+          {data.ui.cvSkills}
         </Text>
         {selectByIds(data.skills, cv.skillIds).map((sk) => (
           <Text key={sk.id} style={{ marginBottom: 4 }}>
@@ -100,7 +100,7 @@ export async function createCvPdf(
           </Text>
         ))}
         <Text style={s.heading} minPresenceAhead={60}>
-          Professional Experience
+          {data.ui.cvExperience}
         </Text>
         {selectByIds(data.experience, cv.experienceIds).map((e) => (
           <View key={e.id} style={s.entry}>
@@ -123,7 +123,7 @@ export async function createCvPdf(
           </View>
         ))}
         <Text style={s.heading} minPresenceAhead={60}>
-          Selected Projects
+          {data.ui.cvProjects}
         </Text>
         {selectByIds(data.projects, cv.projectIds).map((p) => (
           <View key={p.id} style={s.entry}>
@@ -148,7 +148,7 @@ export async function createCvPdf(
           </View>
         ))}
         <Text style={s.heading} minPresenceAhead={40}>
-          Education & Languages
+          {data.ui.cvEducation}
         </Text>
         {data.education.map((e) => (
           <Text key={e.id}>

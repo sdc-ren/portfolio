@@ -26,7 +26,7 @@ export default async function Page({
       <div
         className={`${styles.toolbar} mx-auto flex max-w-[900px] flex-wrap items-center justify-between gap-4`}
       >
-        <nav aria-label="CV versions" className="flex flex-wrap gap-3">
+        <nav aria-label={d.ui.cvVersions} className="flex flex-wrap gap-3">
           {d.cvs.map((c) => (
             <Link
               key={c.id}
@@ -39,7 +39,7 @@ export default async function Page({
           ))}
         </nav>
         <Button asChild>
-          <a href={`/api/cv/${locale}/${variant}`}>Download PDF ↓</a>
+          <a href={`/api/cv/${locale}/${variant}`}>{d.ui.downloadPdf} ↓</a>
         </Button>
       </div>
       <CvDocument data={d} variant={variant} />

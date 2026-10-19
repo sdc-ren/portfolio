@@ -3,8 +3,8 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import initial from "../src/data/initial-content.json";
 import { contentSchema } from "../src/features/content/schema";
-config({ path: ".env.local" });
-config();
+config({ path: ".env.local", quiet: true });
+config({ quiet: true });
 if (!process.env.DIRECT_URL) throw new Error("DIRECT_URL required");
 const db = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DIRECT_URL }),

@@ -17,7 +17,10 @@
     "db:seed": "node --import tsx prisma/seed.ts",
     "postinstall": "prisma generate && node scripts/prepare-fonts.mjs",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "setup:check": "node --import tsx scripts/check-setup.ts",
+    "admin:grant": "node --import tsx scripts/grant-admin.ts",
+    "db:setup": "npm run db:deploy && npm run db:seed"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",

@@ -21,11 +21,11 @@ export default async function Page({
   const { locale, slug } = await params;
   const d = await getPublished(locale);
   const p = d?.projects.find((p) => p.id === slug);
-  if (!p) notFound();
+  if (!d || !p) notFound();
   return (
     <main id="main" className="mx-auto max-w-4xl px-6 py-16">
       <Link href={`/${locale}/projects`} className="text-sm text-slate-400">
-        ← All projects
+        ← {d.ui.allProjects}
       </Link>
       <p className="mb-5 mt-12 text-xs uppercase tracking-widest text-teal-300">
         {p.category}
@@ -44,19 +44,21 @@ export default async function Page({
       <div className="mb-12 flex gap-3">
         {p.repository && (
           <Button asChild>
-            <a href={p.repository}>Source code ↗</a>
+            <a href={p.repository}>{d.ui.sourceCode} ↗</a>
           </Button>
         )}
         {p.demo && (
           <Button asChild variant="outline">
-            <a href={p.demo}>Live project ↗</a>
+            <a href={p.demo}>{d.ui.liveProject} ↗</a>
           </Button>
         )}
       </div>
       <div className="prose border-t border-slate-800 pt-10 text-slate-300">
         <Markdown>{p.description}</Markdown>
       </div>
-      <h2 className="mb-5 mt-10 text-2xl font-semibold">Contributions</h2>
+      <h2 className="mb-5 mt-10 text-2xl font-semibold">
+        {d.ui.contributions}
+      </h2>
       <ul className="list-disc space-y-3 pl-5 text-slate-400">
         {p.highlights.map((h) => (
           <li key={h}>{h}</li>
