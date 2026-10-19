@@ -48,7 +48,7 @@ Build does not need a live DB: public pages are dynamically rendered. Runtime re
 
 ## Editing and publishing
 
-`/admin`: edit profile, technology and role catalogs, skill groups, experience, projects, education, spoken languages, CV variants and site metadata. Add/remove/reorder records. Stable IDs drive project URLs and CV selections. Referential validation rejects deleting an item still used by a CV. Markdown is rendered without raw HTML execution.
+`/admin`: edit profile, technology and role catalogs, skill groups, experience, projects, education, spoken languages, CV variants and site metadata. Add/remove/reorder records. Stable IDs drive project URLs and CV selections; the CV editor provides checkboxes and ordering controls. Referential validation rejects deleting an item still used by a CV. Markdown is rendered without raw HTML execution.
 
 Save draft keeps public content unchanged; Preview draft shows a CV from current edits. Publish atomically saves and promotes the full locale document. Revision-based optimistic concurrency rejects stale tabs. Language creation copies a draft; translate it before publishing. Navigation/control text currently uses English; managed profile/project/CV content supports independent locale documents. Default URL is `/en` and English is the initial seeded language. There is no automatic machine translation.
 
