@@ -4,12 +4,9 @@
   max-width: 100%;
   min-width: 0;
   overflow: hidden;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1.6;
-  letter-spacing: normal;
-  color: var(--foreground);
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
   white-space: nowrap;
 
   > span:not(:global(.sr-only)) {
@@ -38,12 +35,6 @@
 @keyframes blink {
   50% {
     opacity: 0;
-  }
-}
-
-@media (min-width: 640px) {
-  .typewriter {
-    font-size: 12px;
   }
 }
 
