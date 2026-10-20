@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { PortfolioContent } from "@/features/content/schema";
 import { cvMarkup, escapeHtml } from "./markup";
+import { localChromePath } from "./browser";
 
 chromium.setGraphicsMode = false;
 
@@ -37,14 +38,11 @@ export async function createCvPdf(
   const cv = data.cvs.find((item) => item.id === variant);
   if (!cv) throw new Error("CV not found");
   const html = `<!doctype html><html lang="${escapeHtml(locale)}"><head><meta charset="utf-8"><title>${escapeHtml(data.profile.name)} | ${escapeHtml(cv.title)}</title><style>${await embeddedStyles()} body{margin:0;background:#fff}</style></head><body><main class="cv-sheet">${cvMarkup(data, variant)}</main></body></html>`;
+  const installedChrome = await localChromePath();
   const browser = await puppeteer.launch({
-    args: await puppeteer.defaultArgs({
-      args: chromium.args,
-      headless: "shell",
-    }),
-    executablePath:
-      process.env.CHROMIUM_EXECUTABLE_PATH || (await chromium.executablePath()),
-    headless: "shell",
+    args: installedChrome ? [] : chromium.args,
+    executablePath: installedChrome || (await chromium.executablePath()),
+    headless: installedChrome ? true : "shell",
     pipe: true,
     timeout: 20000,
   });

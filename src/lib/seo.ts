@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { PortfolioContent } from "@/features/content/schema";
 import { publicPath } from "./public-path";
+import { normalizeSiteUrl } from "./site-url";
 
 export const DEFAULT_TITLE = "Dang Chi Son | Senior Software Engineer";
 export const DEFAULT_DESCRIPTION =
@@ -8,7 +9,11 @@ export const DEFAULT_DESCRIPTION =
 
 export function siteUrl() {
   const value = process.env.NEXT_PUBLIC_SITE_URL;
-  return value ? new URL(new URL(value).origin) : undefined;
+  if (!value?.trim()) return undefined;
+  const url = new URL(normalizeSiteUrl(value));
+  if (!["http:", "https:"].includes(url.protocol))
+    throw new Error("NEXT_PUBLIC_SITE_URL must use HTTP or HTTPS");
+  return new URL(url.origin);
 }
 
 export function metaDescription(text: string) {

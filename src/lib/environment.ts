@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizeSiteUrl } from "./site-url";
 type Environment = Record<string, string | undefined>;
 const postgresUrl = z.string().refine((value) => {
   try {
@@ -35,7 +36,13 @@ export const authEnvironmentSchema = z.object({
 export function checkEnvironment(env: Environment) {
   const result = databaseEnvironmentSchema
     .merge(authEnvironmentSchema)
-    .extend({ NEXT_PUBLIC_SITE_URL: httpUrl })
+    .extend({
+      NEXT_PUBLIC_SITE_URL: z.preprocess(
+        (value) =>
+          typeof value === "string" ? normalizeSiteUrl(value) : value,
+        httpUrl,
+      ),
+    })
     .safeParse(env);
   return {
     ok: result.success,
