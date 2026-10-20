@@ -38,7 +38,7 @@ export default async function Layout({
             />
             <span className="flex min-w-0 flex-col gap-1">
               <span className="flex items-center gap-2 whitespace-nowrap text-xs sm:text-base">
-                <span>{data.profile.name}</span>
+                <span className="uppercase">{data.profile.name}</span>
                 <span
                   aria-hidden="true"
                   className="font-normal text-muted-foreground"
