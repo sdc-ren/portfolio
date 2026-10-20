@@ -15,8 +15,10 @@ export const englishUi = {
   experienceHeading: "Professional experience",
   toolkit: "Toolkit",
   toolkitHeading: "Technical skills",
-  contactHeading: "Get in touch",
-  contactButton: "Get in touch",
+  contactHeading: "Let’s connect",
+  contactDescription:
+    "Have an engineering opportunity or a project to discuss? Send me an email or connect with me on LinkedIn.",
+  contactButton: "Send an email",
   portfolio: "Portfolio",
   projectsHeading: "Selected projects.",
   projectsDescription:
@@ -58,8 +60,10 @@ export const vietnameseUi: UiLabels = {
   experienceHeading: "Kinh nghiệm làm việc",
   toolkit: "Công nghệ",
   toolkitHeading: "Kỹ năng chuyên môn",
-  contactHeading: "Liên hệ",
-  contactButton: "Liên hệ với tôi",
+  contactHeading: "Cùng trao đổi",
+  contactDescription:
+    "Bạn muốn trao đổi về cơ hội công việc hoặc một dự án? Hãy gửi email hoặc kết nối với tôi qua LinkedIn.",
+  contactButton: "Gửi email",
   portfolio: "Hồ sơ dự án",
   projectsHeading: "Các dự án tiêu biểu.",
   projectsDescription:
@@ -158,6 +162,12 @@ export const uiSchema = z
       .min(1)
       .max(1000)
       .default(englishUi.toolkitHeading),
+    contactDescription: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.contactDescription),
     contactHeading: z
       .string()
       .trim()

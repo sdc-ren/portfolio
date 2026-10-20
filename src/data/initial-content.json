@@ -365,8 +365,8 @@
     "experienceHeading": "Professional experience",
     "toolkit": "Toolkit",
     "toolkitHeading": "Technical skills",
-    "contactHeading": "Get in touch",
-    "contactButton": "Get in touch",
+    "contactHeading": "Let’s connect",
+    "contactButton": "Send an email",
     "portfolio": "Portfolio",
     "projectsHeading": "Selected projects.",
     "projectsDescription": "Selected frontend, full-stack, and open-source projects by Dang Chi Son, covering interactive PDF editing, personal finance, and AI agent tooling.",
@@ -389,6 +389,7 @@
     "cvEducation": "Education",
     "emailLabel": "Email",
     "closeDialog": "Close",
-    "cvLanguages": "Languages"
+    "cvLanguages": "Languages",
+    "contactDescription": "Have an engineering opportunity or a project to discuss? Send me an email or connect with me on LinkedIn."
   }
 }

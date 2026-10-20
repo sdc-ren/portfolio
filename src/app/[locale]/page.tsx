@@ -1,3 +1,4 @@
+import { ContactSection } from "@/components/contact-section";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { pageMetadata } from "@/lib/seo";
 import { ProfileCard } from "@/components/profile-card";
@@ -148,19 +149,7 @@ export default async function Page({
           ))}
         </div>
       </section>
-      <section className="flex flex-wrap items-center justify-between gap-6 border-t border-border py-12">
-        <div>
-          <h2 className="mb-3 text-2xl font-semibold text-foreground">
-            {d.ui.contactHeading}
-          </h2>
-          <p className="text-muted-foreground">{d.profile.email}</p>
-        </div>
-        <Button asChild variant="outline">
-          <a href={`mailto:${d.profile.email}`}>
-            {d.ui.contactButton} <ArrowRight size={16} />
-          </a>
-        </Button>
-      </section>
+      <ContactSection profile={d.profile} labels={d.ui} />
     </main>
   );
 }
