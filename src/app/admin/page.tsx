@@ -31,10 +31,10 @@ export default async function Admin({
       </main>
     );
   return (
-    <main id="main" className="mx-auto max-w-7xl px-6 py-8">
+    <main id="main" className="mx-auto max-w-[1440px] px-6 py-8">
       <header className="mb-8 flex items-center justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-widest text-teal-300">
+          <p className="text-xs uppercase tracking-widest text-primary">
             Content studio
           </p>
           <h1 className="mt-2 text-3xl font-semibold">

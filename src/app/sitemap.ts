@@ -1,3 +1,4 @@
+import { publicPath } from "@/lib/public-path";
 import type { MetadataRoute } from "next";
 import { getLocales, getPublished } from "@/features/content/repository";
 export const dynamic = "force-dynamic";
@@ -10,10 +11,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const d = await getPublished(locale);
       if (!d) return [];
       return [
-        `/${locale}`,
-        `/${locale}/projects`,
-        ...d.projects.map((p) => `/${locale}/projects/${p.id}`),
-        ...d.cvs.map((c) => `/${locale}/cv/${c.id}`),
+        publicPath(locale),
+        publicPath(locale, "/projects"),
+        ...d.projects.map((p) => publicPath(locale, `/projects/${p.id}`)),
+        ...d.cvs.map((c) => publicPath(locale, `/cv/${c.id}`)),
       ].map((p) => ({ url: base + p }));
     }),
   );

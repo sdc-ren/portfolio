@@ -1,4 +1,5 @@
 "use client";
+import { publicPath } from "@/lib/public-path";
 import {
   createContext,
   useContext,
@@ -159,9 +160,9 @@ function Field({
       return (
         <fieldset
           disabled={disabled}
-          className="rounded-xl border border-slate-700 p-4"
+          className="rounded-xl border border-border p-4"
         >
-          <legend className="px-2 text-sm text-slate-300">
+          <legend className="px-2 text-sm text-muted-foreground">
             {label.split(" (")[0]}
           </legend>
           <div className="space-y-3">
@@ -183,11 +184,13 @@ function Field({
               </label>
             ))}
           </div>
-          <p className="mb-2 mt-5 text-xs text-slate-500">Selected order</p>
+          <p className="mb-2 mt-5 text-xs text-muted-foreground">
+            Selected order
+          </p>
           {selected.map((id, index) => (
             <div
               key={id}
-              className="flex items-center justify-between gap-3 border-t border-slate-800 py-2 text-xs"
+              className="flex items-center justify-between gap-3 border-t border-border py-2 text-xs"
             >
               <span>
                 {index + 1}.{" "}
@@ -268,10 +271,10 @@ function Field({
         {value.map((v, i) => (
           <fieldset
             key={i}
-            className="rounded-xl border border-slate-700 p-5"
+            className="rounded-xl border border-border p-5"
             disabled={disabled}
           >
-            <legend className="px-2 text-xs text-teal-300">
+            <legend className="px-2 text-xs text-primary">
               {name} {i + 1}
             </legend>
             <div className="mb-5 flex justify-end gap-2">
@@ -422,7 +425,7 @@ export function Editor({
     });
   return (
     <>
-      <div className="sticky top-0 z-20 mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-slate-800 bg-slate-950/95 py-4">
+      <div className="sticky top-0 z-20 mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-border bg-background/95 py-4">
         <div className="flex items-center gap-3">
           <label className="sr-only" htmlFor="locale">
             Editing language
@@ -440,7 +443,7 @@ export function Editor({
               <option key={l}>{l}</option>
             ))}
           </select>
-          <span className="whitespace-nowrap text-xs text-slate-400">
+          <span className="whitespace-nowrap text-xs text-muted-foreground">
             {dirty ? "Unsaved changes" : `Revision ${revision}`}
           </span>
         </div>
@@ -464,16 +467,12 @@ export function Editor({
           </Button>
         </div>
       </div>
-      <p
-        role="status"
-        aria-live="polite"
-        className="mb-5 text-sm text-teal-200"
-      >
+      <p role="status" aria-live="polite" className="mb-5 text-sm text-primary">
         {status}
       </p>
       {preview ? (
         <>
-          <p className="mb-4 text-sm text-slate-400">
+          <p className="mb-4 text-sm text-muted-foreground">
             Draft preview. Save or publish to validate references.
           </p>
           <select
@@ -501,13 +500,13 @@ export function Editor({
                   disabled={pending}
                   onClick={() => setTab(key)}
                   aria-current={tab === key ? "page" : undefined}
-                  className={`block w-full rounded-lg px-4 py-3 text-left text-sm capitalize ${tab === key ? "bg-teal-400/10 text-teal-300" : "text-slate-400 hover:bg-slate-900"}`}
+                  className={`block w-full rounded-lg px-4 py-3 text-left text-sm capitalize ${tab === key ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
                 >
                   {key}
                 </button>
               ))}
             </nav>
-            <div className="border-t border-slate-800 pt-5">
+            <div className="border-t border-border pt-5">
               <label>
                 <span>Add translation locale</span>
                 <input
@@ -526,22 +525,22 @@ export function Editor({
               >
                 Create draft language
               </Button>
-              <p className="mt-3 text-xs text-slate-500">
+              <p className="mt-3 text-xs text-muted-foreground">
                 Copies current draft. Translate before publishing. Save your
                 edits first.
               </p>
             </div>
             <Link
-              href={`/${locale}`}
-              className="mt-6 block px-4 text-sm text-teal-300"
+              href={publicPath(locale)}
+              className="mt-6 block px-4 text-sm text-primary"
             >
               Open published site ↗
             </Link>
           </aside>
-          <section className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
+          <section className="rounded-2xl border border-border bg-card p-6">
             <h2 className="mb-6 text-2xl font-semibold capitalize">{tab}</h2>
             {tab === "cvs" && (
-              <p className="mb-6 text-sm text-slate-400">
+              <p className="mb-6 text-sm text-muted-foreground">
                 Select shared projects, skills and experience. Use the arrows to
                 set their order in this CV.
               </p>
@@ -560,7 +559,7 @@ export function Editor({
           </section>
         </div>
       )}
-      <p className="mt-8 text-xs text-slate-500">
+      <p className="mt-8 text-xs text-muted-foreground">
         {publishedAt
           ? `Published content exists · loaded ${new Date(publishedAt).toISOString()}`
           : "This language has not been published."}{" "}

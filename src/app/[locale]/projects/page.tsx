@@ -19,14 +19,14 @@ export default async function Page({
   const d = await getPublished(locale);
   if (!d) notFound();
   return (
-    <main id="main" className="mx-auto max-w-6xl px-6 py-16">
-      <p className="mb-4 text-xs uppercase tracking-widest text-teal-300">
+    <main id="main" className="mx-auto max-w-[1440px] px-6 py-16">
+      <p className="mb-4 text-xs uppercase tracking-widest text-primary">
         {d.ui.portfolio}
       </p>
-      <h1 className="mb-6 text-5xl font-semibold text-white">
+      <h1 className="mb-6 text-3xl font-semibold sm:text-4xl text-foreground">
         {d.ui.projectsHeading}
       </h1>
-      <p className="mb-10 max-w-xl text-slate-400">
+      <p className="mb-10 max-w-3xl text-muted-foreground">
         {d.ui.projectsDescription}
       </p>
       <ProjectList projects={d.projects} locale={locale} labels={d.ui} />

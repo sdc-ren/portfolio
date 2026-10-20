@@ -1,3 +1,4 @@
+import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -18,29 +19,33 @@ export default async function Layout({
   const locales = await getLanguageOptions();
   return (
     <div lang={locale}>
-      <header className="border-b border-slate-800">
+      <header className="border-b border-border">
         <nav
           aria-label={data.ui.navLabel}
-          className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-5 px-6 py-6"
+          className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-5 px-6 py-6"
         >
           <Link
-            href={`/${locale}`}
-            className="font-bold tracking-tight text-white"
+            href={publicPath(locale)}
+            className="font-bold tracking-tight text-foreground"
           >
             {data.profile.name}
-            <span className="text-teal-300">.</span>
+            <span className="text-primary">.</span>
           </Link>
-          <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400">
-            <Link href={`/${locale}/projects`}>{data.ui.navProjects}</Link>
-            <Link href={`/${locale}#experience`}>{data.ui.navExperience}</Link>
-            <Link href={`/${locale}/cv/${data.cvs[0].id}`}>
+          <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+            <Link href={publicPath(locale, "/projects")}>
+              {data.ui.navProjects}
+            </Link>
+            <Link href={`${publicPath(locale)}#experience`}>
+              {data.ui.navExperience}
+            </Link>
+            <Link href={publicPath(locale, `/cv/${data.cvs[0].id}`)}>
               {data.ui.navCv}
             </Link>
             {locales.length > 1 &&
               locales.map((l) => (
                 <Link
                   key={l.locale}
-                  href={`/${l.locale}`}
+                  href={publicPath(l.locale)}
                   aria-current={locale === l.locale ? "page" : undefined}
                 >
                   {l.label}
@@ -50,7 +55,7 @@ export default async function Layout({
         </nav>
       </header>
       {children}
-      <footer className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4 border-t border-slate-800 px-6 py-8 text-sm text-slate-500">
+      <footer className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-4 border-t border-border px-6 py-8 text-sm text-muted-foreground">
         <span>
           © {new Date().getFullYear()} {data.profile.name}.{" "}
           {data.settings.footer}

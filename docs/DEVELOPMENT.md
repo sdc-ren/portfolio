@@ -47,16 +47,24 @@ Every admin page and mutation calls verified `auth.getUser()` and checks the UUI
 2. Configure production env variables from `.env.example`. Set `NEXT_PUBLIC_SITE_URL` to the actual HTTPS domain. Avoid sharing the production DB with preview deployments; use a separate Supabase project/branch for previews.
 3. Apply `pnpm db:deploy` and `pnpm db:seed` from a trusted local terminal with the target environment configured **before the first deployment**. Database migrations intentionally do not run during Vercel builds, which can run concurrently.
 4. Provision the Auth admin UUID as above.
-5. Deploy. Verify `/en`, project details, both CV pages, PDF download, admin sign-in, draft isolation and publishing.
+5. Deploy. Verify `/`, project details, both CV pages, PDF download, admin sign-in, draft isolation and publishing.
 6. Set Supabase Auth Site URL to your production domain. Password sign-in here does not need an OAuth callback. If you later add magic links/OAuth, implement a code exchange route and allow only explicit redirect URLs. The initial version has no reset-password UI; recovery can be handled through the Supabase dashboard.
 
 Build does not need a live DB: public pages are dynamically rendered. Runtime requests need working DB/Auth configuration. Updating env variables requires redeployment. Vercel deployment itself is not performed by this repository.
+
+## Public URLs and appearance
+
+English uses clean URLs: `/`, `/projects`, `/projects/[slug]`, and `/cv/[variant]`. Old `/en` URLs permanently redirect to their clean equivalents. Other languages remain prefixed, such as `/vi/projects`. Default and localized routes reuse the same page implementations; links and the sitemap use the shared `publicPath` helper.
+
+The default theme is light with a gray page background, white cards, and a 1440px maximum page container. The CV retains its separate document layout for printing. The SVG favicon is a font-independent SDC code monogram at `src/app/icon.svg`.
+
+After updating an existing database, run `pnpm db:deploy` to apply the copy refinement migration. It updates only exact starter strings, preserves custom content and CV-specific summaries, and increments changed rows' revisions to invalidate stale editor sessions.
 
 ## Editing and publishing
 
 `/admin`: edit profile, technology and role catalogs, skill groups, experience, projects, education, spoken languages, CV variants and site metadata. Add/remove/reorder records. Stable IDs drive project URLs and CV selections; the CV editor provides checkboxes and ordering controls. Referential validation rejects deleting an item still used by a CV. Markdown is rendered without raw HTML execution.
 
-Save draft keeps public content unchanged; Preview draft shows a CV from current edits. Publish atomically saves and promotes the full locale document. Revision-based optimistic concurrency rejects stale tabs. Language creation copies a draft; translate it before publishing. Public navigation, buttons, page headings and CV/PDF section labels are editable in the `ui` section of each locale. New Vietnamese drafts receive Vietnamese UI labels; profile/project prose is copied and must be translated by the editor. Admin controls remain English. Default URL is `/en` and English is the initial seeded language. There is no automatic machine translation.
+Save draft keeps public content unchanged; Preview draft shows a CV from current edits. Publish atomically saves and promotes the full locale document. Revision-based optimistic concurrency rejects stale tabs. Language creation copies a draft; translate it before publishing. Public navigation, buttons, page headings and CV/PDF section labels are editable in the `ui` section of each locale. New Vietnamese drafts receive Vietnamese UI labels; profile/project prose is copied and must be translated by the editor. Admin controls remain English. The default English URL is `/`; other languages retain their locale prefix and English is the initial seeded language. There is no automatic machine translation.
 
 The shared document model is deliberate for a single-owner portfolio: all related content publishes atomically. If this grows into multi-user editing or a large content catalog, migrate collections to normalized tables and introduce editorial roles rather than extending the JSON document indefinitely.
 

@@ -6,7 +6,7 @@ export default function Login() {
   const [state, action, pending] = useActionState(login, { error: "" });
   return (
     <main id="main" className="mx-auto max-w-md px-6 py-24">
-      <p className="mb-4 text-xs uppercase tracking-widest text-teal-300">
+      <p className="mb-4 text-xs uppercase tracking-widest text-primary">
         Portfolio CMS
       </p>
       <h1 className="mb-8 text-4xl font-semibold">Welcome back.</h1>
@@ -25,7 +25,7 @@ export default function Login() {
           />
         </label>
         {state.error && (
-          <p role="alert" className="text-sm text-rose-300">
+          <p role="alert" className="text-sm text-red-700">
             {state.error}
           </p>
         )}
@@ -33,7 +33,7 @@ export default function Login() {
           {pending ? "Signing in…" : "Sign in"}
         </Button>
       </form>
-      <p className="mt-6 text-xs text-slate-500">
+      <p className="mt-6 text-xs text-muted-foreground">
         Administrator accounts are provisioned privately.
       </p>
     </main>

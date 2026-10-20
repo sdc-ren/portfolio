@@ -1,5 +1,6 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { publicPath } from "@/lib/public-path";
 import { requireAdmin } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { contentSchema, localeSchema } from "@/features/content/schema";
@@ -37,7 +38,7 @@ export async function saveContent(input: unknown) {
       ok: false,
       error: "Content changed in another tab. Reload before saving.",
     };
-  if (publish) revalidatePath(`/${locale}`, "layout");
+  if (publish) revalidatePath(publicPath(locale), "layout");
   return { ok: true, revision: revision + 1 };
 }
 export async function createLocale(input: unknown) {

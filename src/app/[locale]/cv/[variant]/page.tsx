@@ -1,3 +1,4 @@
+import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublished } from "@/features/content/repository";
@@ -30,9 +31,9 @@ export default async function Page({
           {d.cvs.map((c) => (
             <Link
               key={c.id}
-              href={`/${locale}/cv/${c.id}`}
+              href={publicPath(locale, `/cv/${c.id}`)}
               aria-current={c.id === variant ? "page" : undefined}
-              className={`text-xs ${c.id === variant ? "text-teal-300" : "text-slate-400"}`}
+              className={`text-xs ${c.id === variant ? "text-primary" : "text-muted-foreground"}`}
             >
               {c.title}
             </Link>

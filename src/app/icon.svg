@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+ <title>SDC code monogram</title>
+ <rect width="64" height="64" rx="14" fill="#15232d"/>
+ <path d="M12 12l5 4-5 4" fill="none" stroke="#5eead4" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter"/>
+ <path d="M22 20h9" fill="none" stroke="#5eead4" stroke-width="2.5"/>
+ <g fill="none" stroke="#f3f4f6" stroke-width="3.6" stroke-linecap="square" stroke-linejoin="miter">
+  <path d="M21 29H11v9h10v10H11"/>
+  <path d="M28 29v19h6l5-5V34l-5-5z"/>
+  <path d="M54 29H44v19h10"/>
+ </g>
+ <path d="M45 55h10" fill="none" stroke="#5eead4" stroke-width="2.5"/>
+</svg>

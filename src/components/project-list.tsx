@@ -43,7 +43,7 @@ export function ProjectList({
           </select>
         </label>
       </div>
-      <p className="mb-4 text-sm text-slate-500" aria-live="polite">
+      <p className="mb-4 text-sm text-muted-foreground" aria-live="polite">
         {formatProjectCount(labels, shown.length)}
       </p>
       <div className="grid gap-5 md:grid-cols-2">
@@ -52,7 +52,7 @@ export function ProjectList({
         ))}
       </div>
       {!shown.length && (
-        <p className="py-12 text-slate-400">{labels.noProjects}</p>
+        <p className="py-12 text-muted-foreground">{labels.noProjects}</p>
       )}
     </>
   );

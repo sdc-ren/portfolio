@@ -1,10 +1,25 @@
 @import "tailwindcss";
 :root {
-  color-scheme: dark;
-  --background: #0b1120;
-  --foreground: #e2e8f0;
-  --primary: #5eead4;
+  color-scheme: light;
+  --background: #f3f4f6;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --muted: #e9edf1;
+  --muted-foreground: #526174;
+  --border: #d6dde5;
+  --primary: #0f766e;
+  --primary-foreground: #ffffff;
   --radius: 0.625rem;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
 }
 * {
   box-sizing: border-box;
@@ -35,27 +50,27 @@ button:disabled {
   cursor: wait;
 }
 ::selection {
-  background: #115e59;
-  color: white;
+  background: #ccfbf1;
+  color: #134e4a;
 }
 a:focus-visible {
-  outline: 2px solid #5eead4;
+  outline: 2px solid var(--primary);
   outline-offset: 5px;
 }
 input,
 textarea,
 select {
   width: 100%;
-  background: #0b1120;
-  border: 1px solid #334155;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;
-  color: #f1f5f9;
+  color: var(--foreground);
 }
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid #2dd4bf;
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 textarea {
@@ -64,7 +79,7 @@ textarea {
 label {
   display: block;
   font-size: 0.85rem;
-  color: #cbd5e1;
+  color: var(--muted-foreground);
 }
 label > span {
   display: block;
@@ -72,11 +87,13 @@ label > span {
 }
 input[type="checkbox"] {
   width: auto;
+  accent-color: var(--primary);
 }
 h1,
 h2,
 h3 {
-  line-height: 1.15;
+  line-height: 1.3;
+  overflow-wrap: break-word;
 }
 p {
   margin: 0;
@@ -89,7 +106,9 @@ p {
   padding-left: 1.5rem;
 }
 .prose a {
-  color: #5eead4;
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .prose h2,
 .prose h3 {
@@ -99,7 +118,7 @@ p {
 .prose pre {
   overflow: auto;
   padding: 1rem;
-  background: #020617;
+  background: var(--muted);
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -109,7 +128,6 @@ p {
     transition: none !important;
   }
 }
-
 @media print {
   body {
     background: white !important;

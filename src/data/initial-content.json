@@ -5,8 +5,8 @@
     "location": "Da Nang, Vietnam",
     "email": "dangchison@gmail.com",
     "phone": "+84 966 019 009",
-    "summary": "Senior Software Engineer with approximately 12 years of experience, specializing in frontend engineering with Vue.js, React, Angular, and TypeScript. Spent nearly 10 years at NeoLab and DGWAsian following its acquisition in 2023, including around six years leading frontend teams of 6–10 engineers. Experienced in frontend architecture, performance optimization, engineering standards, and delivery of complex web applications. Also builds Node.js backend services, a full-stack personal finance product, and open-source tools integrating AI coding agents through MCP, event hooks, and secure remote workflows. Focused on expanding practical expertise in AI agent engineering.",
-    "tagline": "Frontend architecture. Practical AI tooling.",
+    "summary": "I'm Dang Chi Son, a software engineer based in Da Nang. I work on frontend architecture, complex web applications, and technical leadership with TypeScript, Vue, React, and Angular. I also build full-stack applications and open-source tools that connect coding agents with Google Workspace and Telegram.",
+    "tagline": "Frontend engineering and developer tools",
     "github": "https://github.com/sdc-ren",
     "linkedin": "https://www.linkedin.com/in/sondangc/"
   },
@@ -389,7 +389,7 @@
   "settings": {
     "title": "Dang Chi Son | Software Engineer",
     "description": "Frontend architecture, technical leadership and open-source AI agent tooling by Dang Chi Son.",
-    "footer": "Built with care. Maintained with purpose.",
+    "footer": "Software engineering portfolio",
     "languageLabel": "English"
   },
   "ui": {
@@ -402,12 +402,12 @@
     "exploreWork": "Explore my work",
     "viewCv": "View CV",
     "selectedWork": "Selected work",
-    "workHeading": "Things I’ve helped build.",
+    "workHeading": "Selected projects",
     "allProjects": "All projects",
-    "experienceHeading": "Engineering. Ownership. Delivery.",
+    "experienceHeading": "Professional experience",
     "toolkit": "Toolkit",
-    "toolkitHeading": "Tools that serve the work.",
-    "contactHeading": "Have something in mind?",
+    "toolkitHeading": "Technical skills",
+    "contactHeading": "Get in touch",
     "contactButton": "Get in touch",
     "portfolio": "Portfolio",
     "projectsHeading": "Selected projects.",

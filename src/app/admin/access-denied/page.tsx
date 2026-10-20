@@ -10,7 +10,7 @@ export default function AccessDenied() {
       <h1 className="mb-6 text-3xl font-semibold">
         Administrator access required
       </h1>
-      <p className="mb-8 text-slate-400">
+      <p className="mb-8 text-muted-foreground">
         This account is signed in but has not been granted permission to manage
         this portfolio. Ask the site owner to provision the account, or sign in
         with a different account.
