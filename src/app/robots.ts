@@ -1,9 +1,9 @@
+import { siteUrl } from "@/lib/seo";
 import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
+  const base = siteUrl();
   return {
     rules: { userAgent: "*", allow: "/", disallow: ["/admin", "/api/"] },
-    sitemap: process.env.NEXT_PUBLIC_SITE_URL
-      ? `${process.env.NEXT_PUBLIC_SITE_URL}/sitemap.xml`
-      : undefined,
+    sitemap: base ? new URL("/sitemap.xml", base).href : undefined,
   };
 }

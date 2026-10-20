@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getPublished } from "@/features/content/repository";
 import { ProjectList } from "@/components/project-list";
@@ -8,7 +9,14 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const d = await getPublished(locale);
-  return { title: d?.ui.navProjects, description: d?.ui.projectsDescription };
+  if (!d) notFound();
+  return pageMetadata({
+    data: d,
+    locale,
+    path: "/projects",
+    title: `${d.ui.navProjects} | ${d.profile.name}`,
+    description: d.ui.projectsDescription,
+  });
 }
 export default async function Page({
   params,

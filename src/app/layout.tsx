@@ -1,12 +1,11 @@
+import { DEFAULT_TITLE, DEFAULT_DESCRIPTION, siteUrl } from "@/lib/seo";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: {
-    default: "Dang Chi Son | Software Engineer",
-    template: "%s | Dang Chi Son",
-  },
-  description: "Frontend architecture and AI agent tooling.",
+  metadataBase: siteUrl(),
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
 };
 export default function RootLayout({
   children,

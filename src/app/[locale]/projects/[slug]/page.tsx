@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,7 +12,14 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const d = await getPublished(locale);
   const p = d?.projects.find((p) => p.id === slug);
-  return { title: p?.title, description: p?.summary };
+  if (!d || !p) notFound();
+  return pageMetadata({
+    data: d,
+    locale,
+    path: `/projects/${p.id}`,
+    title: `${p.title} | ${d.profile.name}`,
+    description: p.summary,
+  });
 }
 export default async function Page({
   params,

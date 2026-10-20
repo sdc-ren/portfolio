@@ -342,8 +342,8 @@
     }
   ],
   "settings": {
-    "title": "Dang Chi Son | Software Engineer",
-    "description": "Frontend architecture, technical leadership and open-source AI agent tooling by Dang Chi Son.",
+    "title": "Dang Chi Son | Senior Software Engineer",
+    "description": "Senior Software Engineer in Da Nang, Vietnam, with 12 years of experience in frontend architecture, technical leadership, and practical AI agent tooling.",
     "footer": "Software engineering portfolio",
     "languageLabel": "English",
     "headerRoles": ["SOFTWARE ENGINEER", "AI AGENT ENGINEERING"]
@@ -367,7 +367,7 @@
     "contactButton": "Get in touch",
     "portfolio": "Portfolio",
     "projectsHeading": "Selected projects.",
-    "projectsDescription": "Product engineering, frontend leadership and open-source developer tools.",
+    "projectsDescription": "Selected frontend, full-stack, and open-source projects by Dang Chi Son, covering interactive PDF editing, personal finance, and AI agent tooling.",
     "searchProjects": "Search projects",
     "searchPlaceholder": "Name, role or description…",
     "technology": "Technology",

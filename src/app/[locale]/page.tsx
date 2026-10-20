@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { ProfileCard } from "@/components/profile-card";
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
@@ -13,7 +14,13 @@ export async function generateMetadata({
 }) {
   const { locale } = await params;
   const d = await getPublished(locale);
-  return { title: d?.settings.title, description: d?.settings.description };
+  if (!d) notFound();
+  return pageMetadata({
+    data: d,
+    locale,
+    title: d.settings.title,
+    description: d.settings.description,
+  });
 }
 export default async function Page({
   params,

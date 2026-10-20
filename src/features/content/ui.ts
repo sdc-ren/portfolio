@@ -20,7 +20,7 @@ export const englishUi = {
   portfolio: "Portfolio",
   projectsHeading: "Selected projects.",
   projectsDescription:
-    "Product engineering, frontend leadership and open-source developer tools.",
+    "Selected frontend, full-stack, and open-source projects by Dang Chi Son, covering interactive PDF editing, personal finance, and AI agent tooling.",
   searchProjects: "Search projects",
   searchPlaceholder: "Name, role or description…",
   technology: "Technology",

@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/seo";
 import { DownloadLink } from "@/components/download-link";
 import { Download } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -12,7 +13,15 @@ export async function generateMetadata({
 }) {
   const { locale, variant } = await params;
   const d = await getPublished(locale);
-  return { title: d?.cvs.find((c) => c.id === variant)?.title };
+  const cv = d?.cvs.find((c) => c.id === variant);
+  if (!d || !cv) notFound();
+  return pageMetadata({
+    data: d,
+    locale,
+    path: `/cv/${cv.id}`,
+    title: `${d.ui.navCv} | ${d.profile.name}`,
+    description: cv.summary,
+  });
 }
 export default async function Page({
   params,
