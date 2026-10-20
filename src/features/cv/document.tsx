@@ -1,17 +1,21 @@
+import type { ReactNode } from "react";
 import type { PortfolioContent } from "@/features/content/schema";
 import { selectByIds } from "@/features/content/schema";
 import styles from "./cv.module.scss";
 export function CvDocument({
   data,
   variant,
+  actions,
 }: {
   data: PortfolioContent;
   variant: string;
+  actions?: ReactNode;
 }) {
   const cv = data.cvs.find((c) => c.id === variant)!;
   return (
     <article className={styles.sheet}>
-      <header>
+      {actions && <div className={styles.actions}>{actions}</div>}
+      <header className={actions ? styles.headerWithActions : undefined}>
         <h1>{data.profile.name.toUpperCase()}</h1>
         <p className={styles.role}>{cv.title}</p>
         <p className={styles.muted}>{cv.specialties}</p>

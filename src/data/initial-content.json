@@ -346,7 +346,7 @@
     "description": "Frontend architecture, technical leadership and open-source AI agent tooling by Dang Chi Son.",
     "footer": "Software engineering portfolio",
     "languageLabel": "English",
-    "headerRole": "SOFTWARE ENGINEER."
+    "headerRoles": ["SOFTWARE ENGINEER", "AI AGENT ENGINEERING"]
   },
   "ui": {
     "navProjects": "Projects",

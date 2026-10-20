@@ -23,25 +23,33 @@ export default async function Layout({
       <header className="border-b border-border">
         <nav
           aria-label={data.ui.navLabel}
-          className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-5 px-6 py-6"
+          className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-5 px-4 py-6 sm:px-6"
         >
           <Link
             href={publicPath(locale)}
-            className="flex max-w-full items-center gap-3 font-bold tracking-tight text-foreground"
+            className="flex max-w-full items-center gap-2 sm:gap-3 font-bold tracking-tight text-foreground"
           >
             <img
               src="/icon.svg"
               alt=""
               width={40}
               height={40}
-              className="shrink-0 rounded-lg"
+              className="size-8 shrink-0 rounded-lg sm:size-10"
             />
             <span className="flex min-w-0 flex-col gap-1">
-              <span>
-                {data.profile.name}
-                <span className="text-primary">.</span>
+              <span className="flex items-center gap-2 whitespace-nowrap text-xs sm:text-base">
+                <span>{data.profile.name}</span>
+                <span
+                  aria-hidden="true"
+                  className="font-normal text-muted-foreground"
+                >
+                  |
+                </span>
+                <Typewriter texts={data.settings.headerRoles} />
               </span>
-              <Typewriter text={data.settings.headerRole} />
+              <span className="max-w-3xl text-[10px] font-normal leading-relaxed tracking-normal text-muted-foreground sm:text-[11px]">
+                {data.cvs[0].specialties}
+              </span>
             </span>
           </Link>
           <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">

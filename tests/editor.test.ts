@@ -45,17 +45,17 @@ test("Duplicate references cannot publish a CV", () => {
   assert.equal(contentSchema.safeParse(d).success, false);
 });
 
-test("Older portfolio settings receive a header role while custom text is preserved", () => {
-  const { headerRole, ...settings } = initial.settings;
-  assert.equal(
-    contentSchema.parse({ ...initial, settings }).settings.headerRole,
-    "SOFTWARE ENGINEER.",
+test("Older portfolio settings receive rotating roles while custom roles are preserved", () => {
+  const { headerRoles, ...settings } = initial.settings;
+  assert.deepEqual(
+    contentSchema.parse({ ...initial, settings }).settings.headerRoles,
+    ["SOFTWARE ENGINEER", "AI AGENT ENGINEERING"],
   );
-  assert.equal(
+  assert.deepEqual(
     contentSchema.parse({
       ...initial,
-      settings: { ...settings, headerRole: "Frontend Architect" },
-    }).settings.headerRole,
-    "Frontend Architect",
+      settings: { ...settings, headerRoles: ["Frontend Architect"] },
+    }).settings.headerRoles,
+    ["Frontend Architect"],
   );
 });

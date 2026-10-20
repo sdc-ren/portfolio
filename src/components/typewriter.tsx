@@ -3,17 +3,21 @@
 import { useEffect, useState } from "react";
 import styles from "./typewriter.module.scss";
 
-export function Typewriter({ text }: { text: string }) {
+export function Typewriter({ texts }: { texts: readonly string[] }) {
   const [visible, setVisible] = useState("");
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const characters = Array.from(text);
+    const phrases = texts.filter(Boolean);
+    let phrase = 0;
+    let characters = Array.from(phrases[phrase] ?? "");
     let timer: ReturnType<typeof setTimeout>;
 
     function restart() {
       clearTimeout(timer);
-      setVisible(preference.matches ? text : "");
+      phrase = 0;
+      characters = Array.from(phrases[phrase] ?? "");
+      setVisible(preference.matches ? (phrases[0] ?? "") : "");
       if (preference.matches) return;
       let index = 0;
       let deleting = false;
@@ -23,6 +27,8 @@ export function Typewriter({ text }: { text: string }) {
         let delay = deleting ? 45 : 85;
         if (index === 0) {
           deleting = false;
+          phrase = (phrase + 1) % phrases.length;
+          characters = Array.from(phrases[phrase]);
           delay = 450;
         } else if (index === characters.length) {
           deleting = true;
@@ -39,20 +45,26 @@ export function Typewriter({ text }: { text: string }) {
       clearTimeout(timer);
       preference.removeEventListener("change", restart);
     };
-  }, [text]);
+  }, [texts]);
 
+  const first = texts[0] ?? "";
+  const longest = texts.reduce(
+    (result, text) =>
+      Array.from(text).length > Array.from(result).length ? text : result,
+    "",
+  );
   return (
     <span className={styles.typewriter}>
-      <span className="sr-only">{text}</span>
+      <span className="sr-only">{texts.join(" / ")}</span>
       <span className={styles.measure} aria-hidden="true">
-        {text}
+        {longest}
       </span>
       <span className={styles.animated} aria-hidden="true">
         {visible}
         <span className={styles.cursor} />
       </span>
       <span className={styles.static} aria-hidden="true">
-        {text}
+        {first}
       </span>
     </span>
   );

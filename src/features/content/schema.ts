@@ -83,7 +83,11 @@ export const contentSchema = z
       .min(1)
       .max(10),
     settings: z.object({
-      headerRole: short.default("SOFTWARE ENGINEER."),
+      headerRoles: z
+        .array(short)
+        .min(1)
+        .max(10)
+        .default(["SOFTWARE ENGINEER", "AI AGENT ENGINEERING"]),
       title: short,
       description: text,
       footer: short,

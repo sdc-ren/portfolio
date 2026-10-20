@@ -1,4 +1,19 @@
+.page {
+  padding: 2rem 1rem;
+  .sheet {
+    margin: 0 auto;
+  }
+}
+.actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.headerWithActions {
+  padding-right: 2.5rem;
+}
 .sheet {
+  position: relative;
   background: #fff;
   color: #162235;
   max-width: 900px;
@@ -69,8 +84,14 @@
   }
 }
 @media print {
-  .toolbar {
+  .page {
+    padding: 0;
+  }
+  .actions {
     display: none !important;
+  }
+  .headerWithActions {
+    padding-right: 0;
   }
   .sheet {
     margin: 0;
