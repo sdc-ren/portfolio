@@ -103,3 +103,69 @@
     }
   }
 }
+.functionCode {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+.functionName {
+  color: #0369a1;
+}
+.string {
+  color: var(--primary);
+}
+.indent {
+  padding-left: 16px;
+  white-space: pre-wrap;
+}
+.call {
+  margin-top: 10px;
+}
+.console {
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--primary) 3%, var(--card));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.consoleTitle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: var(--muted-foreground);
+  font-size: 10px;
+  span {
+    opacity: 0.65;
+  }
+}
+.output {
+  min-height: 88px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--foreground);
+  p {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  p > span:last-child {
+    overflow-wrap: anywhere;
+  }
+}
+.prompt {
+  color: var(--primary);
+}
+.caret {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    animation: none;
+  }
+}
