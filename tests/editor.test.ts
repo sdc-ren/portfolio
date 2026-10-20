@@ -44,3 +44,18 @@ test("Duplicate references cannot publish a CV", () => {
   d.cvs[0].projectIds.push(d.cvs[0].projectIds[0]);
   assert.equal(contentSchema.safeParse(d).success, false);
 });
+
+test("Older portfolio settings receive a header role while custom text is preserved", () => {
+  const { headerRole, ...settings } = initial.settings;
+  assert.equal(
+    contentSchema.parse({ ...initial, settings }).settings.headerRole,
+    "SOFTWARE ENGINEER.",
+  );
+  assert.equal(
+    contentSchema.parse({
+      ...initial,
+      settings: { ...settings, headerRole: "Frontend Architect" },
+    }).settings.headerRole,
+    "Frontend Architect",
+  );
+});

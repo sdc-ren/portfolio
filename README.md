@@ -2,7 +2,7 @@
 
 **Software Engineer · Frontend Architecture · AI Agent Tooling**
 
-This repository contains my personal portfolio website: a place to share my professional background, selected projects, open-source work, and CVs.
+This repository contains my personal portfolio website: a place to share my professional background, selected projects, open-source work, and CV.
 
 ## About me
 
@@ -18,15 +18,15 @@ I also build full-stack applications and open-source developer tools. My current
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | [gdrive-cli](https://github.com/sdc-ren/gdrive-cli)                                   | MCP, CLI, and library integrations that give coding agents permission-aware access to selected Google Workspace documents. |
 | [cc-notify-telegram](https://github.com/sdc-ren/cc-notify-telegram)                   | Telegram workflows for AI task notifications, interactive questions, and remote permission decisions.                      |
-| [Personal Finance Management](https://github.com/sdc-ren/personal-finance-management) | A full-stack application for personal and family transactions, budgets, shared expenses, and spending reports.             |
+| [Personal Finance Management](https://github.com/sdc-ren/personal-finance-management) | A personal-use application for quickly recording expenses, tracking category budgets, and reviewing monthly spending.      |
 
-My professional project experience also includes **Jinjer**, a document management and interactive PDF editing product, and **Twinci**, an NFT creation and publishing platform. Further details are included in my portfolio and CVs.
+My professional project experience also includes **Jinjer**, a document management and interactive PDF editing product, and **Twinci**, an NFT creation and publishing platform. Further details are included in my portfolio and CV.
 
 ## What you'll find on the website
 
 - My professional summary, technical skills, and work experience.
 - Selected projects with descriptions, roles, contributions, and source links where available.
-- Two CV versions: **Senior Software Engineer** and **AI Agent Engineering**, with PDF downloads.
+- One **Senior Software Engineer** CV, covering frontend leadership and AI agent tooling, with a PDF download.
 - Content maintained through a private admin area so I can keep my profile and project details up to date.
 
 ## Connect

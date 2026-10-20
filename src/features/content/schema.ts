@@ -83,6 +83,7 @@ export const contentSchema = z
       .min(1)
       .max(10),
     settings: z.object({
+      headerRole: short.default("SOFTWARE ENGINEER."),
       title: short,
       description: text,
       footer: short,

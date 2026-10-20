@@ -28,18 +28,22 @@ export default async function Page({
       <div
         className={`${styles.toolbar} mx-auto flex max-w-[900px] flex-wrap items-center justify-between gap-4`}
       >
-        <nav aria-label={d.ui.cvVersions} className="flex flex-wrap gap-3">
-          {d.cvs.map((c) => (
-            <Link
-              key={c.id}
-              href={publicPath(locale, `/cv/${c.id}`)}
-              aria-current={c.id === variant ? "page" : undefined}
-              className={`text-xs ${c.id === variant ? "text-primary" : "text-muted-foreground"}`}
-            >
-              {c.title}
-            </Link>
-          ))}
-        </nav>
+        {d.cvs.length > 1 ? (
+          <nav aria-label={d.ui.cvVersions} className="flex flex-wrap gap-3">
+            {d.cvs.map((c) => (
+              <Link
+                key={c.id}
+                href={publicPath(locale, `/cv/${c.id}`)}
+                aria-current={c.id === variant ? "page" : undefined}
+                className={`text-xs ${c.id === variant ? "text-primary" : "text-muted-foreground"}`}
+              >
+                {c.title}
+              </Link>
+            ))}
+          </nav>
+        ) : (
+          <span className="text-sm font-medium">{d.ui.navCv}</span>
+        )}
         <Button asChild>
           <DownloadLink href={`/api/cv/${locale}/${variant}`}>
             {d.ui.downloadPdf} ↓

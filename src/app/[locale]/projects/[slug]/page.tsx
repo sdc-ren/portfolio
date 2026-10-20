@@ -1,9 +1,8 @@
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
-import Markdown from "react-markdown";
 import { notFound } from "next/navigation";
 import { getPublished } from "@/features/content/repository";
-import { Button } from "@/components/ui/button";
+import { ProjectDetails } from "@/components/project-details";
 export async function generateMetadata({
   params,
 }: {
@@ -37,37 +36,7 @@ export default async function Page({
       <h1 className="text-2xl font-semibold leading-snug text-foreground sm:text-3xl">
         {p.title}
       </h1>
-      <p className="mt-6 text-muted-foreground">{p.role}</p>
-      <div className="my-8 flex flex-wrap gap-2">
-        {p.tech.map((t) => (
-          <span key={t} className="rounded bg-muted px-3 py-1 text-xs">
-            {t}
-          </span>
-        ))}
-      </div>
-      <div className="mb-12 flex gap-3">
-        {p.repository && (
-          <Button asChild>
-            <a href={p.repository}>{d.ui.sourceCode} ↗</a>
-          </Button>
-        )}
-        {p.demo && (
-          <Button asChild variant="outline">
-            <a href={p.demo}>{d.ui.liveProject} ↗</a>
-          </Button>
-        )}
-      </div>
-      <div className="prose border-t border-border pt-10 text-muted-foreground">
-        <Markdown>{p.description}</Markdown>
-      </div>
-      <h2 className="mb-5 mt-10 text-2xl font-semibold">
-        {d.ui.contributions}
-      </h2>
-      <ul className="list-disc space-y-3 pl-5 text-muted-foreground">
-        {p.highlights.map((h) => (
-          <li key={h}>{h}</li>
-        ))}
-      </ul>
+      <ProjectDetails project={p} labels={d.ui} />
     </main>
   );
 }

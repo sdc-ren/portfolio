@@ -5,7 +5,7 @@
     "location": "Da Nang, Vietnam",
     "email": "dangchison@gmail.com",
     "phone": "+84 966 019 009",
-    "summary": "I'm Dang Chi Son, a software engineer based in Da Nang. I work on frontend architecture, complex web applications, and technical leadership with TypeScript, Vue, React, and Angular. I also build full-stack applications and open-source tools that connect coding agents with Google Workspace and Telegram.",
+    "summary": "I'm Dang Chi Son, a software engineer based in Da Nang with approximately 12 years of experience. I build web applications with TypeScript, Vue, React, and Angular, and have around six years of frontend technical leadership experience. I also develop open-source AI agent tools that connect coding assistants with Google Workspace and Telegram.",
     "tagline": "Frontend engineering and developer tools",
     "github": "https://github.com/sdc-ren",
     "linkedin": "https://www.linkedin.com/in/sondangc/"
@@ -42,7 +42,7 @@
       "id": "frontend",
       "name": "Frontend",
       "items": [
-        "Vue.js / Vue 3",
+        "Vue.js",
         "Nuxt.js",
         "React",
         "Next.js",
@@ -57,17 +57,66 @@
       "id": "architecture",
       "name": "Architecture",
       "items": [
-        "Component-based and feature-based design",
+        "Component and feature-based design",
         "monorepos",
         "shared packages",
-        "SSR / SSG",
-        "API integration"
+        "SSR",
+        "SSG"
       ]
     },
     {
       "id": "state-data",
-      "name": "State & Data",
-      "items": ["Vuex", "Pinia", "Redux / Redux Toolkit", "RxJS / NgRx"]
+      "name": "State Management",
+      "items": ["Pinia", "Vuex", "Redux Toolkit", "RxJS", "NgRx"]
+    },
+    {
+      "id": "quality",
+      "name": "Quality & Performance",
+      "items": [
+        "Jest",
+        "Vitest",
+        "Playwright",
+        "Cypress",
+        "code review",
+        "list virtualization",
+        "PDF/Canvas optimization"
+      ]
+    },
+    {
+      "id": "backend-integration",
+      "name": "Backend & APIs",
+      "items": [
+        "Node.js",
+        "REST APIs",
+        "Google Workspace APIs",
+        "Telegram Bot API",
+        "PostgreSQL",
+        "MySQL"
+      ]
+    },
+    {
+      "id": "ai-agent-tooling",
+      "name": "AI Agent Tooling",
+      "items": [
+        "MCP servers",
+        "agent hooks",
+        "workflow automation",
+        "Claude Code",
+        "Codex",
+        "Google Antigravity"
+      ]
+    },
+    {
+      "id": "devops-delivery",
+      "name": "Delivery",
+      "items": [
+        "Docker",
+        "GitHub Actions",
+        "GitLab CI",
+        "Vercel",
+        "Nginx",
+        "Linux"
+      ]
     },
     {
       "id": "performance",
@@ -78,61 +127,6 @@
         "memory leak investigation",
         "Core Web Vitals",
         "PDF / Canvas optimization"
-      ]
-    },
-    {
-      "id": "quality",
-      "name": "Quality",
-      "items": [
-        "Jest",
-        "Vitest",
-        "component testing",
-        "Playwright / Cypress",
-        "automation testing",
-        "ESLint",
-        "code review",
-        "technical documentation"
-      ]
-    },
-    {
-      "id": "devops-delivery",
-      "name": "DevOps & Delivery",
-      "items": [
-        "Dockerfile",
-        "Docker Compose",
-        "GitHub Actions",
-        "GitLab CI",
-        "Vercel",
-        "Netlify",
-        "Nginx",
-        "Linux",
-        "environment configuration"
-      ]
-    },
-    {
-      "id": "backend-integration",
-      "name": "Backend & Integration",
-      "items": [
-        "Node.js backend APIs / services",
-        "Java",
-        "REST APIs",
-        "PostgreSQL",
-        "MySQL",
-        "smart contract development"
-      ]
-    },
-    {
-      "id": "ai-agent-tooling",
-      "name": "AI Agent Tooling",
-      "items": [
-        "MCP servers",
-        "agent hooks",
-        "workflow automation",
-        "permission-aware integrations",
-        "Claude Code",
-        "Codex",
-        "Gemini / Antigravity",
-        "Kiro"
       ]
     },
     {
@@ -149,12 +143,10 @@
       "period": "2020 – Sep 2026",
       "location": "Da Nang, Vietnam · NeoLab acquired by DGWAsian in 2023",
       "highlights": [
-        "Led frontend engineering activities for project teams of 6–10, balancing hands-on development, technical guidance, task coordination, and delivery requirements.",
-        "Researched and proposed frontend architectures, frameworks, and libraries for review and approval by project stakeholders.",
-        "Established coding conventions and pull-request review practices; coached junior and mid-level developers toward greater independence.",
-        "Created reusable UI components and shared packages, and introduced testing and automation practices to support maintainability and release quality.",
-        "Investigated frontend performance and application issues, including PDF/Canvas rendering bottlenecks and memory-related problems.",
-        "Contributed directly to complex product features, including an interactive PDF editing platform."
+        "Led frontend teams of 6–10 engineers, combining hands-on development with technical guidance, task coordination, and delivery planning.",
+        "Evaluated frontend architectures, frameworks, and libraries, and presented technical proposals to project stakeholders.",
+        "Established coding conventions and pull request review practices; mentored junior and mid-level developers.",
+        "Built reusable UI components and shared packages, and introduced automated testing into development workflows."
       ]
     },
     {
@@ -164,8 +156,7 @@
       "period": "2016 – 2020",
       "location": "Da Nang, Vietnam",
       "highlights": [
-        "Developed and maintained web application features using JavaScript frontend frameworks, collaborating with backend developers and project stakeholders.",
-        "Participated in technical research, requirements discussions, application integration, and production issue resolution."
+        "Developed and maintained frontend features, integrated backend APIs, and resolved production issues in collaboration with backend developers and project stakeholders."
       ]
     },
     {
@@ -175,7 +166,7 @@
       "period": "2015 – 2016",
       "location": "Da Nang, Vietnam",
       "highlights": [
-        "Implemented application features, evaluated technical options, deployed releases to staging and production, and coordinated requirements with customers."
+        "Implemented application features, clarified customer requirements, and deployed releases to staging and production."
       ]
     },
     {
@@ -185,18 +176,18 @@
       "period": "2014 – 2015",
       "location": "Da Nang, Vietnam",
       "highlights": [
-        "Delivered web applications across database design, backend implementation, frontend development, deployment, and customer requirements clarification."
+        "Built web applications across database design, backend and frontend development, deployment, and customer requirements analysis."
       ]
     }
   ],
   "projects": [
     {
       "id": "jinjer",
-      "title": "Jinjer — Document Management & Interactive PDF Editing",
+      "title": "Jinjer — Interactive PDF Editing",
       "role": "Frontend Team Lead",
       "category": "Product engineering",
-      "summary": "Led development of PDF rendering, annotations, highlighting, and drawing features for a client-facing document management product.",
-      "description": "Led development of PDF rendering, annotations, highlighting, and drawing features for a client-facing document management product.\n\nCombined PDF.js and Konva.js to implement a customized document interaction layer; adapted library behavior to satisfy product requirements.\n\nProposed libraries and frontend module architecture, set coding standards, and addressed PDF/Canvas performance bottlenecks.\n\nBuilt a custom PDF-processing core to support product requirements while helping control project operating costs.",
+      "summary": "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.",
+      "description": "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.\n\nWorked with PDF documents typically containing 10–20 pages, with file sizes of 15–20 MB.\n\nIntegrated PDF.js with Konva.js to build a custom document interaction layer; developed a PDF-processing core and investigated rendering bottlenecks.",
       "tech": [
         "Vue 3",
         "TypeScript",
@@ -206,10 +197,9 @@
         "PDF libraries"
       ],
       "highlights": [
-        "Led development of PDF rendering, annotations, highlighting, and drawing features for a client-facing document management product.",
-        "Combined PDF.js and Konva.js to implement a customized document interaction layer; adapted library behavior to satisfy product requirements.",
-        "Proposed libraries and frontend module architecture, set coding standards, and addressed PDF/Canvas performance bottlenecks.",
-        "Built a custom PDF-processing core to support product requirements while helping control project operating costs."
+        "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.",
+        "Worked with PDF documents typically containing 10–20 pages, with file sizes of 15–20 MB.",
+        "Integrated PDF.js with Konva.js to build a custom document interaction layer; developed a PDF-processing core and investigated rendering bottlenecks."
       ],
       "repository": "",
       "demo": "",
@@ -233,11 +223,11 @@
     },
     {
       "id": "personal-finance-management",
-      "title": "Personal Finance Management — Personal & Family Finance Platform",
-      "role": "Independent Project · In Use 6+ Months",
+      "title": "Personal Finance Management",
+      "role": "Independent Project",
       "category": "Product engineering",
-      "summary": "Designed and built a full-stack, mobile-first finance application for recording transactions, managing category budgets, and analyzing spending trends across personal and family contexts.",
-      "description": "Designed and built a full-stack, mobile-first finance application for recording transactions, managing category budgets, and analyzing spending trends across personal and family contexts.\n\nImplemented authenticated application flows, household membership and shared expense tracking, financial reports, and database-backed business logic.\n\nOptimized large transaction lists using react-window virtualization and organized the codebase around Next.js App Router, Server Actions, and reusable UI components.\n\nMaintained and used the application for over six months, incorporating practical needs into ongoing product development.",
+      "summary": "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.",
+      "description": "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.\n\nImplemented authentication, transaction tracking, category budgets, and spending reports with Next.js, Prisma, and PostgreSQL.",
       "tech": [
         "Next.js 16",
         "React 19",
@@ -249,10 +239,8 @@
         "Vitest"
       ],
       "highlights": [
-        "Designed and built a full-stack, mobile-first finance application for recording transactions, managing category budgets, and analyzing spending trends across personal and family contexts.",
-        "Implemented authenticated application flows, household membership and shared expense tracking, financial reports, and database-backed business logic.",
-        "Optimized large transaction lists using react-window virtualization and organized the codebase around Next.js App Router, Server Actions, and reusable UI components.",
-        "Maintained and used the application for over six months, incorporating practical needs into ongoing product development."
+        "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.",
+        "Implemented authentication, transaction tracking, category budgets, and spending reports with Next.js, Prisma, and PostgreSQL."
       ],
       "repository": "https://github.com/sdc-ren/personal-finance-management",
       "demo": "",
@@ -260,20 +248,20 @@
     },
     {
       "id": "gdrive-cli",
-      "title": "gdrive-cli — Open-Source MCP & Google Workspace Tooling",
+      "title": "gdrive-cli — Google Workspace Agent Tooling",
       "role": "Creator / Maintainer",
       "category": "Open source",
-      "summary": "Designed and developed an MCP server, CLI, and Node.js library that allow AI coding agents to access selected Google Workspace documents using service-account permissions.",
-      "description": "Designed and developed an MCP server, CLI, and Node.js library that allow AI coding agents to access selected Google Workspace documents using service-account permissions.\n\nImplemented permission-aware read/write workflows, Google API integrations, paginated and filtered document access, retry handling, and automated verification.\n\nOptimized MCP tool schemas and output formats to reduce unnecessary context overhead during agent workflows.",
+      "summary": "Built an MCP server, CLI, and Node.js library for Google Workspace access; used the tool in personal workflows and a remote project.",
+      "description": "Built an MCP server, CLI, and Node.js library for Google Workspace access; used the tool in personal workflows and a remote project.\n\nAutomated document retrieval and data entry within designated Google Drive folders, using service-account permissions to scope access.\n\nImplemented filtered and paginated document access, retry handling, and automated verification; refined tool schemas and response formats to limit unnecessary agent context.",
       "tech": [
         "Node.js",
         "Model Context Protocol (MCP)",
         "Google Drive / Docs / Sheets / Slides APIs"
       ],
       "highlights": [
-        "Designed and developed an MCP server, CLI, and Node.js library that allow AI coding agents to access selected Google Workspace documents using service-account permissions.",
-        "Implemented permission-aware read/write workflows, Google API integrations, paginated and filtered document access, retry handling, and automated verification.",
-        "Optimized MCP tool schemas and output formats to reduce unnecessary context overhead during agent workflows."
+        "Built an MCP server, CLI, and Node.js library for Google Workspace access; used the tool in personal workflows and a remote project.",
+        "Automated document retrieval and data entry within designated Google Drive folders, using service-account permissions to scope access.",
+        "Implemented filtered and paginated document access, retry handling, and automated verification; refined tool schemas and response formats to limit unnecessary agent context."
       ],
       "repository": "https://github.com/sdc-ren/gdrive-cli",
       "demo": "",
@@ -284,8 +272,8 @@
       "title": "cc-notify-telegram — Remote AI Agent Notifications",
       "role": "Creator / Maintainer",
       "category": "Open source",
-      "summary": "Built a developer tool that connects AI coding assistants with Telegram for task completion alerts, interactive questions, and remote permission decisions.",
-      "description": "Built a developer tool that connects AI coding assistants with Telegram for task completion alerts, interactive questions, and remote permission decisions.\n\nDesigned agent-hook integrations, session-aware request routing, authorization controls, timeouts, and safe fallback to local prompts.\n\nUsed a documentation-first workflow: defined architecture and specifications, delegated implementation tasks to coding agents, then reviewed changes and verified behavior through testing and E2E checks.",
+      "summary": "Built Telegram integrations for AI coding assistants and regularly used the tool with Claude Code for completion alerts, questions, and remote permission decisions.",
+      "description": "Built Telegram integrations for AI coding assistants and regularly used the tool with Claude Code for completion alerts, questions, and remote permission decisions.\n\nMapped each session request to a Telegram message so replies are routed back to the originating session.\n\nImplemented authorization checks, timeouts, and fallback to local prompts; reviewed AI-assisted changes and verified behavior through automated and end-to-end tests.",
       "tech": [
         "Node.js",
         "Telegram Bot API",
@@ -294,9 +282,9 @@
         "Google Antigravity"
       ],
       "highlights": [
-        "Built a developer tool that connects AI coding assistants with Telegram for task completion alerts, interactive questions, and remote permission decisions.",
-        "Designed agent-hook integrations, session-aware request routing, authorization controls, timeouts, and safe fallback to local prompts.",
-        "Used a documentation-first workflow: defined architecture and specifications, delegated implementation tasks to coding agents, then reviewed changes and verified behavior through testing and E2E checks."
+        "Built Telegram integrations for AI coding assistants and regularly used the tool with Claude Code for completion alerts, questions, and remote permission decisions.",
+        "Mapped each session request to a Telegram message so replies are routed back to the originating session.",
+        "Implemented authorization checks, timeouts, and fallback to local prompts; reviewed AI-assisted changes and verified behavior through automated and end-to-end tests."
       ],
       "repository": "https://github.com/sdc-ren/cc-notify-telegram",
       "demo": "",
@@ -321,18 +309,17 @@
     {
       "id": "english",
       "name": "English",
-      "proficiency": "Basic communication; able to read technical documentation."
+      "proficiency": "Basic conversational proficiency; able to read technical documentation."
     }
   ],
   "cvs": [
     {
       "id": "senior-software-engineer",
       "title": "SENIOR SOFTWARE ENGINEER",
-      "summary": "Senior Software Engineer with approximately 12 years of experience, specializing in frontend engineering with Vue.js, React, Angular, and TypeScript. Spent nearly 10 years at NeoLab and DGWAsian following its acquisition in 2023, including around six years leading frontend teams of 6–10 engineers. Experienced in frontend architecture, performance optimization, engineering standards, and delivery of complex web applications. Also builds Node.js backend services, a full-stack personal finance product, and open-source tools integrating AI coding agents through MCP, event hooks, and secure remote workflows. Focused on expanding practical expertise in AI agent engineering.",
+      "summary": "Senior Software Engineer with approximately 12 years of experience in web development, including around six years of frontend technical leadership. Leads teams of 6–10 engineers and builds applications with Vue.js, React, Angular, and TypeScript. Experienced in frontend architecture, interactive PDF editing, performance optimization, and engineering standards, with additional work in full-stack applications and AI agent tooling.",
       "specialties": "Frontend Architecture · Vue.js / React / Angular · TypeScript · Technical Leadership · AI Agent Tooling",
       "projectIds": [
         "jinjer",
-        "twinci",
         "personal-finance-management",
         "gdrive-cli",
         "cc-notify-telegram"
@@ -341,42 +328,10 @@
         "frontend",
         "architecture",
         "state-data",
-        "performance",
         "quality",
-        "devops-delivery",
         "backend-integration",
         "ai-agent-tooling",
-        "additional-mobile"
-      ],
-      "experienceIds": [
-        "experience-1",
-        "experience-2",
-        "experience-3",
-        "experience-4"
-      ]
-    },
-    {
-      "id": "ai-agent-engineering",
-      "title": "SOFTWARE ENGINEER | AI AGENT ENGINEERING",
-      "summary": "Software Engineer with approximately 12 years of professional experience, including nearly 10 years at NeoLab / DGWAsian and around six years in frontend technical leadership. Develops open-source AI agent tooling using Node.js, TypeScript, the Model Context Protocol (MCP), agent hooks, and external API integrations. Built permission-aware Google Workspace access for coding agents and session-aware Telegram workflows for notifications, questions, and remote approvals. Applies a documentation-first development process with AI-assisted implementation, code review, testing, and E2E verification. Brings a strong foundation in frontend architecture, full-stack development, and delivery; currently focused on AI agent engineering rather than model training.",
-      "specialties": "AI Agent Tooling · MCP Servers · Node.js / TypeScript · Agent Integrations · Frontend Architecture",
-      "projectIds": [
-        "gdrive-cli",
-        "cc-notify-telegram",
-        "personal-finance-management",
-        "jinjer",
-        "twinci"
-      ],
-      "skillIds": [
-        "ai-agent-tooling",
-        "backend-integration",
-        "architecture",
-        "quality",
-        "devops-delivery",
-        "frontend",
-        "state-data",
-        "performance",
-        "additional-mobile"
+        "devops-delivery"
       ],
       "experienceIds": [
         "experience-1",
@@ -390,7 +345,8 @@
     "title": "Dang Chi Son | Software Engineer",
     "description": "Frontend architecture, technical leadership and open-source AI agent tooling by Dang Chi Son.",
     "footer": "Software engineering portfolio",
-    "languageLabel": "English"
+    "languageLabel": "English",
+    "headerRole": "SOFTWARE ENGINEER."
   },
   "ui": {
     "navProjects": "Projects",
@@ -429,6 +385,7 @@
     "cvExperience": "Professional Experience",
     "cvProjects": "Selected Projects",
     "cvEducation": "Education & Languages",
-    "emailLabel": "Email"
+    "emailLabel": "Email",
+    "closeDialog": "Close"
   }
 }

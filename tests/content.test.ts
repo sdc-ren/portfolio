@@ -6,9 +6,10 @@ import {
   selectByIds,
   localeSchema,
 } from "../src/features/content/schema";
-test("Both imported CVs resolve all project, experience and skill references", () => {
+test("Unified CV resolves all project, experience and skill references", () => {
   const d = contentSchema.parse(initial);
-  assert.equal(d.cvs.length, 2);
+  assert.equal(d.cvs.length, 1);
+  assert.equal(d.cvs[0].id, "senior-software-engineer");
   for (const cv of d.cvs) {
     assert.equal(
       selectByIds(d.projects, cv.projectIds).length,

@@ -12,7 +12,7 @@ pnpm db:seed
 pnpm dev
 ```
 
-The seed imports the two supplied English CVs into shared project/experience/skill content and two independently ordered CV variants. It never overwrites an existing English document. No factual claims are generated beyond the supplied CVs. Review the English proficiency and experience statements before publishing.
+The seed initializes one unified English CV combining frontend engineering, technical leadership and AI agent tooling, with shared project, experience and skill catalogs. It never overwrites an existing English document. No factual claims are generated beyond the supplied CVs. Review the English proficiency and experience statements before publishing.
 
 Public routes always read published content from PostgreSQL, never drafts or a bundled-data fallback. The imported CV content is used only by the seed command and tests.
 
@@ -47,7 +47,7 @@ Every admin page and mutation calls verified `auth.getUser()` and checks the UUI
 2. Configure production env variables from `.env.example`. Set `NEXT_PUBLIC_SITE_URL` to the actual HTTPS domain. Avoid sharing the production DB with preview deployments; use a separate Supabase project/branch for previews.
 3. Apply `pnpm db:deploy` and `pnpm db:seed` from a trusted local terminal with the target environment configured **before the first deployment**. Database migrations intentionally do not run during Vercel builds, which can run concurrently.
 4. Provision the Auth admin UUID as above.
-5. Deploy. Verify `/`, project details, both CV pages, PDF download, admin sign-in, draft isolation and publishing.
+5. Deploy. Verify `/`, project details, the unified CV page, PDF download, admin sign-in, draft isolation and publishing.
 6. Set Supabase Auth Site URL to your production domain. Password sign-in here does not need an OAuth callback. If you later add magic links/OAuth, implement a code exchange route and allow only explicit redirect URLs. The initial version has no reset-password UI; recovery can be handled through the Supabase dashboard.
 
 Build does not need a live DB: public pages are dynamically rendered. Runtime requests need working DB/Auth configuration. Updating env variables requires redeployment. Vercel deployment itself is not performed by this repository.
@@ -112,3 +112,9 @@ pnpm install --frozen-lockfile
 ```
 
 On Vercel, clear any old Install Command override containing `npm ci`. Use automatic package-manager detection from `pnpm-lock.yaml`; set Build Command to `pnpm build` (or leave automatic). To use the exact pinned pnpm patch, enable Corepack in Vercel with `ENABLE_EXPERIMENTAL_COREPACK=1`. Then redeploy.
+
+## Import the unified v4 CV
+
+After pulling this update, run `pnpm db:deploy` against the configured Supabase database. The data migration imports the approved English v4 content into both draft and published documents, consolidates CVs to `senior-software-engineer`, and increments the revision to invalidate concurrent stale admin saves. It replaces the known project, skill and experience entries while retaining additional catalog records, contact details, UI labels, settings and translated locales. Existing custom edits to the imported records are replaced intentionally. Take a database backup before applying content imports if those records have been edited. The normal seed remains non-destructive and does not update existing rows.
+
+The previous English AI CV URL and PDF endpoint redirect to the retained Senior Software Engineer CV URL. Other translated locales retain their existing content and must be updated separately in admin.

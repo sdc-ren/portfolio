@@ -1,3 +1,4 @@
+import { Typewriter } from "@/components/typewriter";
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -26,10 +27,22 @@ export default async function Layout({
         >
           <Link
             href={publicPath(locale)}
-            className="font-bold tracking-tight text-foreground"
+            className="flex max-w-full items-center gap-3 font-bold tracking-tight text-foreground"
           >
-            {data.profile.name}
-            <span className="text-primary">.</span>
+            <img
+              src="/icon.svg"
+              alt=""
+              width={40}
+              height={40}
+              className="shrink-0 rounded-lg"
+            />
+            <span className="flex min-w-0 flex-col gap-1">
+              <span>
+                {data.profile.name}
+                <span className="text-primary">.</span>
+              </span>
+              <Typewriter text={data.settings.headerRole} />
+            </span>
           </Link>
           <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
             <Link href={publicPath(locale, "/projects")}>

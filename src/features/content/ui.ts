@@ -1,5 +1,6 @@
 import { z } from "zod";
 export const englishUi = {
+  closeDialog: "Close",
   navProjects: "Projects",
   navExperience: "Experience",
   navCv: "CV",
@@ -41,6 +42,7 @@ export const englishUi = {
 } as const;
 export type UiLabels = { [K in keyof typeof englishUi]: string };
 export const vietnameseUi: UiLabels = {
+  closeDialog: "Đóng",
   navProjects: "Dự án",
   navExperience: "Kinh nghiệm",
   navCv: "CV",
@@ -83,6 +85,12 @@ export const vietnameseUi: UiLabels = {
 // Defaults preserve existing documents; each locale can override every public label.
 export const uiSchema = z
   .object({
+    closeDialog: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.closeDialog),
     navProjects: z
       .string()
       .trim()

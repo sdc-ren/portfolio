@@ -1,6 +1,7 @@
+import { ProfileCard } from "@/components/profile-card";
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getPublished } from "@/features/content/repository";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,7 @@ export default async function Page({
   if (!d) notFound();
   return (
     <main id="main" className="mx-auto max-w-[1440px] px-6">
-      <section className="grid items-center gap-8 py-12 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
+      <section className="grid items-start gap-8 py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-14">
         <div>
           <p className="mb-4 text-xs font-semibold uppercase tracking-[.12em] text-primary">
             {d.profile.role} · {d.profile.location}
@@ -58,36 +59,7 @@ export default async function Page({
             </Button>
           </div>
         </div>
-        <aside className="rounded-2xl border border-border bg-card p-6">
-          <img
-            src="/icon.svg"
-            alt="SDC"
-            width={64}
-            height={64}
-            className="mb-5 size-16"
-          />
-          <p className="mb-5 text-sm text-muted-foreground">
-            <span className="block font-medium text-foreground">
-              {d.profile.name}
-            </span>
-            <span className="block mt-1">{d.profile.role}</span>
-          </p>
-          <div className="flex gap-4 text-muted-foreground">
-            {d.profile.github && (
-              <a href={d.profile.github} aria-label="GitHub">
-                <Github size={20} />
-              </a>
-            )}
-            {d.profile.linkedin && (
-              <a href={d.profile.linkedin} aria-label="LinkedIn">
-                <Linkedin size={20} />
-              </a>
-            )}
-            <a href={`mailto:${d.profile.email}`} aria-label={d.ui.emailLabel}>
-              <Mail size={20} />
-            </a>
-          </div>
-        </aside>
+        <ProfileCard profile={d.profile} emailLabel={d.ui.emailLabel} />
       </section>
       <section className="border-t border-border py-12">
         <div className="mb-8 flex items-end justify-between gap-4">
@@ -110,7 +82,7 @@ export default async function Page({
           {d.projects
             .filter((p) => p.featured)
             .map((p, i) => (
-              <ProjectCard key={p.id} project={p} locale={locale} index={i} />
+              <ProjectCard key={p.id} project={p} labels={d.ui} index={i} />
             ))}
         </div>
       </section>

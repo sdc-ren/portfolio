@@ -29,7 +29,7 @@ export default async function Page({
       <p className="mb-10 max-w-3xl text-muted-foreground">
         {d.ui.projectsDescription}
       </p>
-      <ProjectList projects={d.projects} locale={locale} labels={d.ui} />
+      <ProjectList projects={d.projects} labels={d.ui} />
     </main>
   );
 }

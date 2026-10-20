@@ -1,0 +1,61 @@
+.typewriter {
+  display: inline-grid;
+  align-items: center;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+
+  > span:not(:global(.sr-only)) {
+    grid-area: 1 / 1;
+  }
+}
+
+.measure {
+  visibility: hidden;
+  padding-right: 0.6em;
+}
+
+.cursor {
+  display: inline-block;
+  height: 1em;
+  margin-left: 0.15em;
+  border-right: 2px solid var(--primary);
+  vertical-align: -0.1em;
+  animation: blink 1s step-end infinite;
+}
+
+.static {
+  display: none;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  .typewriter {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .measure,
+  .animated {
+    display: none;
+  }
+  .static {
+    display: inline;
+  }
+  .cursor {
+    animation: none;
+  }
+}

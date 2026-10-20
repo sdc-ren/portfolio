@@ -14,11 +14,9 @@ import {
 } from "./ui/select";
 export function ProjectList({
   projects,
-  locale,
   labels,
 }: {
   projects: PortfolioContent["projects"];
-  locale: string;
   labels: UiLabels;
 }) {
   const fieldId = useId();
@@ -72,7 +70,7 @@ export function ProjectList({
       </p>
       <div className="grid gap-5 md:grid-cols-2">
         {shown.map((p, i) => (
-          <ProjectCard key={p.id} project={p} locale={locale} index={i} />
+          <ProjectCard key={p.id} project={p} labels={labels} index={i} />
         ))}
       </div>
       {!shown.length && (
