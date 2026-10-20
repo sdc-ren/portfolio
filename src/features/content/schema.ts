@@ -60,6 +60,7 @@ export const contentSchema = z
         z.object({
           id: slug,
           institution: short,
+          location: z.string().trim().max(200).default(""),
           qualification: short,
           year: short,
         }),

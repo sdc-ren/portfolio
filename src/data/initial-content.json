@@ -296,13 +296,15 @@
       "id": "duy-tan",
       "institution": "Duy Tan University",
       "qualification": "Engineering degree",
-      "year": "2013"
+      "year": "2013",
+      "location": "Da Nang"
     },
     {
       "id": "it-college",
       "institution": "College of Information Technology",
       "qualification": "Engineering qualification",
-      "year": "2010"
+      "year": "2010",
+      "location": "Da Nang"
     }
   ],
   "languages": [
@@ -351,7 +353,7 @@
   "ui": {
     "navProjects": "Projects",
     "navExperience": "Experience",
-    "navCv": "CV",
+    "navCv": "Curriculum Vitae (CV)",
     "navLabel": "Main navigation",
     "languageLabel": "Language",
     "letsTalk": "Let’s talk",
@@ -384,8 +386,9 @@
     "cvSkills": "Technical Skills",
     "cvExperience": "Professional Experience",
     "cvProjects": "Selected Projects",
-    "cvEducation": "Education & Languages",
+    "cvEducation": "Education",
     "emailLabel": "Email",
-    "closeDialog": "Close"
+    "closeDialog": "Close",
+    "cvLanguages": "Languages"
   }
 }

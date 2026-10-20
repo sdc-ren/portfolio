@@ -1,0 +1,9 @@
+Nimbus Sans font programs, unmodified.
+Copyright 2015 URW Software; 2013, 2014 (URW)++ Design & Development.
+Source: https://github.com/ArtifexSoftware/urw-base35-fonts
+License: GNU Affero General Public License version 3, see NIMBUS-COPYING.txt.
+
+As a special exception, permission is granted to include these font programs
+in a Postscript or PDF file that consists of a document that contains text
+to be displayed or printed using this font, regardless of the conditions or
+license applying to the document itself.

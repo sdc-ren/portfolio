@@ -4,7 +4,7 @@ Next.js App Router + TypeScript strict + Prisma 7 + Supabase PostgreSQL/Auth + s
 
 ## Local setup
 
-Node 22.12+ and pnpm 10.34.7. Enable Corepack with `corepack enable`, then run `pnpm install --frozen-lockfile`, copy `.env.example` to `.env.local`, fill credentials, then:
+Node 22.17+ and pnpm 10.34.7. Enable Corepack with `corepack enable`, then run `pnpm install --frozen-lockfile`, copy `.env.example` to `.env.local`, fill credentials, then:
 
 ```sh
 pnpm db:deploy
@@ -70,7 +70,9 @@ The shared document model is deliberate for a single-owner portfolio: all relate
 
 ## PDF
 
-`/api/cv/[locale]/[variant]` generates an actual downloadable PDF from current published data using React PDF, in the Node.js runtime. Bundled DejaVu fonts support Vietnamese; Vercel output tracing includes them. No headless Chromium or external font request is required. Web CV has separate SCSS print styles. PDF and web share data and order, not identical pagination. PDF section labels use the locale’s managed `ui` content.
+`/api/cv/[locale]/[variant]` prints current published content using bundled Chromium and Puppeteer in the Node.js runtime. Web and PDF use the same escaped HTML template and SCSS stylesheet, ported from the approved Senior v4 HTML. Print CSS controls A4 margins and starts Selected Projects on a new page. Nimbus Sans matches the uploaded PDF; DejaVu supplies Unicode fallback. Fonts and compiled CSS are embedded for printing, and the renderer blocks external requests and page JavaScript. Changes in admin therefore affect both outputs without maintaining a second layout.
+
+The build prepares `public/cv-template.css`; Vercel file tracing includes it, the fonts and Chromium binaries. Chromium increases the function bundle and cold-start work; check the traced bundle and production download after deployment. Local macOS/Windows development needs `CHROMIUM_EXECUTABLE_PATH` pointing to an installed Chrome executable; Vercel uses the bundled Linux executable. The PDF output uses a browser print engine, so it preserves the supplied layout but is not a byte-identical copy of a PDF produced by WeasyPrint.
 
 ## Verification
 
@@ -118,3 +120,7 @@ On Vercel, clear any old Install Command override containing `npm ci`. Use autom
 After pulling this update, run `pnpm db:deploy` against the configured Supabase database. The data migration imports the approved English v4 content into both draft and published documents, consolidates CVs to `senior-software-engineer`, and increments the revision to invalidate concurrent stale admin saves. It replaces the known project, skill and experience entries while retaining additional catalog records, contact details, UI labels, settings and translated locales. Existing custom edits to the imported records are replaced intentionally. Take a database backup before applying content imports if those records have been edited. The normal seed remains non-destructive and does not update existing rows.
 
 The previous English AI CV URL and PDF endpoint redirect to the retained Senior Software Engineer CV URL. Other translated locales retain their existing content and must be updated separately in admin.
+
+## Tooltip and CV label update
+
+Run `pnpm db:deploy` after pulling the tooltip/CV update. It upgrades only known starter navigation and education labels and adds the supplied Da Nang locations to the two known education records when missing. Customized labels and other schools are preserved. Header Projects links to the homepage `#projects` section; All Projects still opens the full project listing.

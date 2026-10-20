@@ -3,7 +3,7 @@ export const englishUi = {
   closeDialog: "Close",
   navProjects: "Projects",
   navExperience: "Experience",
-  navCv: "CV",
+  navCv: "Curriculum Vitae (CV)",
   navLabel: "Main navigation",
   languageLabel: "Language",
   letsTalk: "Let’s talk",
@@ -37,7 +37,8 @@ export const englishUi = {
   cvSkills: "Technical Skills",
   cvExperience: "Professional Experience",
   cvProjects: "Selected Projects",
-  cvEducation: "Education & Languages",
+  cvEducation: "Education",
+  cvLanguages: "Languages",
   emailLabel: "Email",
 } as const;
 export type UiLabels = { [K in keyof typeof englishUi]: string };
@@ -45,7 +46,7 @@ export const vietnameseUi: UiLabels = {
   closeDialog: "Đóng",
   navProjects: "Dự án",
   navExperience: "Kinh nghiệm",
-  navCv: "CV",
+  navCv: "Hồ sơ năng lực (CV)",
   navLabel: "Điều hướng chính",
   languageLabel: "Ngôn ngữ",
   letsTalk: "Liên hệ",
@@ -79,12 +80,19 @@ export const vietnameseUi: UiLabels = {
   cvSkills: "Kỹ năng chuyên môn",
   cvExperience: "Kinh nghiệm làm việc",
   cvProjects: "Dự án tiêu biểu",
-  cvEducation: "Học vấn & Ngôn ngữ",
+  cvEducation: "Học vấn",
+  cvLanguages: "Ngôn ngữ",
   emailLabel: "Email",
 };
 // Defaults preserve existing documents; each locale can override every public label.
 export const uiSchema = z
   .object({
+    cvLanguages: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.cvLanguages),
     closeDialog: z
       .string()
       .trim()

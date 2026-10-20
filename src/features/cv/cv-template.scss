@@ -1,0 +1,232 @@
+@font-face {
+  font-family: CVNimbus;
+  src: url("/fonts/NimbusSans-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: CVNimbus;
+  src: url("/fonts/NimbusSans-Bold.otf") format("opentype");
+  font-weight: 700 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: CVUnicode;
+  src: url("/fonts/DejaVuSans.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: CVUnicode;
+  src: url("/fonts/DejaVuSans-Bold.ttf") format("truetype");
+  font-weight: 700 900;
+  font-display: swap;
+}
+.cv-sheet {
+  --cv-ink: #162235;
+  --cv-muted: #516075;
+  --cv-accent: #185b83;
+  --cv-line: #dbe3eb;
+  position: relative;
+  box-sizing: border-box;
+  width: min(900px, 100%);
+  margin: 28px auto;
+  padding: 42px 52px 50px;
+  background: #fff;
+  color: var(--cv-ink);
+  box-shadow: 0 8px 34px #1f334519;
+  font:
+    400 14px/1.48 CVNimbus,
+    CVUnicode,
+    Arial,
+    Helvetica,
+    sans-serif;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  * {
+    box-sizing: border-box;
+  }
+  a {
+    color: var(--cv-accent);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  header {
+    border-bottom: 2px solid var(--cv-accent);
+    padding-bottom: 17px;
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: 30px;
+    letter-spacing: 0.08em;
+    line-height: 1.15;
+    margin: 0 0 7px;
+    font-weight: 750;
+    padding-right: 28px;
+  }
+  .cv-job-title {
+    font-size: 15px;
+    color: var(--cv-accent);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+  .cv-specialties {
+    color: var(--cv-muted);
+    font-size: 12px;
+    margin: 0 0 11px;
+  }
+  .cv-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    font-size: 11.5px;
+    color: var(--cv-muted);
+  }
+  section {
+    margin-top: 19px;
+  }
+  h2 {
+    margin: 0 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--cv-line);
+    font-size: 12px;
+    line-height: 1.3;
+    font-weight: 800;
+    color: var(--cv-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    break-after: avoid-page;
+  }
+  p {
+    margin: 0 0 7px;
+  }
+  ul {
+    list-style: disc;
+    padding-left: 17px;
+    margin: 6px 0 0;
+  }
+  li {
+    margin: 0 0 4px;
+    padding-left: 1px;
+  }
+  .cv-skill-item {
+    font-size: 12.5px;
+    margin-bottom: 4px;
+    b {
+      color: #203d55;
+    }
+  }
+  .cv-entry {
+    margin: 0 0 17px;
+    break-inside: avoid-page;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .cv-entry-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1px 12px;
+    h3 {
+      flex: 1 1 420px;
+    }
+  }
+  h3 {
+    font-size: 13.4px;
+    line-height: inherit;
+    margin: 0;
+    font-weight: 750;
+  }
+  .cv-date {
+    color: var(--cv-muted);
+    white-space: nowrap;
+    font-size: 11.5px;
+  }
+  .cv-subhead {
+    color: var(--cv-muted);
+    font-size: 12px;
+    margin: 1px 0 5px;
+  }
+  .cv-project-link {
+    color: var(--cv-muted);
+    font-size: 11.5px;
+    margin: 2px 0 1px;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+  .cv-project-tech {
+    color: var(--cv-muted);
+    font-size: 11.5px;
+    margin: 2px 0 5px;
+  }
+  @media (max-width: 650px) {
+    margin: 0;
+    padding: 24px 20px 35px;
+    h1 {
+      font-size: 25px;
+    }
+    .cv-date {
+      white-space: normal;
+    }
+  }
+  @media print {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    font-size: 12px;
+    line-height: 1.42;
+    h1 {
+      font-size: 27px;
+      padding-right: 0;
+    }
+    header {
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+    }
+    section {
+      margin-top: 13px;
+    }
+    h2 {
+      margin-bottom: 7px;
+    }
+    li {
+      margin-bottom: 2.5px;
+    }
+    .cv-skill-item {
+      font-size: 11.5px;
+      margin-bottom: 3px;
+    }
+    .cv-entry {
+      margin-bottom: 13px;
+    }
+    .cv-entry-head h3 {
+      font-size: 12.5px;
+      flex-basis: 410px;
+    }
+    .cv-date,
+    .cv-project-tech,
+    .cv-project-link,
+    .cv-subhead {
+      font-size: 11px;
+    }
+    .cv-page-start {
+      break-before: page;
+      margin-top: 0;
+    }
+  }
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 16mm;
+  }
+}

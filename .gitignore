@@ -6,3 +6,5 @@ src/generated/
 *.tsbuildinfo
 .vercel/
 public/fonts/*.ttf
+
+public/cv-template.css

@@ -1,3 +1,4 @@
+import { ActionAnchor } from "./action-link";
 import { Github, Linkedin, Mail, Code2 } from "lucide-react";
 import type { PortfolioContent } from "@/features/content/schema";
 import styles from "./profile-card.module.scss";
@@ -52,20 +53,20 @@ export function ProfileCard({
       </div>
       <div className={styles.links}>
         {profile.github && (
-          <a href={profile.github} aria-label="GitHub">
+          <ActionAnchor href={profile.github} aria-label="GitHub">
             <Github size={17} />
             GitHub
-          </a>
+          </ActionAnchor>
         )}
         {profile.linkedin && (
-          <a href={profile.linkedin} aria-label="LinkedIn">
+          <ActionAnchor href={profile.linkedin} aria-label="LinkedIn">
             <Linkedin size={17} />
             LinkedIn
-          </a>
+          </ActionAnchor>
         )}
-        <a href={`mailto:${profile.email}`} aria-label={emailLabel}>
+        <ActionAnchor href={`mailto:${profile.email}`} aria-label={emailLabel}>
           <Mail size={17} />
-        </a>
+        </ActionAnchor>
       </div>
     </aside>
   );

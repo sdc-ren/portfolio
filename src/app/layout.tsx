@@ -1,3 +1,5 @@
+import "@/features/cv/cv-template.scss";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { DEFAULT_TITLE, DEFAULT_DESCRIPTION, siteUrl } from "@/lib/seo";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
@@ -28,7 +30,9 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        {children}
+        <TooltipProvider delayDuration={300} skipDelayDuration={100}>
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );

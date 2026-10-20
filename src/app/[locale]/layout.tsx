@@ -1,6 +1,7 @@
 import { Typewriter } from "@/components/typewriter";
 import { publicPath } from "@/lib/public-path";
-import Link from "next/link";
+import { ActionLink as Link } from "@/components/action-link";
+import navStyles from "@/components/header-nav.module.scss";
 import { notFound } from "next/navigation";
 import {
   getPublished,
@@ -27,6 +28,7 @@ export default async function Layout({
         >
           <Link
             href={publicPath(locale)}
+            tooltip={data.profile.name}
             className="flex max-w-full items-center gap-2 sm:gap-3 font-bold tracking-tight text-foreground"
           >
             <img
@@ -52,20 +54,30 @@ export default async function Layout({
               </span>
             </span>
           </Link>
-          <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-            <Link href={publicPath(locale, "/projects")}>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+            <Link
+              className={navStyles.link}
+              href={`${publicPath(locale)}#projects`}
+            >
               {data.ui.navProjects}
             </Link>
-            <Link href={`${publicPath(locale)}#experience`}>
+            <Link
+              className={navStyles.link}
+              href={`${publicPath(locale)}#experience`}
+            >
               {data.ui.navExperience}
             </Link>
-            <Link href={publicPath(locale, `/cv/${data.cvs[0].id}`)}>
+            <Link
+              className={navStyles.link}
+              href={publicPath(locale, `/cv/${data.cvs[0].id}`)}
+            >
               {data.ui.navCv}
             </Link>
             {locales.length > 1 &&
               locales.map((l) => (
                 <Link
                   key={l.locale}
+                  className={navStyles.link}
                   href={publicPath(l.locale)}
                   aria-current={locale === l.locale ? "page" : undefined}
                 >

@@ -1,3 +1,6 @@
+"use client";
+import { ActionTooltip } from "@/components/action-tooltip";
+import { actionLabel } from "@/lib/action-label";
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -22,15 +25,29 @@ export function Button({
   variant,
   size,
   asChild = false,
+  tooltip,
+  title,
   ...props
 }: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & { asChild?: boolean }) {
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+    tooltip?: string | false;
+  }) {
   const Comp = asChild ? Slot : "button";
+  const label =
+    tooltip === false
+      ? undefined
+      : (tooltip ??
+        props["aria-label"] ??
+        title ??
+        actionLabel(props.children));
   return (
-    <Comp
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
+    <ActionTooltip label={label}>
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
+      />
+    </ActionTooltip>
   );
 }
 export { buttonVariants };

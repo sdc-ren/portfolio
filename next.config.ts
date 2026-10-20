@@ -37,8 +37,15 @@ const config: NextConfig = {
     "@prisma/client",
     "@prisma/adapter-pg",
     "pg",
-    "@react-pdf/renderer",
+    "@sparticuz/chromium",
+    "puppeteer-core",
   ],
-  outputFileTracingIncludes: { "/api/cv/**/*": ["./public/fonts/**/*"] },
+  outputFileTracingIncludes: {
+    "/api/cv/**/*": [
+      "./public/fonts/**/*",
+      "./public/cv-template.css",
+      "./node_modules/@sparticuz/chromium/bin/**/*",
+    ],
+  },
 };
 export default config;

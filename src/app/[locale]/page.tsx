@@ -1,3 +1,4 @@
+import { ActionTooltip } from "@/components/action-tooltip";
 import { pageMetadata } from "@/lib/seo";
 import { ProfileCard } from "@/components/profile-card";
 import { publicPath } from "@/lib/public-path";
@@ -68,7 +69,10 @@ export default async function Page({
         </div>
         <ProfileCard profile={d.profile} emailLabel={d.ui.emailLabel} />
       </section>
-      <section className="border-t border-border py-12">
+      <section
+        id="projects"
+        className="scroll-mt-6 border-t border-border py-12"
+      >
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
             <p className="mb-3 text-xs uppercase tracking-widest text-primary">
@@ -78,12 +82,14 @@ export default async function Page({
               {d.ui.workHeading}
             </h2>
           </div>
-          <Link
-            href={publicPath(locale, "/projects")}
-            className="text-sm text-muted-foreground"
-          >
-            {d.ui.allProjects} ↗
-          </Link>
+          <ActionTooltip label={d.ui.allProjects}>
+            <Link
+              href={publicPath(locale, "/projects")}
+              className="text-sm text-muted-foreground"
+            >
+              {d.ui.allProjects} ↗
+            </Link>
+          </ActionTooltip>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
           {d.projects

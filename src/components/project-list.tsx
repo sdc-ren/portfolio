@@ -51,7 +51,7 @@ export function ProjectList({
               setTech(value === "all" ? "" : value.slice(5))
             }
           >
-            <SelectTrigger id={`${fieldId}-tech`}>
+            <SelectTrigger tooltip={labels.technology} id={`${fieldId}-tech`}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

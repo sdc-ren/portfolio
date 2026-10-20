@@ -463,7 +463,11 @@ export function Editor({
                 router.push(`/admin?locale=${value}`);
             }}
           >
-            <SelectTrigger id="locale" className="w-28">
+            <SelectTrigger
+              tooltip="Editing language"
+              id="locale"
+              className="w-28"
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -527,7 +531,9 @@ export function Editor({
           <aside className="space-y-1">
             <nav aria-label="Content sections">
               {(Object.keys(data) as (keyof PortfolioContent)[]).map((key) => (
-                <button
+                <Button
+                  type="button"
+                  variant="ghost"
                   key={key}
                   disabled={pending}
                   onClick={() => setTab(key)}
@@ -535,7 +541,7 @@ export function Editor({
                   className={`block w-full rounded-lg px-4 py-3 text-left text-sm capitalize ${tab === key ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
                 >
                   {key}
-                </button>
+                </Button>
               ))}
             </nav>
             <div className="border-t border-border pt-5">
