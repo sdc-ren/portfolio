@@ -1,3 +1,4 @@
+import { DownloadLink } from "@/components/download-link";
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -40,7 +41,9 @@ export default async function Page({
           ))}
         </nav>
         <Button asChild>
-          <a href={`/api/cv/${locale}/${variant}`}>{d.ui.downloadPdf} ↓</a>
+          <DownloadLink href={`/api/cv/${locale}/${variant}`}>
+            {d.ui.downloadPdf} ↓
+          </DownloadLink>
         </Button>
       </div>
       <CvDocument data={d} variant={variant} />

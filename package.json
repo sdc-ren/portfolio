@@ -25,6 +25,9 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
+    "@radix-ui/react-checkbox": "^1.4.1",
+    "@radix-ui/react-label": "^2.1.17",
+    "@radix-ui/react-select": "^2.4.1",
     "@radix-ui/react-slot": "^1.2.0",
     "@react-pdf/renderer": "^4.3.0",
     "@supabase/ssr": "^0.8.0",
@@ -35,6 +38,7 @@
     "dotenv": "^17.0.0",
     "lucide-react": "^0.468.0",
     "next": "^16.4.2",
+    "nextjs-toploader": "^3.9.17",
     "pg": "^8.16.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

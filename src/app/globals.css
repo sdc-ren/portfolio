@@ -9,9 +9,21 @@
   --border: #d6dde5;
   --primary: #0f766e;
   --primary-foreground: #ffffff;
+  --input: var(--border);
+  --ring: var(--primary);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --accent: var(--muted);
+  --accent-foreground: var(--foreground);
   --radius: 0.625rem;
 }
 @theme inline {
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -41,7 +53,7 @@ button,
 input,
 textarea,
 select {
-  font: inherit;
+  font-family: inherit;
 }
 button {
   cursor: pointer;
@@ -56,38 +68,6 @@ button:disabled {
 a:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 5px;
-}
-input,
-textarea,
-select {
-  width: 100%;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: var(--foreground);
-}
-input:focus,
-textarea:focus,
-select:focus {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-textarea {
-  resize: vertical;
-}
-label {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--muted-foreground);
-}
-label > span {
-  display: block;
-  margin-bottom: 6px;
-}
-input[type="checkbox"] {
-  width: auto;
-  accent-color: var(--primary);
 }
 h1,
 h2,
@@ -131,6 +111,9 @@ p {
 @media print {
   body {
     background: white !important;
+  }
+  #nprogress {
+    display: none !important;
   }
   body > div > header,
   body > div > footer {

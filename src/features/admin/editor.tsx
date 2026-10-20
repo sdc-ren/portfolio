@@ -9,11 +9,22 @@ import {
   useTransition,
 } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "nextjs-toploader/app";
 import { Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
 import type { PortfolioContent } from "@/features/content/schema";
 import { saveContent, createLocale } from "./actions";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   normalizeContentInput,
   uniqueItemId,
@@ -95,45 +106,55 @@ function Field({
     name.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
   if (typeof value === "boolean")
     return (
-      <label className="flex items-center gap-3">
-        <input
-          type="checkbox"
+      <div className="flex items-center gap-3">
+        <Checkbox
+          id={fieldId}
           checked={value}
           disabled={disabled}
-          onChange={(e) => onChange(e.target.checked)}
+          onCheckedChange={(checked) => onChange(checked === true)}
         />
-        {label}
-      </label>
+        <Label htmlFor={fieldId}>{label}</Label>
+      </div>
     );
   if (typeof value === "string")
     return (
-      <label>
-        <span>{label}</span>
+      <div className="space-y-2">
+        <Label htmlFor={fieldId}>{label}</Label>
         {large.has(name) ? (
-          <textarea
+          <Textarea
+            id={fieldId}
             rows={name === "description" ? 7 : 4}
             value={value}
             disabled={disabled}
             onChange={(e) => onChange(e.target.value)}
           />
         ) : (
-          <>
-            <input
-              value={value}
-              disabled={disabled}
-              list={name === "role" ? fieldId : undefined}
-              onChange={(e) => onChange(e.target.value)}
-            />
-            {name === "role" && (
-              <datalist id={fieldId}>
-                {content?.roles.map((role) => (
-                  <option key={role} value={role} />
-                ))}
-              </datalist>
-            )}
-          </>
+          <Input
+            id={fieldId}
+            value={value}
+            disabled={disabled}
+            onChange={(e) => onChange(e.target.value)}
+          />
         )}
-      </label>
+        {name === "role" && (
+          <div className="flex flex-wrap gap-2">
+            {content?.roles
+              .filter((role) => role !== value)
+              .map((role) => (
+                <Button
+                  key={role}
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  disabled={disabled}
+                  onClick={() => onChange(role)}
+                >
+                  {role}
+                </Button>
+              ))}
+          </div>
+        )}
+      </div>
     );
   if (Array.isArray(value)) {
     const references =
@@ -167,21 +188,24 @@ function Field({
           </legend>
           <div className="space-y-3">
             {references.map((item) => (
-              <label key={item.id} className="flex items-start gap-3">
-                <input
+              <div key={item.id} className="flex items-start gap-3">
+                <Checkbox
+                  id={`${fieldId}-${item.id}`}
+                  disabled={disabled}
                   className="mt-1"
-                  type="checkbox"
                   checked={selected.includes(item.id)}
-                  onChange={(e) =>
+                  onCheckedChange={(checked) =>
                     onChange(
-                      e.target.checked
+                      checked === true
                         ? [...selected, item.id]
                         : selected.filter((id) => id !== item.id),
                     )
                   }
                 />
-                {labelFor(item)}
-              </label>
+                <Label htmlFor={`${fieldId}-${item.id}`}>
+                  {labelFor(item)}
+                </Label>
+              </div>
             ))}
           </div>
           <p className="mb-2 mt-5 text-xs text-muted-foreground">
@@ -230,15 +254,16 @@ function Field({
     if (!objects)
       return (
         <div>
-          <label>
-            <span>{label} · one per line</span>
-            <textarea
+          <div className="space-y-2">
+            <Label htmlFor={fieldId}>{label} · one per line</Label>
+            <Textarea
+              id={fieldId}
               rows={4}
               value={(value as string[]).join("\n")}
               disabled={disabled}
               onChange={(e) => onChange(e.target.value.split("\n"))}
             />
-          </label>
+          </div>
           {name === "tech" && (
             <span className="mt-3 flex flex-wrap gap-2">
               {content?.technologies
@@ -427,22 +452,28 @@ export function Editor({
     <>
       <div className="sticky top-0 z-20 mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-border bg-background/95 py-4">
         <div className="flex items-center gap-3">
-          <label className="sr-only" htmlFor="locale">
+          <Label className="sr-only" htmlFor="locale">
             Editing language
-          </label>
-          <select
-            id="locale"
+          </Label>
+          <Select
             value={locale}
             disabled={pending}
-            onChange={(e) => {
+            onValueChange={(value) => {
               if (!dirty || window.confirm("Discard unsaved changes?"))
-                router.push(`/admin?locale=${e.target.value}`);
+                router.push(`/admin?locale=${value}`);
             }}
           >
-            {locales.map((l) => (
-              <option key={l}>{l}</option>
-            ))}
-          </select>
+            <SelectTrigger id="locale" className="w-28">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {locales.map((l) => (
+                <SelectItem key={l} value={l}>
+                  {l}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <span className="whitespace-nowrap text-xs text-muted-foreground">
             {dirty ? "Unsaved changes" : `Revision ${revision}`}
           </span>
@@ -475,17 +506,18 @@ export function Editor({
           <p className="mb-4 text-sm text-muted-foreground">
             Draft preview. Save or publish to validate references.
           </p>
-          <select
-            aria-label="Preview CV"
-            value={previewCv}
-            onChange={(e) => setPreviewCv(e.target.value)}
-          >
-            {data.cvs.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.title}
-              </option>
-            ))}
-          </select>
+          <Select value={previewCv} onValueChange={setPreviewCv}>
+            <SelectTrigger aria-label="Preview CV">
+              <SelectValue placeholder="Select CV" />
+            </SelectTrigger>
+            <SelectContent>
+              {data.cvs.map((c) => (
+                <SelectItem key={c.id} value={c.id}>
+                  {c.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           {data.cvs.some((c) => c.id === previewCv) && (
             <CvDocument data={data} variant={previewCv} />
           )}
@@ -507,15 +539,16 @@ export function Editor({
               ))}
             </nav>
             <div className="border-t border-border pt-5">
-              <label>
-                <span>Add translation locale</span>
-                <input
+              <div className="space-y-2">
+                <Label htmlFor="new-locale">Add translation locale</Label>
+                <Input
+                  id="new-locale"
                   placeholder="vi"
                   value={newLocale}
                   disabled={pending}
                   onChange={(e) => setNewLocale(e.target.value)}
                 />
-              </label>
+              </div>
               <Button
                 variant="outline"
                 size="sm"
