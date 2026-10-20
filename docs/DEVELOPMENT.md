@@ -4,7 +4,7 @@ Next.js App Router + TypeScript strict + Prisma 7 + Supabase PostgreSQL/Auth + s
 
 ## Local setup
 
-Node 22.17+ and pnpm 10.34.7. Enable Corepack with `corepack enable`, then run `pnpm install --frozen-lockfile`, copy `.env.example` to `.env.local`, fill credentials, then:
+Node 24.x and pnpm 10.34.7. Enable Corepack with `corepack enable`, then run `pnpm install --frozen-lockfile`, copy `.env.example` to `.env.local`, fill credentials, then:
 
 ```sh
 pnpm db:deploy
@@ -43,7 +43,7 @@ Every admin page and mutation calls verified `auth.getUser()` and checks the UUI
 
 ## Deploy to Vercel
 
-1. Import `sdc-ren/portfolio` into Vercel; framework Next.js, root directory repository root, Node.js 22.x, install `pnpm install --frozen-lockfile`, build `pnpm build`.
+1. Import `sdc-ren/portfolio` into Vercel; framework Next.js, root directory repository root, Node.js 24.x, install `pnpm install --frozen-lockfile`, build `pnpm build`.
 2. Configure production env variables from `.env.example`. Set `NEXT_PUBLIC_SITE_URL` to the actual HTTPS domain. Avoid sharing the production DB with preview deployments; use a separate Supabase project/branch for previews.
 3. Apply `pnpm db:deploy` and `pnpm db:seed` from a trusted local terminal with the target environment configured **before the first deployment**. Database migrations intentionally do not run during Vercel builds, which can run concurrently.
 4. Provision the Auth admin UUID as above.
