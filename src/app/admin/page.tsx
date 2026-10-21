@@ -2,8 +2,7 @@ import { requireAdmin } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { contentSchema, localeSchema } from "@/features/content/schema";
 import { Editor } from "@/features/admin/editor";
-import { logout } from "./login/actions";
-import { Button } from "@/components/ui/button";
+import { cookies } from "next/headers";
 export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Portfolio administration",
@@ -31,30 +30,16 @@ export default async function Admin({
       </main>
     );
   return (
-    <main id="main" className="mx-auto max-w-[1440px] px-6 py-8">
-      <header className="mb-8 flex items-center justify-between gap-4">
-        <div>
-          <p className="text-xs uppercase tracking-widest text-primary">
-            Content studio
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold">
-            Your work, your words.
-          </h1>
-        </div>
-        <form action={logout}>
-          <Button variant="outline" size="sm">
-            Sign out
-          </Button>
-        </form>
-      </header>
-      <Editor
-        key={locale}
-        locale={locale}
-        locales={locales.map((l) => l.locale)}
-        initial={contentSchema.parse(row.draft)}
-        revision={row.revision}
-        publishedAt={row.publishedAt?.toISOString() ?? null}
-      />
-    </main>
+    <Editor
+      key={locale}
+      locale={locale}
+      locales={locales.map((l) => l.locale)}
+      initial={contentSchema.parse(row.draft)}
+      revision={row.revision}
+      publishedAt={row.publishedAt?.toISOString() ?? null}
+      defaultSidebarOpen={
+        (await cookies()).get("sidebar_state")?.value !== "false"
+      }
+    />
   );
 }

@@ -1,23 +1,24 @@
 "use client";
-import { publicPath } from "@/lib/public-path";
-import {
-  createContext,
-  useContext,
-  useId,
-  useEffect,
-  useState,
-  useTransition,
-} from "react";
-import Link from "next/link";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "nextjs-toploader/app";
-import { Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
-import type { PortfolioContent } from "@/features/content/schema";
+import { Eye, Languages, Loader2, Save, Upload } from "lucide-react";
+import {
+  contentSchema,
+  type PortfolioContent,
+} from "@/features/content/schema";
+import { normalizeContentInput } from "@/features/content/normalize";
 import { saveContent, createLocale } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Select,
   SelectTrigger,
@@ -26,584 +27,390 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  normalizeContentInput,
-  uniqueItemId,
-} from "@/features/content/normalize";
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
 import { CvDocument } from "@/features/cv/document";
-type Json = string | boolean | Json[] | { [key: string]: Json };
-const labels: Record<string, string> = {
-  projectIds: "Projects in this CV (IDs, in order)",
-  skillIds: "Skill groups in this CV (IDs, in order)",
-  experienceIds: "Experience in this CV (IDs, in order)",
-  description: "Description (Markdown)",
-  tech: "Technologies",
-  repository: "Repository URL",
-  demo: "Live project URL",
-  featured: "Featured on homepage",
-  id: "Stable ID (used in URLs / CV selections)",
-};
-const large = new Set(["summary", "description", "highlights"]);
-const templates: Record<string, Json> = {
-  projects: {
-    id: "new-project",
-    title: "New project",
-    role: "Developer",
-    category: "Product engineering",
-    summary: "Describe the project.",
-    description: "Describe the problem, approach and outcomes.",
-    tech: [],
-    highlights: [],
-    repository: "",
-    demo: "",
-    featured: false,
-  },
-  experience: {
-    id: "new-experience",
-    company: "Company",
-    role: "Role",
-    period: "2026 – Present",
-    location: "Location",
-    highlights: [],
-  },
-  skills: { id: "new-skill", name: "Skill group", items: [] },
-  education: {
-    id: "new-education",
-    institution: "Institution",
-    qualification: "Qualification",
-    year: "2026",
-  },
-  languages: {
-    id: "new-language",
-    name: "Language",
-    proficiency: "Proficiency",
-  },
-  cvs: {
-    id: "new-cv",
-    title: "CV title",
-    summary: "Professional summary",
-    specialties: "Specialties",
-    projectIds: [],
-    skillIds: [],
-    experienceIds: [],
-  },
-};
-const ContentContext = createContext<PortfolioContent | null>(null);
-function Field({
-  name,
-  value,
-  onChange,
-  disabled = false,
-}: {
-  name: string;
-  value: Json;
-  onChange: (v: Json) => void;
-  disabled?: boolean;
-}) {
-  const content = useContext(ContentContext);
-  const fieldId = useId();
-  const label =
-    labels[name] ??
-    name.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
-  if (typeof value === "boolean")
-    return (
-      <div className="flex items-center gap-3">
-        <Checkbox
-          id={fieldId}
-          checked={value}
-          disabled={disabled}
-          onCheckedChange={(checked) => onChange(checked === true)}
-        />
-        <Label htmlFor={fieldId}>{label}</Label>
-      </div>
-    );
-  if (typeof value === "string")
-    return (
-      <div className="space-y-2">
-        <Label htmlFor={fieldId}>{label}</Label>
-        {large.has(name) ? (
-          <Textarea
-            id={fieldId}
-            rows={name === "description" ? 7 : 4}
-            value={value}
-            disabled={disabled}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        ) : (
-          <Input
-            id={fieldId}
-            value={value}
-            disabled={disabled}
-            onChange={(e) => onChange(e.target.value)}
-          />
-        )}
-        {name === "role" && (
-          <div className="flex flex-wrap gap-2">
-            {content?.roles
-              .filter((role) => role !== value)
-              .map((role) => (
-                <Button
-                  key={role}
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  disabled={disabled}
-                  onClick={() => onChange(role)}
-                >
-                  {role}
-                </Button>
-              ))}
-          </div>
-        )}
-      </div>
-    );
-  if (Array.isArray(value)) {
-    const references =
-      name === "projectIds"
-        ? content?.projects
-        : name === "skillIds"
-          ? content?.skills
-          : name === "experienceIds"
-            ? content?.experience
-            : undefined;
-    if (references) {
-      const selected = value as string[];
-      const labelFor = (item: (typeof references)[number]) =>
-        "title" in item
-          ? item.title
-          : "name" in item
-            ? item.name
-            : `${item.company} · ${item.role}`;
-      const move = (index: number, delta: number) => {
-        const next = [...selected];
-        [next[index], next[index + delta]] = [next[index + delta], next[index]];
-        onChange(next);
-      };
-      return (
-        <fieldset
-          disabled={disabled}
-          className="rounded-xl border border-border p-4"
-        >
-          <legend className="px-2 text-sm text-muted-foreground">
-            {label.split(" (")[0]}
-          </legend>
-          <div className="space-y-3">
-            {references.map((item) => (
-              <div key={item.id} className="flex items-start gap-3">
-                <Checkbox
-                  id={`${fieldId}-${item.id}`}
-                  disabled={disabled}
-                  className="mt-1"
-                  checked={selected.includes(item.id)}
-                  onCheckedChange={(checked) =>
-                    onChange(
-                      checked === true
-                        ? [...selected, item.id]
-                        : selected.filter((id) => id !== item.id),
-                    )
-                  }
-                />
-                <Label htmlFor={`${fieldId}-${item.id}`}>
-                  {labelFor(item)}
-                </Label>
-              </div>
-            ))}
-          </div>
-          <p className="mb-2 mt-5 text-xs text-muted-foreground">
-            Selected order
-          </p>
-          {selected.map((id, index) => (
-            <div
-              key={id}
-              className="flex items-center justify-between gap-3 border-t border-border py-2 text-xs"
-            >
-              <span>
-                {index + 1}.{" "}
-                {references.find((item) => item.id === id)
-                  ? labelFor(references.find((item) => item.id === id)!)
-                  : `Missing: ${id}`}
-              </span>
-              <div className="flex gap-1">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  disabled={disabled || index === 0}
-                  aria-label={`Move ${id} up`}
-                  onClick={() => move(index, -1)}
-                >
-                  <ArrowUp size={14} />
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  disabled={disabled || index === selected.length - 1}
-                  aria-label={`Move ${id} down`}
-                  onClick={() => move(index, 1)}
-                >
-                  <ArrowDown size={14} />
-                </Button>
-              </div>
-            </div>
-          ))}
-        </fieldset>
-      );
-    }
+import { ContentContext, Field, type Json } from "./editor-fields";
+import { AdminSidebar } from "./admin-sidebar";
+import { CollectionManager } from "./collection-manager";
+import { isCollection } from "./collections";
+import { navigation, type Section } from "./navigation";
+import { Overview } from "./overview";
+import styles from "./studio.module.scss";
 
-    const objects =
-      !!templates[name] ||
-      value.some((v) => typeof v === "object" && !Array.isArray(v));
-    if (!objects)
-      return (
-        <div>
-          <div className="space-y-2">
-            <Label htmlFor={fieldId}>{label} · one per line</Label>
-            <Textarea
-              id={fieldId}
-              rows={4}
-              value={(value as string[]).join("\n")}
-              disabled={disabled}
-              onChange={(e) => onChange(e.target.value.split("\n"))}
-            />
-          </div>
-          {name === "tech" && (
-            <span className="mt-3 flex flex-wrap gap-2">
-              {content?.technologies
-                .filter((tech) => !(value as string[]).includes(tech))
-                .map((tech) => (
-                  <Button
-                    key={tech}
-                    type="button"
-                    size="sm"
-                    variant="outline"
-                    disabled={disabled}
-                    onClick={() =>
-                      onChange([...(value as string[]).filter(Boolean), tech])
-                    }
-                  >
-                    + {tech}
-                  </Button>
-                ))}
-            </span>
-          )}
-        </div>
-      );
-    const move = (i: number, delta: number) => {
-      const next = [...value];
-      [next[i], next[i + delta]] = [next[i + delta], next[i]];
-      onChange(next);
-    };
-    return (
-      <div className="space-y-5">
-        {value.map((v, i) => (
-          <fieldset
-            key={i}
-            className="rounded-xl border border-border p-5"
-            disabled={disabled}
-          >
-            <legend className="px-2 text-xs text-primary">
-              {name} {i + 1}
-            </legend>
-            <div className="mb-5 flex justify-end gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                disabled={i === 0}
-                aria-label={`Move item ${i + 1} up`}
-                onClick={() => move(i, -1)}
-              >
-                <ArrowUp size={16} />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                disabled={i === value.length - 1}
-                aria-label={`Move item ${i + 1} down`}
-                onClick={() => move(i, 1)}
-              >
-                <ArrowDown size={16} />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      "Remove this item? Update any CV references before saving.",
-                    )
-                  )
-                    onChange(value.filter((_, j) => i !== j));
-                }}
-              >
-                <Trash2 size={16} />
-                Remove
-              </Button>
-            </div>
-            <Field
-              name={`${name}-item`}
-              value={v}
-              onChange={(v) =>
-                onChange(value.map((old, j) => (j === i ? v : old)))
-              }
-            />
-          </fieldset>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          disabled={disabled}
-          onClick={() => {
-            const item = structuredClone(templates[name]) as { id: string };
-            item.id = uniqueItemId(item.id, value as { id: string }[]);
-            onChange([...value, item]);
-          }}
-        >
-          <Plus size={16} />
-          Add {name}
-        </Button>
-      </div>
-    );
-  }
-  return (
-    <div className="grid gap-5">
-      {Object.entries(value).map(([key, v]) => (
-        <Field
-          key={key}
-          name={key}
-          value={v}
-          disabled={disabled}
-          onChange={(next) => onChange({ ...value, [key]: next })}
-        />
-      ))}
-    </div>
-  );
-}
 export function Editor({
   initial,
   locale,
   locales,
   revision: initialRevision,
-  publishedAt,
+  publishedAt: initialPublishedAt,
+  defaultSidebarOpen = true,
 }: {
   initial: PortfolioContent;
   locale: string;
   locales: string[];
   revision: number;
   publishedAt: string | null;
+  defaultSidebarOpen?: boolean;
 }) {
-  const [data, setData] = useState(initial),
-    [revision, setRevision] = useState(initialRevision),
-    [tab, setTab] = useState<keyof PortfolioContent>("profile"),
-    [dirty, setDirty] = useState(false),
-    [status, setStatus] = useState(""),
-    [preview, setPreview] = useState(false),
-    [previewCv, setPreviewCv] = useState(initial.cvs[0].id),
-    [newLocale, setNewLocale] = useState(""),
-    [pending, start] = useTransition();
+  const [data, setData] = useState(initial);
+  const [revision, setRevision] = useState(initialRevision);
+  const [tab, setTab] = useState<Section>("overview");
+  const [dirty, setDirty] = useState(false);
+  const [status, setStatus] = useState<{
+    error: boolean;
+    message: string;
+  } | null>(null);
+  const [preview, setPreview] = useState(false);
+  const [previewCv, setPreviewCv] = useState(initial.cvs[0].id);
+  const [newLocale, setNewLocale] = useState("");
+  const [publishedAt, setPublishedAt] = useState(initialPublishedAt);
+  const [pending, start] = useTransition();
   const router = useRouter();
   useEffect(() => {
-    const handler = (e: BeforeUnloadEvent) => {
-      if (dirty) e.preventDefault();
+    const handler = (event: BeforeUnloadEvent) => {
+      if (dirty) event.preventDefault();
     };
     window.addEventListener("beforeunload", handler);
     return () => window.removeEventListener("beforeunload", handler);
   }, [dirty]);
+  const update = (section: keyof PortfolioContent, value: Json) => {
+    setData((previous) => ({ ...previous, [section]: value }));
+    setDirty(true);
+    setStatus(null);
+  };
+  const select = (section: Section) => {
+    setPreview(false);
+    setTab(section);
+  };
+  const switchLocale = (value: string) => {
+    if (!dirty || window.confirm("Discard unsaved workspace changes?"))
+      router.push(`/admin?locale=${value}`);
+  };
   const save = (publish: boolean) =>
     start(async () => {
-      setStatus("");
+      setStatus(null);
+      const checked = contentSchema.safeParse(normalizeContentInput(data));
+      if (!checked.success) {
+        setStatus({
+          error: true,
+          message: checked.error.issues
+            .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+            .join("; "),
+        });
+        return;
+      }
       try {
-        const normalized = normalizeContentInput(data) as PortfolioContent;
-        const r = await saveContent({
+        const result = await saveContent({
           locale,
           revision,
           publish,
-          data: normalized,
+          data: checked.data,
         });
-        if (r.ok && r.revision !== undefined) {
-          setData(normalized);
-          setRevision(r.revision);
+        if (result.ok && result.revision !== undefined) {
+          setData(checked.data);
+          setRevision(result.revision);
           setDirty(false);
-          setStatus(
-            publish
-              ? "Published. Website and PDF now use this version."
-              : "Draft saved. Public website is unchanged.",
-          );
-        } else setStatus(r.error ?? "Could not save.");
+          if (publish) setPublishedAt(new Date().toISOString());
+          setStatus({
+            error: false,
+            message: publish
+              ? "Published. The website and PDF now use this version."
+              : "Draft saved. The public website is unchanged.",
+          });
+        } else
+          setStatus({
+            error: true,
+            message: result.error ?? "Could not save content.",
+          });
       } catch {
-        setStatus(
-          "Save failed. Your edits remain here; check your session and retry.",
-        );
+        setStatus({
+          error: true,
+          message:
+            "Save failed. Your edits are still here. Check your session and try again.",
+        });
       }
     });
   const addLanguage = () =>
     start(async () => {
       try {
-        const r = await createLocale({ locale: newLocale, source: locale });
-        if (r.ok) router.push(`/admin?locale=${newLocale}`);
-        else setStatus(r.error ?? "Could not create language.");
+        const result = await createLocale({
+          locale: newLocale.trim(),
+          source: locale,
+        });
+        if (result.ok) router.push(`/admin?locale=${newLocale.trim()}`);
+        else
+          setStatus({
+            error: true,
+            message: result.error ?? "Could not create language.",
+          });
       } catch {
-        setStatus(
-          "Use a locale such as vi, en or ja. Check your session and retry.",
-        );
+        setStatus({
+          error: true,
+          message:
+            "Use a locale such as vi, en or ja. Check your session and try again.",
+        });
       }
     });
+  const current = navigation.find((item) => item.key === tab)!;
   return (
-    <>
-      <div className="sticky top-0 z-20 mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-border bg-background/95 py-4">
-        <div className="flex items-center gap-3">
-          <Label className="sr-only" htmlFor="locale">
-            Editing language
-          </Label>
-          <Select
-            value={locale}
-            disabled={pending}
-            onValueChange={(value) => {
-              if (!dirty || window.confirm("Discard unsaved changes?"))
-                router.push(`/admin?locale=${value}`);
-            }}
-          >
-            <SelectTrigger
-              tooltip="Editing language"
-              id="locale"
-              className="w-28"
+    <SidebarProvider defaultOpen={defaultSidebarOpen} className={styles.shell}>
+      <AdminSidebar
+        active={tab}
+        data={data}
+        locale={locale}
+        disabled={pending}
+        hasChanges={dirty}
+        onSelect={select}
+      />
+      <SidebarInset id="main" tabIndex={-1} className="min-w-0 bg-background">
+        <header className={styles.header}>
+          <div className="flex min-w-0 items-center gap-3">
+            <SidebarTrigger aria-label="Toggle navigation" />
+            <Separator orientation="vertical" className="h-5" />
+            <span className="hidden text-xs text-muted-foreground sm:inline">
+              Portfolio
+            </span>
+            <span className="text-muted-foreground" aria-hidden="true">
+              /
+            </span>
+            <span className="truncate text-sm font-medium">
+              {preview ? "CV preview" : current.label}
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Badge variant={dirty ? "outline" : "secondary"}>
+              {dirty ? "Unsaved changes" : "Saved"}
+            </Badge>
+            <Label className="sr-only" htmlFor="editing-locale">
+              Editing language
+            </Label>
+            <Select
+              value={locale}
+              disabled={pending}
+              onValueChange={switchLocale}
             >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {locales.map((l) => (
-                <SelectItem key={l} value={l}>
-                  {l}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <span className="whitespace-nowrap text-xs text-muted-foreground">
-            {dirty ? "Unsaved changes" : `Revision ${revision}`}
-          </span>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant="ghost"
-            disabled={pending}
-            onClick={() => setPreview(!preview)}
-          >
-            {preview ? "Edit content" : "Preview draft"}
-          </Button>
-          <Button
-            variant="outline"
-            disabled={pending}
-            onClick={() => save(false)}
-          >
-            Save draft
-          </Button>
-          <Button disabled={pending} onClick={() => save(true)}>
-            {pending ? "Working…" : "Publish"}
-          </Button>
-        </div>
-      </div>
-      <p role="status" aria-live="polite" className="mb-5 text-sm text-primary">
-        {status}
-      </p>
-      {preview ? (
-        <>
-          <p className="mb-4 text-sm text-muted-foreground">
-            Draft preview. Save or publish to validate references.
-          </p>
-          <Select value={previewCv} onValueChange={setPreviewCv}>
-            <SelectTrigger aria-label="Preview CV">
-              <SelectValue placeholder="Select CV" />
-            </SelectTrigger>
-            <SelectContent>
-              {data.cvs.map((c) => (
-                <SelectItem key={c.id} value={c.id}>
-                  {c.title}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          {data.cvs.some((c) => c.id === previewCv) && (
-            <CvDocument data={data} variant={previewCv} />
-          )}
-        </>
-      ) : (
-        <div className="grid items-start gap-8 md:grid-cols-[210px_1fr]">
-          <aside className="space-y-1">
-            <nav aria-label="Content sections">
-              {(Object.keys(data) as (keyof PortfolioContent)[]).map((key) => (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  key={key}
-                  disabled={pending}
-                  onClick={() => setTab(key)}
-                  aria-current={tab === key ? "page" : undefined}
-                  className={`block w-full rounded-lg px-4 py-3 text-left text-sm capitalize ${tab === key ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"}`}
-                >
-                  {key}
-                </Button>
-              ))}
-            </nav>
-            <div className="border-t border-border pt-5">
-              <div className="space-y-2">
-                <Label htmlFor="new-locale">Add translation locale</Label>
-                <Input
-                  id="new-locale"
-                  placeholder="vi"
-                  value={newLocale}
-                  disabled={pending}
-                  onChange={(e) => setNewLocale(e.target.value)}
-                />
-              </div>
+              <SelectTrigger
+                id="editing-locale"
+                tooltip="Editing language"
+                className="w-24 bg-card"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {locales.map((value) => (
+                  <SelectItem key={value} value={value}>
+                    {value.toUpperCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </header>
+        <div className={styles.content}>
+          <div className={styles.pageHeading}>
+            <div>
+              <p className="mb-2 text-xs font-medium uppercase tracking-widest text-primary">
+                Content management · {locale.toUpperCase()}
+              </p>
+              <h1 className="text-2xl font-semibold tracking-tight">
+                {preview ? "Preview draft CV" : current.label}
+              </h1>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {preview
+                  ? "Preview current workspace content before publishing."
+                  : current.description}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
               <Button
                 variant="outline"
                 size="sm"
-                className="mt-3"
-                disabled={pending || dirty || !newLocale}
-                onClick={addLanguage}
-              >
-                Create draft language
-              </Button>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Copies current draft. Translate before publishing. Save your
-                edits first.
-              </p>
-            </div>
-            <Link
-              href={publicPath(locale)}
-              className="mt-6 block px-4 text-sm text-primary"
-            >
-              Open published site ↗
-            </Link>
-          </aside>
-          <section className="rounded-2xl border border-border bg-card p-6">
-            <h2 className="mb-6 text-2xl font-semibold capitalize">{tab}</h2>
-            {tab === "cvs" && (
-              <p className="mb-6 text-sm text-muted-foreground">
-                Select shared projects, skills and experience. Use the arrows to
-                set their order in this CV.
-              </p>
-            )}
-            <ContentContext.Provider value={data}>
-              <Field
-                name={tab}
-                value={data[tab] as Json}
                 disabled={pending}
-                onChange={(v) => {
-                  setData({ ...data, [tab]: v });
-                  setDirty(true);
-                }}
+                onClick={() => setPreview(!preview)}
+              >
+                <Eye size={15} />
+                {preview ? "Back to content" : "Preview CV"}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pending || !dirty}
+                onClick={() => save(false)}
+              >
+                <Save size={15} />
+                Save draft
+              </Button>
+              <Button size="sm" disabled={pending} onClick={() => save(true)}>
+                {pending ? (
+                  <Loader2 size={15} className="animate-spin" />
+                ) : (
+                  <Upload size={15} />
+                )}
+                {pending ? "Saving…" : "Publish"}
+              </Button>
+            </div>
+          </div>
+          {status && (
+            <p
+              role={status.error ? "alert" : "status"}
+              className={`${styles.notice} ${status.error ? styles.error : ""}`}
+            >
+              {status.message}
+            </p>
+          )}
+          <ContentContext.Provider value={data}>
+            {preview ? (
+              <div className="space-y-5">
+                <Select
+                  value={
+                    data.cvs.some((cv) => cv.id === previewCv)
+                      ? previewCv
+                      : data.cvs[0].id
+                  }
+                  onValueChange={setPreviewCv}
+                >
+                  <SelectTrigger
+                    className="w-full bg-card sm:w-80"
+                    aria-label="Preview CV"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {data.cvs.map((cv) => (
+                      <SelectItem key={cv.id} value={cv.id}>
+                        {cv.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className={styles.preview}>
+                  <CvDocument
+                    data={data}
+                    variant={
+                      data.cvs.some((cv) => cv.id === previewCv)
+                        ? previewCv
+                        : data.cvs[0].id
+                    }
+                  />
+                </div>
+              </div>
+            ) : tab === "overview" ? (
+              <Overview
+                data={data}
+                locales={locales}
+                onSelect={select}
+                publishedAt={publishedAt}
               />
-            </ContentContext.Provider>
-          </section>
+            ) : tab === "translations" ? (
+              <div className={styles.overviewGrid}>
+                <Card className="border-border">
+                  <CardHeader>
+                    <CardTitle>Content languages</CardTitle>
+                    <CardDescription>
+                      Each language has its own draft and published version.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    {locales.map((value) => (
+                      <div
+                        key={value}
+                        className="flex items-center justify-between rounded-lg border border-border p-4"
+                      >
+                        <span className="flex items-center gap-3">
+                          <Languages size={17} className="text-primary" />
+                          <strong className="text-sm">
+                            {value.toUpperCase()}
+                          </strong>
+                        </span>
+                        {value === locale ? (
+                          <Badge variant="secondary">Editing</Badge>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={pending}
+                            onClick={() => switchLocale(value)}
+                          >
+                            Open
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+                <Card className="border-border">
+                  <CardHeader>
+                    <CardTitle>Add a translation</CardTitle>
+                    <CardDescription>
+                      Copy this language’s saved draft, then translate it before
+                      publishing.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="new-locale">Locale code</Label>
+                      <Input
+                        id="new-locale"
+                        placeholder="vi"
+                        value={newLocale}
+                        disabled={pending}
+                        onChange={(event) => setNewLocale(event.target.value)}
+                      />
+                    </div>
+                    <Button
+                      disabled={pending || dirty || !newLocale.trim()}
+                      onClick={addLanguage}
+                    >
+                      Create draft language
+                    </Button>
+                    <p className="text-xs text-muted-foreground">
+                      {dirty
+                        ? "Save your workspace changes before creating a translation."
+                        : "Examples: en, vi, ja. Existing languages cannot be overwritten."}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            ) : isCollection(tab) ? (
+              <CollectionManager
+                key={tab}
+                section={tab}
+                data={data}
+                disabled={pending}
+                onChange={(value) => update(tab, value)}
+              />
+            ) : (
+              <Card className="border-border">
+                <CardHeader>
+                  <CardTitle>{current.label}</CardTitle>
+                  <CardDescription>
+                    Changes apply to the current language. Save a draft or
+                    publish when ready.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Field
+                    name={tab}
+                    value={data[tab] as Json}
+                    disabled={pending}
+                    onChange={(value) => update(tab, value)}
+                  />
+                </CardContent>
+              </Card>
+            )}
+          </ContentContext.Provider>
+          <footer className="mt-8 flex flex-wrap justify-between gap-2 border-t border-border pt-4 text-xs text-muted-foreground">
+            <span>
+              Revision {revision} · {locale.toUpperCase()}
+            </span>
+            <span>Public pages and PDFs use published content only.</span>
+          </footer>
         </div>
-      )}
-      <p className="mt-8 text-xs text-muted-foreground">
-        {publishedAt
-          ? `Published content exists · loaded ${new Date(publishedAt).toISOString()}`
-          : "This language has not been published."}{" "}
-        · Public pages and PDFs use published content only.
-      </p>
-    </>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
