@@ -34,7 +34,12 @@
     "Telegram Bot API",
     "Claude Code",
     "OpenAI Codex",
-    "Google Antigravity"
+    "Google Antigravity",
+    "Python",
+    "Playwright",
+    "Pydantic",
+    "Supabase",
+    "GitHub Actions"
   ],
   "roles": ["Software Engineer", "Frontend Team Lead", "Creator / Maintainer"],
   "skills": [
@@ -287,6 +292,32 @@
         "Implemented authorization checks, timeouts, and fallback to local prompts; reviewed AI-assisted changes and verified behavior through automated and end-to-end tests."
       ],
       "repository": "https://github.com/sdc-ren/cc-notify-telegram",
+      "demo": "",
+      "featured": true
+    },
+    {
+      "id": "altfins",
+      "title": "altfins: Crypto Monitoring & Telegram Alerts",
+      "role": "Creator / Maintainer",
+      "category": "Automation & data pipelines",
+      "summary": "Runs 24/7 to collect cryptocurrency analysis from altFINS, store structured data in Supabase, and deliver updates through Telegram.",
+      "description": "A Python automation service for monitoring cryptocurrency analysis without manually revisiting multiple altFINS pages. The service operates around the clock and sends source-specific updates to Telegram. Its pipeline separates browser automation, typed data models, persistence, and notification delivery so each part can be maintained independently.",
+      "tech": [
+        "Python",
+        "Playwright",
+        "Pydantic",
+        "Supabase",
+        "PostgreSQL",
+        "Telegram Bot API",
+        "GitHub Actions"
+      ],
+      "highlights": [
+        "Built a Playwright pipeline for Technical Analysis, Chart Patterns, and Market Highlights, with Pydantic models to normalize extracted records.",
+        "Persisted market indicators in Supabase and synchronized browser session state to reuse authenticated sessions across automated runs.",
+        "Added same-source and cross-source deduplication, database retries, and source-specific Telegram notifications.",
+        "Automated execution through GitHub Actions and an external scheduler; operated the service 24/7 for ongoing cryptocurrency updates."
+      ],
+      "repository": "https://github.com/sdc-ren/altfins",
       "demo": "",
       "featured": true
     }
