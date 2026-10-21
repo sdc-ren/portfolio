@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useContext, useId } from "react";
 import { ArrowUp, ArrowDown } from "lucide-react";
+import { ChipPicker } from "./chip-picker";
+import { technologySuggestions, roleSuggestions } from "./chip-options";
 import type { PortfolioContent } from "@/features/content/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,6 +47,47 @@ export function Field({
   const label =
     labels[name] ??
     name.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
+  if (name === "role" && typeof value === "string")
+    return (
+      <ChipPicker
+        label={label}
+        single
+        value={value ? [value] : []}
+        options={[...(content?.roles ?? []), ...roleSuggestions]}
+        disabled={disabled}
+        onChange={(next) => onChange(next[0] ?? "")}
+      />
+    );
+  if (
+    Array.isArray(value) &&
+    ["technologies", "tech", "roles", "items"].includes(name)
+  ) {
+    const options =
+      name === "roles"
+        ? [
+            ...(content?.roles ?? []),
+            ...(content?.experience.map((item) => item.role) ?? []),
+            ...(content?.projects.map((item) => item.role) ?? []),
+            ...roleSuggestions,
+          ]
+        : [
+            ...(content?.technologies ?? []),
+            ...(name === "items"
+              ? (content?.skills.flatMap((item) => item.items) ?? [])
+              : []),
+            ...(content?.projects.flatMap((item) => item.tech) ?? []),
+            ...(name === "technologies" ? technologySuggestions : []),
+          ];
+    return (
+      <ChipPicker
+        label={label}
+        value={value as string[]}
+        options={options}
+        disabled={disabled}
+        onChange={onChange}
+      />
+    );
+  }
   if (typeof value === "boolean")
     return (
       <div className="flex items-center gap-3">
@@ -83,24 +126,6 @@ export function Field({
             disabled={disabled || (name === "id" && lockId)}
             onChange={(e) => onChange(e.target.value)}
           />
-        )}
-        {name === "role" && (
-          <div className="flex flex-wrap gap-2">
-            {content?.roles
-              .filter((role) => role !== value)
-              .map((role) => (
-                <Button
-                  key={role}
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  disabled={disabled}
-                  onClick={() => onChange(role)}
-                >
-                  {role}
-                </Button>
-              ))}
-          </div>
         )}
       </div>
     );
@@ -208,26 +233,6 @@ export function Field({
             onChange={(e) => onChange(e.target.value.split("\n"))}
           />
         </div>
-        {name === "tech" && (
-          <span className="mt-3 flex flex-wrap gap-2">
-            {content?.technologies
-              .filter((tech) => !(value as string[]).includes(tech))
-              .map((tech) => (
-                <Button
-                  key={tech}
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  disabled={disabled}
-                  onClick={() =>
-                    onChange([...(value as string[]).filter(Boolean), tech])
-                  }
-                >
-                  + {tech}
-                </Button>
-              ))}
-          </span>
-        )}
       </div>
     );
   }
