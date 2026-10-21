@@ -367,7 +367,7 @@ export function CollectionManager({
               />
             )}
             {original && (
-              <p className="mt-6 text-xs text-muted-foreground">
+              <p className={styles.fieldHint}>
                 Existing IDs are locked to preserve URLs and CV references.
               </p>
             )}

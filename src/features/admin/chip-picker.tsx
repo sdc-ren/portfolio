@@ -169,7 +169,7 @@ export function ChipPicker({
           Add
         </Button>
       </div>
-      <p className="mt-2 text-xs text-muted-foreground">
+      <p className={styles.hint}>
         {single
           ? "Select one value, or add your own."
           : "Check a chip to select it; uncheck to remove it. Custom values are supported."}
