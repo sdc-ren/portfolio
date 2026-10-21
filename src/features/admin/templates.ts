@@ -1,0 +1,45 @@
+import type { Json } from "./editor-fields";
+export const templates: Record<string, Json> = {
+  projects: {
+    id: "new-project",
+    title: "New project",
+    role: "Developer",
+    category: "Product engineering",
+    summary: "Describe the project.",
+    description: "Describe the problem, approach and outcomes.",
+    tech: [],
+    highlights: [],
+    repository: "",
+    demo: "",
+    featured: false,
+  },
+  experience: {
+    id: "new-experience",
+    company: "Company",
+    role: "Role",
+    period: "2026 – Present",
+    location: "Location",
+    highlights: [],
+  },
+  skills: { id: "new-skill", name: "Skill group", items: [] },
+  education: {
+    id: "new-education",
+    institution: "Institution",
+    qualification: "Qualification",
+    year: "2026",
+  },
+  languages: {
+    id: "new-language",
+    name: "Language",
+    proficiency: "Proficiency",
+  },
+  cvs: {
+    id: "new-cv",
+    title: "CV title",
+    summary: "Professional summary",
+    specialties: "Specialties",
+    projectIds: [],
+    skillIds: [],
+    experienceIds: [],
+  },
+};
