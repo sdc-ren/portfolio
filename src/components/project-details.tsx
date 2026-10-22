@@ -23,24 +23,14 @@ export function ProjectDetails({
         labels={labels}
       />
       {(project.role || project.tech.length > 0) && (
-        <div className={styles.metadata}>
-          {project.role && (
-            <div className={styles.role}>
-              <span className={styles.badge}>{project.role}</span>
-            </div>
-          )}
-          {project.tech.length > 0 && (
-            <div>
-              <ul className={styles.techList} aria-label={labels.technology}>
-                {project.tech.map((tech) => (
-                  <li key={tech} className={styles.badge}>
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+        <ul className={styles.metadata}>
+          {project.role && <li className={styles.badge}>{project.role}</li>}
+          {project.tech.map((tech) => (
+            <li key={tech} className={styles.badge}>
+              {tech}
+            </li>
+          ))}
+        </ul>
       )}
       <ProjectLinks links={project.links} labels={labels} />
       {project.description.trim() !==
