@@ -54,7 +54,7 @@ export function ProjectCard({
             >
               <span className={styles.title}>
                 <span className={styles.titleText}>
-                  {project.title.split(" — ")[0]}
+                  {project.title.split(/ (?:-|\u2014) /)[0]}
                 </span>
                 <Expand size={18} aria-hidden="true" />
               </span>

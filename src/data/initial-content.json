@@ -188,7 +188,7 @@
   "projects": [
     {
       "id": "jinjer",
-      "title": "Jinjer — Interactive PDF Editing",
+      "title": "Jinjer - Interactive PDF Editing",
       "role": "Frontend Team Lead",
       "category": "Product engineering",
       "summary": "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.",
@@ -213,7 +213,7 @@
     },
     {
       "id": "twinci",
-      "title": "Twinci — NFT Creation & Publishing Platform",
+      "title": "Twinci - NFT Creation & Publishing Platform",
       "role": "Developer / Frontend Lead",
       "category": "Product engineering",
       "summary": "Contributed across Vue.js frontend development, Java services, and smart contract development for NFT creation and publishing workflows.",
@@ -271,7 +271,7 @@
     },
     {
       "id": "gdrive-cli",
-      "title": "gdrive-cli — Google Workspace Agent Tooling",
+      "title": "gdrive-cli - Google Workspace Agent Tooling",
       "role": "Creator / Maintainer",
       "category": "Open source",
       "summary": "Built an MCP server, CLI, and Node.js library for Google Workspace access; used the tool in personal workflows and a remote project.",
@@ -301,7 +301,7 @@
     },
     {
       "id": "cc-notify-telegram",
-      "title": "cc-notify-telegram — Remote AI Agent Notifications",
+      "title": "cc-notify-telegram - Remote AI Agent Notifications",
       "role": "Creator / Maintainer",
       "category": "Open source",
       "summary": "Built Telegram integrations for AI coding assistants and regularly used the tool with Claude Code for completion alerts, questions, and remote permission decisions.",
