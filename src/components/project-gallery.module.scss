@@ -1,26 +1,20 @@
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-.position {
-  min-width: 48px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--muted-foreground);
-  font-variant-numeric: tabular-nums;
-}
 .thumbnails {
   display: flex;
+  flex-wrap: nowrap;
+  min-width: 0;
+  max-width: 100%;
   gap: 8px;
   overflow-x: auto;
   padding: 4px;
   scroll-snap-type: x proximity;
 }
+.detailStrip {
+  min-width: 0;
+  margin-bottom: 20px;
+}
 .thumbnail {
-  flex-shrink: 0;
-  width: 88px;
+  flex: 0 0 60px;
+  width: 60px;
   height: 60px;
   padding: 2px;
   border: 2px solid transparent;
@@ -43,31 +37,160 @@
   object-fit: cover;
   border-radius: 4px;
 }
-.caption {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--muted-foreground);
-  text-align: center;
-  overflow-wrap: anywhere;
-}
 .lightbox {
-  width: calc(100vw - 32px);
-  max-width: 1120px;
-  max-height: calc(100dvh - 32px);
-  overflow-y: auto;
-  background: var(--card);
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #090b10;
+  color: #f8fafc;
+  translate: none;
+  transform: none;
+  animation: none;
+}
+.viewerHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+  padding: max(18px, env(safe-area-inset-top))
+    max(84px, calc(env(safe-area-inset-right) + 72px)) 18px
+    max(24px, env(safe-area-inset-left));
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
 }
 .lightboxTitle {
-  padding-right: 24px;
-  line-height: 1.5;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.position {
+  flex-shrink: 0;
+  color: #a5adbc;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 20px 92px;
 }
 .fullImage {
   display: block;
   width: 100%;
-  max-height: 65dvh;
-  min-height: 120px;
+  height: 100%;
+  min-height: 0;
+  max-height: 100%;
   object-fit: contain;
+}
+.navigationButton,
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 6%);
+  color: #f8fafc;
+  opacity: 1;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease;
+  &:hover {
+    background: rgb(255 255 255 / 15%);
+    border-color: rgb(255 255 255 / 38%);
+  }
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+  }
+  &:disabled {
+    opacity: 0.25;
+  }
+}
+.navigationButton {
+  position: absolute;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  translate: 0 -50%;
+}
+.previous {
+  left: max(20px, env(safe-area-inset-left));
+}
+.next {
+  right: max(20px, env(safe-area-inset-right));
+}
+.closeButton {
+  top: max(10px, env(safe-area-inset-top));
+  right: max(20px, env(safe-area-inset-right));
+  width: 40px;
+  height: 40px;
+  > svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+.filmstrip {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px max(24px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  border-top: 1px solid rgb(255 255 255 / 8%);
+  background: #0e1118;
+  .thumbnails {
+    width: fit-content;
+    margin-inline: auto;
+    padding: 4px;
+  }
+  .thumbnail {
+    background: rgb(255 255 255 / 7%);
+    opacity: 0.55;
+    transition:
+      opacity 150ms ease,
+      border-color 150ms ease;
+    &:hover {
+      opacity: 0.85;
+    }
+    &[aria-pressed="true"] {
+      border-color: #f8fafc;
+      opacity: 1;
+    }
+    &:focus-visible {
+      outline-color: #fff;
+    }
+  }
+}
+.caption {
+  margin: 0;
+  max-height: 3.2em;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #b9c0cc;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 .failed {
   display: flex;
@@ -77,4 +200,79 @@
   color: var(--muted-foreground);
   background: var(--muted);
   font-size: 12px;
+}
+.stage .failed {
+  color: #b9c0cc;
+  background: #11151e;
+}
+@media (max-width: 640px) {
+  .viewerHeader {
+    gap: 10px;
+    min-height: 52px;
+    padding: max(14px, env(safe-area-inset-top))
+      max(72px, calc(env(safe-area-inset-right) + 60px)) 14px
+      max(16px, env(safe-area-inset-left));
+  }
+  .lightboxTitle {
+    font-size: 13px;
+  }
+  .stage {
+    padding: 12px max(58px, calc(env(safe-area-inset-right) + 52px)) 12px
+      max(58px, calc(env(safe-area-inset-left) + 52px));
+  }
+  .navigationButton {
+    width: 44px;
+    height: 44px;
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  .previous {
+    left: max(6px, env(safe-area-inset-left));
+  }
+  .next {
+    right: max(6px, env(safe-area-inset-right));
+  }
+  .closeButton {
+    right: max(8px, env(safe-area-inset-right));
+    top: max(4px, env(safe-area-inset-top));
+    width: 44px;
+    height: 44px;
+  }
+  .filmstrip {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
+@media (max-height: 480px) and (orientation: landscape) {
+  .closeButton {
+    width: 44px;
+    height: 44px;
+    top: max(2px, env(safe-area-inset-top));
+  }
+  .viewerHeader {
+    min-height: 48px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .stage {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .filmstrip {
+    gap: 6px;
+    padding-top: 6px;
+    padding-bottom: max(6px, env(safe-area-inset-bottom));
+  }
+  .caption {
+    max-height: 1.6em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .navigationButton,
+  .closeButton,
+  .filmstrip .thumbnail {
+    transition: none;
+  }
 }
