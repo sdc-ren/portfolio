@@ -24,13 +24,18 @@ export function ProjectDetails({
       />
       {(project.role || project.tech.length > 0) && (
         <div className={styles.metadata}>
-          {project.role && <p className={styles.role}>{project.role}</p>}
+          {project.role && (
+            <div className={styles.role}>
+              <span className={styles.badge}>{project.role}</span>
+            </div>
+          )}
           {project.tech.length > 0 && (
-            <div className={styles.technology}>
-              <span className={styles.label}>{labels.technology}</span>
-              <ul className={styles.techList}>
+            <div>
+              <ul className={styles.techList} aria-label={labels.technology}>
                 {project.tech.map((tech) => (
-                  <li key={tech}>{tech}</li>
+                  <li key={tech} className={styles.badge}>
+                    {tech}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -40,15 +45,15 @@ export function ProjectDetails({
       <ProjectLinks links={project.links} labels={labels} />
       {project.description.trim() !==
         project.highlights.join("\n\n").trim() && (
-        <div className="prose border-t border-border pt-6 text-muted-foreground">
+        <div className="prose text-muted-foreground">
           <Markdown>{project.description}</Markdown>
         </div>
       )}
       <h2 className="mb-4 mt-7 text-base font-semibold">
-        {labels.contributions === "Contributions"
-          ? "Highlights"
-          : labels.contributions === "Đóng góp"
-            ? "Điểm nổi bật"
+        {["Contributions", "Highlights"].includes(labels.contributions)
+          ? "Project details"
+          : ["Đóng góp", "Điểm nổi bật"].includes(labels.contributions)
+            ? "Chi tiết dự án"
             : labels.contributions}
       </h2>
       <ul className="list-disc space-y-3 pl-5 text-muted-foreground">
