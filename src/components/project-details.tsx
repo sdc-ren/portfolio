@@ -34,7 +34,7 @@ export function ProjectDetails({
           />
         </section>
       )}
-      <h2 className="mb-4 mt-7 text-base font-semibold">
+      <h2 className="mb-4 text-base font-semibold">
         {["Contributions", "Highlights"].includes(labels.contributions)
           ? "Project details"
           : ["Đóng góp", "Điểm nổi bật"].includes(labels.contributions)
