@@ -10,10 +10,12 @@ export function ProjectDetails({
   project,
   labels,
   showMetadata = true,
+  showLinks = true,
 }: {
   project: PortfolioContent["projects"][number];
   labels: UiLabels;
   showMetadata?: boolean;
+  showLinks?: boolean;
 }) {
   return (
     <>
@@ -37,7 +39,7 @@ export function ProjectDetails({
             ? "Chi tiết dự án"
             : labels.contributions}
       </h2>
-      <ProjectLinks links={project.links} labels={labels} />
+      {showLinks && <ProjectLinks links={project.links} labels={labels} />}
       {project.description.trim() !==
         project.highlights.join("\n\n").trim() && (
         <div className="prose mb-5 text-muted-foreground">

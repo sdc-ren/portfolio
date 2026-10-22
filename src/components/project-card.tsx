@@ -92,18 +92,28 @@ export function ProjectCard({
             <DialogDescription className="line-clamp-3">
               {project.summary}
             </DialogDescription>
-            <ProjectMetadata project={project} />
+            <div className="!mt-2">
+              <ProjectMetadata project={project} />
+            </div>
           </DialogHeader>
           <div className="overflow-y-auto overscroll-contain px-6 py-5">
             <ProjectDetails
               project={project}
               labels={labels}
               showMetadata={false}
+              showLinks={false}
             />
           </div>
-          <DialogFooter className="border-t border-border px-6 py-4">
+          <DialogFooter className="flex-row items-center justify-between gap-3 border-t border-border px-6 py-4 sm:justify-between sm:space-x-0">
+            <ProjectLinks
+              links={project.links}
+              labels={labels}
+              className="flex min-w-0 flex-1 flex-wrap gap-1"
+            />
             <DialogClose asChild>
-              <Button variant="outline">{labels.closeDialog}</Button>
+              <Button variant="outline" className="ml-auto shrink-0">
+                {labels.closeDialog}
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
