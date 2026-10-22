@@ -31,15 +31,26 @@ export function ProjectLinks({
 }) {
   if (!links.length) return null;
   return (
-    <div className="mb-6 flex flex-wrap gap-3">
+    <div className="mb-6 flex flex-wrap gap-1">
       {links.map((link) => {
         const Icon = icons[link.type];
+        const label = projectLinkLabel(link, labels);
         return (
-          <Button key={link.id} asChild variant="outline">
-            <a href={link.url} target="_blank" rel="noopener noreferrer">
+          <Button
+            key={link.id}
+            asChild
+            variant="ghost"
+            size="icon"
+            tooltip={label}
+            className="size-11 sm:size-9"
+          >
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+            >
               <Icon size={16} aria-hidden="true" />
-              {projectLinkLabel(link, labels)}
-              <ExternalLink size={12} aria-hidden="true" />
             </a>
           </Button>
         );
