@@ -1,5 +1,11 @@
 import { z } from "zod";
 import { uiSchema } from "./ui";
+import {
+  legacyProjectLinks,
+  projectImageSchema,
+  projectLinkSchema,
+  MAX_PROJECT_IMAGES,
+} from "./project-assets";
 const text = z.string().trim().min(1).max(20000);
 const short = z.string().trim().min(1).max(200);
 const slug = z
@@ -12,19 +18,47 @@ const url = z.union([
 ]);
 const list = z.array(short).max(100);
 export const localeSchema = z.string().regex(/^[a-z]{2}(?:-[A-Z]{2})?$/);
-export const projectSchema = z.object({
-  id: slug,
-  title: short,
-  role: short,
-  category: short,
-  summary: text,
-  description: text,
-  tech: list,
-  highlights: z.array(text).max(30),
-  repository: url,
-  demo: url,
-  featured: z.boolean(),
-});
+export const projectSchema = z
+  .object({
+    id: slug,
+    title: short,
+    role: short,
+    category: short,
+    summary: text,
+    description: text,
+    tech: list,
+    highlights: z.array(text).max(30),
+    repository: url.optional(),
+    demo: url.optional(),
+    links: z.array(projectLinkSchema).max(12).optional(),
+    images: z.array(projectImageSchema).max(MAX_PROJECT_IMAGES).default([]),
+    coverImageId: z.string().max(80).default(""),
+    featured: z.boolean(),
+  })
+  .superRefine((project, ctx) => {
+    for (const key of ["links", "images"] as const) {
+      const ids = (project[key] ?? []).map((item) => item.id);
+      if (new Set(ids).size !== ids.length)
+        ctx.addIssue({
+          code: "custom",
+          path: [key],
+          message: "IDs must be unique",
+        });
+    }
+    if (
+      project.coverImageId &&
+      !project.images.some((image) => image.id === project.coverImageId)
+    )
+      ctx.addIssue({
+        code: "custom",
+        path: ["coverImageId"],
+        message: "Choose an image from this gallery",
+      });
+  })
+  .transform(({ repository, demo, ...project }) => ({
+    ...project,
+    links: project.links ?? legacyProjectLinks(repository, demo),
+  }));
 export const contentSchema = z
   .object({
     ui: uiSchema,

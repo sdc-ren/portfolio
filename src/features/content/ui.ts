@@ -1,5 +1,16 @@
 import { z } from "zod";
 export const englishUi = {
+  visitWebsite: "Visit website",
+  installExtension: "Install extension",
+  downloadAppStore: "Download on App Store",
+  downloadGooglePlay: "Get it on Google Play",
+  joinBeta: "Join beta",
+  projectGallery: "Project screenshots",
+  viewImage: "View image",
+  previousImage: "Previous image",
+  nextImage: "Next image",
+  imageUnavailable: "Image unavailable",
+
   closeDialog: "Close",
   navProjects: "Projects",
   navExperience: "Experience",
@@ -45,6 +56,17 @@ export const englishUi = {
 } as const;
 export type UiLabels = { [K in keyof typeof englishUi]: string };
 export const vietnameseUi: UiLabels = {
+  visitWebsite: "Xem website",
+  installExtension: "Cài tiện ích",
+  downloadAppStore: "Tải trên App Store",
+  downloadGooglePlay: "Tải trên Google Play",
+  joinBeta: "Tham gia thử nghiệm",
+  projectGallery: "Hình ảnh dự án",
+  viewImage: "Xem ảnh",
+  previousImage: "Ảnh trước",
+  nextImage: "Ảnh tiếp theo",
+  imageUnavailable: "Không tải được ảnh",
+
   closeDialog: "Đóng",
   navProjects: "Dự án",
   navExperience: "Kinh nghiệm",
@@ -91,6 +113,52 @@ export const vietnameseUi: UiLabels = {
 // Defaults preserve existing documents; each locale can override every public label.
 export const uiSchema = z
   .object({
+    visitWebsite: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.visitWebsite),
+    installExtension: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.installExtension),
+    downloadAppStore: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.downloadAppStore),
+    downloadGooglePlay: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.downloadGooglePlay),
+    joinBeta: z.string().trim().min(1).max(1000).default(englishUi.joinBeta),
+    projectGallery: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.projectGallery),
+    viewImage: z.string().trim().min(1).max(1000).default(englishUi.viewImage),
+    previousImage: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.previousImage),
+    nextImage: z.string().trim().min(1).max(1000).default(englishUi.nextImage),
+    imageUnavailable: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.imageUnavailable),
+
     cvLanguages: z
       .string()
       .trim()

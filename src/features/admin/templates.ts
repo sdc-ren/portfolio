@@ -9,8 +9,9 @@ export const templates: Record<string, Json> = {
     description: "Describe the problem, approach and outcomes.",
     tech: [],
     highlights: [],
-    repository: "",
-    demo: "",
+    links: [],
+    images: [],
+    coverImageId: "",
     featured: false,
   },
   experience: {

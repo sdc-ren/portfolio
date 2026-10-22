@@ -28,7 +28,15 @@ test("Duplicate IDs and unsafe project links are rejected", () => {
   d.projects[1].id = d.projects[0].id;
   assert.equal(contentSchema.safeParse(d).success, false);
   d.projects[1].id = "other";
-  d.projects[0].repository = "javascript:alert(1)";
+  d.projects[0].links = [
+    {
+      id: "unsafe",
+      type: "website",
+      url: "javascript:alert(1)",
+      label: "",
+      showInCv: false,
+    },
+  ];
   assert.equal(contentSchema.safeParse(d).success, false);
 });
 test("CV selection follows the configured order", () => {

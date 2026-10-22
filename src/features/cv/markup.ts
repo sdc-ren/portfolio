@@ -1,4 +1,5 @@
 import type { PortfolioContent } from "@/features/content/schema";
+import { projectLinkLabel } from "@/features/content/project-link-label";
 import { selectByIds } from "@/features/content/schema";
 
 export function escapeHtml(value: string) {
@@ -61,7 +62,15 @@ ${section(
   selectByIds(data.projects, cv.projectIds)
     .map(
       (item) =>
-        `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.title)}</h3><span class="cv-date">${e(item.role)}</span></div>${item.repository ? `<p class="cv-project-link">${link(item.repository, displayUrl(item.repository))}</p>` : ""}<p class="cv-project-tech">${e(item.tech.join(" · "))}</p>${bullets(item.highlights)}</article>`,
+        `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.title)}</h3><span class="cv-date">${e(item.role)}</span></div>${item.links
+          .filter((item) => item.showInCv)
+          .map(
+            (item) =>
+              `<p class="cv-project-link">${link(item.url, `${projectLinkLabel(item, data.ui)}: ${displayUrl(item.url)}`)}</p>`,
+          )
+          .join(
+            "",
+          )}<p class="cv-project-tech">${e(item.tech.join(" · "))}</p>${bullets(item.highlights)}</article>`,
     )
     .join(""),
   "cv-page-start",

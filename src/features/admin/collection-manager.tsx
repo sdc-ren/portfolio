@@ -40,6 +40,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ProjectEditor } from "./project-editor";
 import { Field, type Json } from "./editor-fields";
 import { templates } from "./templates";
 import {
@@ -74,6 +75,7 @@ export function CollectionManager({
   const [filter, setFilter] = useState("all");
   const [draft, setDraft] = useState<RecordValue | null>(null);
   const [original, setOriginal] = useState<RecordValue | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [discard, setDiscard] = useState(false);
   const [removing, setRemoving] = useState<RecordValue | null>(null);
@@ -81,11 +83,11 @@ export function CollectionManager({
   const changed = !!draft && JSON.stringify(draft) !== JSON.stringify(original);
   useEffect(() => {
     const protect = (event: BeforeUnloadEvent) => {
-      if (changed) event.preventDefault();
+      if (changed || uploading) event.preventDefault();
     };
     window.addEventListener("beforeunload", protect);
     return () => window.removeEventListener("beforeunload", protect);
-  }, [changed]);
+  }, [changed, uploading]);
   const visible = items.filter((item) => {
     const matches = JSON.stringify(item)
       .toLowerCase()
@@ -110,6 +112,7 @@ export function CollectionManager({
     setError("");
   };
   const close = () => {
+    if (uploading) return;
     if (changed) setDiscard(true);
     else setDraft(null);
   };
@@ -354,18 +357,31 @@ export function CollectionManager({
             </SheetDescription>
           </SheetHeader>
           <div className={styles.sheetBody}>
-            {draft && (
-              <Field
-                name={`${section}-item`}
-                value={draft}
-                disabled={disabled}
-                lockId={!!original}
-                onChange={(value) => {
-                  setDraft(value as RecordValue);
-                  setError("");
-                }}
-              />
-            )}
+            {draft &&
+              (section === "projects" ? (
+                <ProjectEditor
+                  value={draft}
+                  disabled={disabled}
+                  lockId={!!original}
+                  uploading={uploading}
+                  onBusyChange={setUploading}
+                  onChange={(value) => {
+                    setDraft(value as RecordValue);
+                    setError("");
+                  }}
+                />
+              ) : (
+                <Field
+                  name={`${section}-item`}
+                  value={draft}
+                  disabled={disabled}
+                  lockId={!!original}
+                  onChange={(value) => {
+                    setDraft(value as RecordValue);
+                    setError("");
+                  }}
+                />
+              ))}
             {original && (
               <p className={styles.fieldHint}>
                 Existing IDs are locked to preserve URLs and CV references.
@@ -381,10 +397,14 @@ export function CollectionManager({
             )}
           </div>
           <SheetFooter className="flex-row justify-end border-t border-border">
-            <Button variant="outline" disabled={disabled} onClick={close}>
+            <Button
+              variant="outline"
+              disabled={disabled || uploading}
+              onClick={close}
+            >
               Cancel
             </Button>
-            <Button disabled={disabled} onClick={apply}>
+            <Button disabled={disabled || uploading} onClick={apply}>
               Apply changes
             </Button>
           </SheetFooter>
