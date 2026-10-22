@@ -1,3 +1,4 @@
+import styles from "./project-details.module.scss";
 import Markdown from "react-markdown";
 import type { PortfolioContent } from "@/features/content/schema";
 import type { UiLabels } from "@/features/content/ui";
@@ -21,14 +22,21 @@ export function ProjectDetails({
         title={project.title}
         labels={labels}
       />
-      <p className="mt-6 text-muted-foreground">{project.role}</p>
-      <div className="my-8 flex flex-wrap gap-2">
-        {project.tech.map((t) => (
-          <span key={t} className="rounded bg-muted px-3 py-1 text-xs">
-            {t}
-          </span>
-        ))}
-      </div>
+      {(project.role || project.tech.length > 0) && (
+        <div className={styles.metadata}>
+          {project.role && <p className={styles.role}>{project.role}</p>}
+          {project.tech.length > 0 && (
+            <div className={styles.technology}>
+              <span className={styles.label}>{labels.technology}</span>
+              <ul className={styles.techList}>
+                {project.tech.map((tech) => (
+                  <li key={tech}>{tech}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
       <ProjectLinks links={project.links} labels={labels} />
       {project.description.trim() !==
         project.highlights.join("\n\n").trim() && (
@@ -36,7 +44,7 @@ export function ProjectDetails({
           <Markdown>{project.description}</Markdown>
         </div>
       )}
-      <h2 className="mb-5 mt-10 text-2xl font-semibold">
+      <h2 className="mb-4 mt-7 text-base font-semibold">
         {labels.contributions}
       </h2>
       <ul className="list-disc space-y-3 pl-5 text-muted-foreground">

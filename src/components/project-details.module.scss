@@ -1,0 +1,40 @@
+.metadata {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.role {
+  margin: 0;
+  font-size: 13px;
+}
+.technology {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.label {
+  flex-shrink: 0;
+}
+.techList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 480px) {
+  .technology {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

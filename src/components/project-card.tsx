@@ -1,4 +1,5 @@
 "use client";
+import { useRef } from "react";
 import { ProjectGallery } from "./project-gallery";
 import styles from "./project-card.module.scss";
 import { ActionTooltip } from "./action-tooltip";
@@ -26,6 +27,7 @@ export function ProjectCard({
   labels: UiLabels;
   index?: number;
 }) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
   return (
     <article className={styles.card}>
       <header className={styles.meta}>
@@ -67,6 +69,10 @@ export function ProjectCard({
         </ActionTooltip>
         <DialogContent
           closeLabel={labels.closeDialog}
+          onOpenAutoFocus={(event) => {
+            event.preventDefault();
+            titleRef.current?.focus();
+          }}
           onInteractOutside={(event) => event.preventDefault()}
           className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-3xl grid-rows-[auto_minmax(0,1fr)_auto] gap-0 overflow-hidden rounded-xl bg-card p-0"
         >
@@ -74,7 +80,11 @@ export function ProjectCard({
             <p className="text-xs uppercase tracking-widest text-primary">
               {project.category}
             </p>
-            <DialogTitle className="text-xl leading-snug sm:text-2xl">
+            <DialogTitle
+              ref={titleRef}
+              tabIndex={-1}
+              className="text-xl leading-snug outline-none sm:text-2xl"
+            >
               {project.title}
             </DialogTitle>
             <DialogDescription className="line-clamp-3">
