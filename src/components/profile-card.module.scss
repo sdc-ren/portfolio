@@ -127,3 +127,24 @@
     animation: none;
   }
 }
+
+.scene {
+  position: relative;
+  height: 186px;
+  overflow: hidden;
+}
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.replayButton {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .replayButton {
+    display: none;
+  }
+}

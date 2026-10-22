@@ -1,8 +1,11 @@
 "use client";
 
+import { useCallback, useState } from "react";
+import { Button } from "./ui/button";
+import { ProfileLocationIntro } from "./profile-location-intro";
 import { ProfileSequence } from "./profile-sequence";
 import { ActionAnchor } from "./action-link";
-import { Github, Linkedin, Mail, Code2 } from "lucide-react";
+import { Github, Linkedin, Mail, Code2, MapPin, RotateCcw } from "lucide-react";
 import type { PortfolioContent } from "@/features/content/schema";
 import styles from "./profile-card.module.scss";
 
@@ -13,6 +16,9 @@ export function ProfileCard({
   profile: PortfolioContent["profile"];
   emailLabel: string;
 }) {
+  const [introComplete, setIntroComplete] = useState(false);
+  const [replay, setReplay] = useState(0);
+  const finishIntro = useCallback(() => setIntroComplete(true), []);
   return (
     <aside className={styles.card} aria-label={profile.name}>
       <div className={styles.toolbar}>
@@ -22,11 +28,40 @@ export function ProfileCard({
           <i />
         </span>
         <span className={styles.filename}>
-          <Code2 size={14} aria-hidden="true" /> profile.ts
+          {introComplete ? (
+            <Code2 size={14} aria-hidden="true" />
+          ) : (
+            <MapPin size={14} aria-hidden="true" />
+          )}{" "}
+          {introComplete ? "profile.ts" : "location.svg"}
         </span>
-        <img src="/icon.svg" alt="SDC" width={28} height={28} />
+        <div className={styles.toolbarActions}>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className={styles.replayButton}
+            aria-label="Replay location intro"
+            onClick={() => {
+              setIntroComplete(false);
+              setReplay((value) => value + 1);
+            }}
+          >
+            <RotateCcw size={13} />
+          </Button>
+          <img src="/icon.svg" alt="SDC" width={28} height={28} />
+        </div>
       </div>
-      <ProfileSequence profile={profile} />
+      <div className={styles.scene}>
+        <ProfileSequence profile={profile} enabled={introComplete} />
+        {!introComplete && (
+          <ProfileLocationIntro
+            key={replay}
+            replay={replay}
+            onComplete={finishIntro}
+          />
+        )}
+      </div>
       <p className="sr-only">
         {profile.name}, {profile.role}, {profile.location}
       </p>
