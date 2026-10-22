@@ -16,6 +16,7 @@ export function ProjectDetails({
     <>
       <ProjectGallery
         images={project.images}
+        coverImageId={project.coverImageId}
         title={project.title}
         labels={labels}
       />

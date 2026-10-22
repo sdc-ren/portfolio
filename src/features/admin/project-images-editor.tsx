@@ -150,8 +150,8 @@ export function ProjectImagesEditor({
         <ImagePlus size={18} aria-hidden="true" />
       </div>
       <p className={styles.hint}>
-        Images appear on the website only. Choose a cover for the project card.
-        Review each image description for accessibility.
+        Images appear on the website only. Choose the image shown first when the
+        gallery opens. Review each image description for accessibility.
       </p>
       <div className={styles.upload}>
         <Label htmlFor={`${id}-upload`}>Upload screenshots</Label>
