@@ -130,6 +130,7 @@ export function ProjectGallery({
         </DialogTrigger>
       )}
       <DialogContent
+        layout="fullscreen"
         closeLabel={labels.closeDialog}
         closeClassName={styles.closeButton}
         className={styles.lightbox}
