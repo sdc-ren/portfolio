@@ -53,7 +53,7 @@ ${section(
   selectByIds(data.experience, cv.experienceIds)
     .map(
       (item) =>
-        `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.company)} — ${e(item.role)}</h3><span class="cv-date">${e(item.period)}</span></div><div class="cv-subhead">${e(item.location)}</div>${bullets(item.highlights)}</article>`,
+        `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.company)} - ${e(item.role)}</h3><span class="cv-date">${e(item.period)}</span></div><div class="cv-subhead">${e(item.location)}</div>${bullets(item.highlights)}</article>`,
     )
     .join(""),
 )}
@@ -75,6 +75,6 @@ ${section(
     .join(""),
   "cv-page-start",
 )}
-${section(data.ui.cvEducation, data.education.map((item) => `<p><b>${e(item.institution)}</b>${item.location ? `, ${e(item.location)}` : ""} — ${e(item.qualification)}, ${e(item.year)}</p>`).join(""))}
+${section(data.ui.cvEducation, data.education.map((item) => `<p><b>${e(item.institution)}</b>${item.location ? `, ${e(item.location)}` : ""} - ${e(item.qualification)}, ${e(item.year)}</p>`).join(""))}
 ${section(data.ui.cvLanguages, data.languages.map((item) => `<p><b>${e(item.name)}:</b> ${e(item.proficiency)}</p>`).join(""))}`;
 }

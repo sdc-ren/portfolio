@@ -1,4 +1,7 @@
 "use client";
+import { useRef } from "react";
+import { ProjectMetadata } from "./project-metadata";
+import { ProjectLinks } from "./project-links";
 import { ProjectGallery } from "./project-gallery";
 import styles from "./project-card.module.scss";
 import { ActionTooltip } from "./action-tooltip";
@@ -26,6 +29,7 @@ export function ProjectCard({
   labels: UiLabels;
   index?: number;
 }) {
+  const titleRef = useRef<HTMLHeadingElement>(null);
   return (
     <article className={styles.card}>
       <header className={styles.meta}>
@@ -50,7 +54,7 @@ export function ProjectCard({
             >
               <span className={styles.title}>
                 <span className={styles.titleText}>
-                  {project.title.split(" — ")[0]}
+                  {project.title.split(/ (?:-|\u2014) /)[0]}
                 </span>
                 <Expand size={18} aria-hidden="true" />
               </span>
@@ -67,6 +71,10 @@ export function ProjectCard({
         </ActionTooltip>
         <DialogContent
           closeLabel={labels.closeDialog}
+          onOpenAutoFocus={(event) => {
+            event.preventDefault();
+            titleRef.current?.focus();
+          }}
           onInteractOutside={(event) => event.preventDefault()}
           className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-3xl grid-rows-[auto_minmax(0,1fr)_auto] gap-0 overflow-hidden rounded-xl bg-card p-0"
         >
@@ -74,23 +82,52 @@ export function ProjectCard({
             <p className="text-xs uppercase tracking-widest text-primary">
               {project.category}
             </p>
-            <DialogTitle className="text-xl leading-snug sm:text-2xl">
+            <DialogTitle
+              ref={titleRef}
+              tabIndex={-1}
+              className="text-xl leading-snug outline-none sm:text-2xl"
+            >
               {project.title}
             </DialogTitle>
             <DialogDescription className="line-clamp-3">
               {project.summary}
             </DialogDescription>
+            <div className="!mt-2">
+              <ProjectMetadata project={project} />
+            </div>
           </DialogHeader>
           <div className="overflow-y-auto overscroll-contain px-6 py-5">
-            <ProjectDetails project={project} labels={labels} />
+            <ProjectDetails
+              project={project}
+              labels={labels}
+              showMetadata={false}
+              showLinks={false}
+            />
           </div>
-          <DialogFooter className="border-t border-border px-6 py-4">
+          <DialogFooter className="flex-row items-center justify-between gap-3 border-t border-border px-6 py-4 sm:justify-between sm:space-x-0">
+            <ProjectLinks
+              links={project.links}
+              labels={labels}
+              className="flex min-w-0 flex-1 flex-wrap gap-1"
+            />
             <DialogClose asChild>
-              <Button variant="outline">{labels.closeDialog}</Button>
+              <Button variant="outline" className="ml-auto shrink-0">
+                {labels.closeDialog}
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      {project.links.length > 0 && (
+        <div className={styles.cardLinks}>
+          <p className={styles.linksTitle}>Links</p>
+          <ProjectLinks
+            links={project.links}
+            labels={labels}
+            className="flex flex-wrap gap-1"
+          />
+        </div>
+      )}
     </article>
   );
 }

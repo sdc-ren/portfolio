@@ -6,8 +6,9 @@ import {
   projectLinkSchema,
   MAX_PROJECT_IMAGES,
 } from "./project-assets";
-const text = z.string().trim().min(1).max(20000);
-const short = z.string().trim().min(1).max(200);
+const normalizeDash = (value: string) => value.replaceAll("\u2014", "-");
+const text = z.string().trim().min(1).max(20000).transform(normalizeDash);
+const short = z.string().trim().min(1).max(200).transform(normalizeDash);
 const slug = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
