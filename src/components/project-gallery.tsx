@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Images } from "lucide-react";
 import type { ProjectImage as ImageValue } from "@/features/content/project-assets";
 import type { UiLabels } from "@/features/content/ui";
@@ -16,19 +16,70 @@ import {
 import { ProjectImage } from "./project-image";
 import styles from "./project-gallery.module.scss";
 
-/** Photos mount only when this dialog opens, keeping project cards compact. */
+function ThumbnailStrip({
+  images,
+  labels,
+  selectedId,
+  opensDialog = false,
+  onSelect,
+}: {
+  images: ImageValue[];
+  labels: UiLabels;
+  selectedId?: string;
+  opensDialog?: boolean;
+  onSelect: (id: string, trigger: HTMLButtonElement) => void;
+}) {
+  return (
+    <div
+      className={styles.thumbnails}
+      role="group"
+      aria-label={labels.projectGallery}
+    >
+      {images.map((image, i) => (
+        <ActionTooltip
+          key={image.id}
+          label={`${labels.viewImage} ${i + 1}: ${image.alt}`}
+        >
+          <button
+            type="button"
+            className={styles.thumbnail}
+            aria-pressed={
+              selectedId === undefined ? undefined : image.id === selectedId
+            }
+            aria-haspopup={opensDialog ? "dialog" : undefined}
+            aria-label={`${labels.viewImage} ${i + 1}: ${image.alt}`}
+            onClick={(event) => onSelect(image.id, event.currentTarget)}
+          >
+            <ProjectImage
+              src={image.url}
+              alt=""
+              unavailable={labels.imageUnavailable}
+              className={styles.thumbImage}
+            />
+          </button>
+        </ActionTooltip>
+      ))}
+    </div>
+  );
+}
+
+/** Card icons defer photos; detail views expose a compact thumbnail strip. */
 export function ProjectGallery({
   images,
   labels,
   title,
   coverImageId = "",
+  variant = "icon",
 }: {
   images: ImageValue[];
   labels: UiLabels;
   title: string;
   coverImageId?: string;
+  variant?: "icon" | "thumbnails";
 }) {
   const [selectedId, setSelectedId] = useState(coverImageId || images[0]?.id);
+  const [open, setOpen] = useState(false);
+  const thumbnailTrigger = useRef<HTMLButtonElement | null>(null);
   if (!images.length) return null;
   const index = Math.max(
     0,
@@ -38,26 +89,44 @@ export function ProjectGallery({
   const move = (delta: number) =>
     setSelectedId(images[(index + delta + images.length) % images.length].id);
   return (
-    <Dialog
-      onOpenChange={(open) => {
-        if (open) setSelectedId(coverImageId || images[0].id);
-      }}
-    >
-      <DialogTrigger asChild>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          aria-label={`${labels.projectGallery}: ${title}`}
-          tooltip={`${labels.projectGallery} (${images.length})`}
-        >
-          <Images size={18} aria-hidden="true" />
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      {variant === "thumbnails" ? (
+        <div className={styles.detailStrip}>
+          <ThumbnailStrip
+            images={images}
+            labels={labels}
+            opensDialog
+            onSelect={(id, trigger) => {
+              thumbnailTrigger.current = trigger;
+              setSelectedId(id);
+              setOpen(true);
+            }}
+          />
+        </div>
+      ) : (
+        <DialogTrigger asChild>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label={`${labels.projectGallery}: ${title}`}
+            tooltip={`${labels.projectGallery} (${images.length})`}
+            onClick={() => setSelectedId(coverImageId || images[0].id)}
+          >
+            <Images size={18} aria-hidden="true" />
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent
         closeLabel={labels.closeDialog}
         className={styles.lightbox}
         onInteractOutside={(event) => event.preventDefault()}
+        onCloseAutoFocus={(event) => {
+          if (variant === "thumbnails") {
+            event.preventDefault();
+            thumbnailTrigger.current?.focus();
+          }
+        }}
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
             event.preventDefault();
@@ -104,33 +173,12 @@ export function ProjectGallery({
           </Button>
         </div>
         {images.length > 1 && (
-          <div
-            className={styles.thumbnails}
-            role="group"
-            aria-label={labels.projectGallery}
-          >
-            {images.map((image, i) => (
-              <ActionTooltip
-                key={image.id}
-                label={`${labels.viewImage} ${i + 1}: ${image.alt}`}
-              >
-                <button
-                  type="button"
-                  className={styles.thumbnail}
-                  aria-pressed={image.id === selected.id}
-                  aria-label={`${labels.viewImage} ${i + 1}: ${image.alt}`}
-                  onClick={() => setSelectedId(image.id)}
-                >
-                  <ProjectImage
-                    src={image.url}
-                    alt=""
-                    unavailable={labels.imageUnavailable}
-                    className={styles.thumbImage}
-                  />
-                </button>
-              </ActionTooltip>
-            ))}
-          </div>
+          <ThumbnailStrip
+            images={images}
+            labels={labels}
+            selectedId={selected.id}
+            onSelect={setSelectedId}
+          />
         )}
         {selected.caption && (
           <p className={styles.caption}>{selected.caption}</p>

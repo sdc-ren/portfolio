@@ -15,6 +15,7 @@ export function ProjectDetails({
   return (
     <>
       <ProjectGallery
+        variant="thumbnails"
         images={project.images}
         coverImageId={project.coverImageId}
         title={project.title}
