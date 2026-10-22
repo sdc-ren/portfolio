@@ -8,16 +8,13 @@ import styles from "./profile-card.module.scss";
 /** Three scenes share one fixed viewport instead of stacking code and output. */
 export function ProfileSequence({
   profile,
-  enabled = true,
 }: {
   profile: PortfolioContent["profile"];
-  enabled?: boolean;
 }) {
   const { roles } = useRoleAnimation();
   const rolesKey = JSON.stringify(roles);
   const [frame, setFrame] = useState({ scene: 0, text: "" });
   useEffect(() => {
-    if (!enabled) return;
     const phrases: string[] = JSON.parse(rolesKey);
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     let timer: ReturnType<typeof setTimeout>;
@@ -61,7 +58,7 @@ export function ProfileSequence({
       clearTimeout(timer);
       preference.removeEventListener("change", restart);
     };
-  }, [enabled, rolesKey, profile.name, profile.role, profile.location]);
+  }, [rolesKey, profile.name, profile.role, profile.location]);
 
   const tokens = frame.text.split(
     /("(?:[^"\\]|\\.)*"|\b(?:const|function|return|console|log|introduce)\b)/g,

@@ -5,14 +5,10 @@ import { Button } from "./ui/button";
 import { DA_NANG_POINT, VIETNAM_OUTLINE } from "./profile-location-map";
 import styles from "./profile-location-intro.module.scss";
 
-const SESSION_KEY = "portfolio.location-intro.v1";
-
 /** One short decorative intro. It never requests the visitor's location or map tiles. */
 export function ProfileLocationIntro({
-  replay,
   onComplete,
 }: {
-  replay: number;
   onComplete: () => void;
 }) {
   const root = useRef<HTMLDivElement | null>(null);
@@ -31,21 +27,10 @@ export function ProfileLocationIntro({
       finished = true;
       clearTimeout(watchdog);
       observer?.disconnect();
-      try {
-        sessionStorage.setItem(SESSION_KEY, "seen");
-      } catch {
-        /* Storage can be disabled. */
-      }
       onComplete();
     };
     skip.current = finish;
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem(SESSION_KEY) === "seen";
-    } catch {
-      /* Still works without storage. */
-    }
-    if (preference.matches || (replay === 0 && seen)) {
+    if (preference.matches) {
       finish();
       return;
     }
@@ -128,7 +113,7 @@ export function ProfileLocationIntro({
       preference.removeEventListener("change", onPreferenceChange);
       context?.revert();
     };
-  }, [replay, onComplete]);
+  }, [onComplete]);
 
   return (
     <div ref={root} className={styles.intro}>

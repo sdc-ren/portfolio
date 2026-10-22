@@ -53,13 +53,10 @@ export function ProfileCard({
         </div>
       </div>
       <div className={styles.scene}>
-        <ProfileSequence profile={profile} enabled={introComplete} />
-        {!introComplete && (
-          <ProfileLocationIntro
-            key={replay}
-            replay={replay}
-            onComplete={finishIntro}
-          />
+        {introComplete ? (
+          <ProfileSequence profile={profile} />
+        ) : (
+          <ProfileLocationIntro key={replay} onComplete={finishIntro} />
         )}
       </div>
       <p className="sr-only">
