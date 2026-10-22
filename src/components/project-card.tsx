@@ -120,6 +120,7 @@ export function ProjectCard({
       </Dialog>
       {project.links.length > 0 && (
         <div className={styles.cardLinks}>
+          <p className={styles.linksTitle}>Links</p>
           <ProjectLinks
             links={project.links}
             labels={labels}

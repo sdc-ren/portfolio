@@ -22,7 +22,9 @@ export function ProjectDetails({
       {showMetadata && <ProjectMetadata project={project} />}
       {project.images.length > 0 && (
         <section aria-label={labels.projectGallery}>
-          <h2 className="mb-3 text-sm font-medium">{labels.projectGallery}</h2>
+          <h2 className="mb-3 text-base font-semibold">
+            {labels.projectGallery}
+          </h2>
           <ProjectGallery
             variant="thumbnails"
             images={project.images}
