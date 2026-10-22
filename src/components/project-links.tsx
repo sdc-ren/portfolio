@@ -25,13 +25,15 @@ const icons = {
 export function ProjectLinks({
   links,
   labels,
+  className = "mb-6 flex flex-wrap gap-1",
 }: {
   links: ProjectLink[];
   labels: UiLabels;
+  className?: string;
 }) {
   if (!links.length) return null;
   return (
-    <div className="mb-6 flex flex-wrap gap-1">
+    <div className={className}>
       {links.map((link) => {
         const Icon = icons[link.type];
         const label = projectLinkLabel(link, labels);

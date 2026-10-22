@@ -1,5 +1,7 @@
 "use client";
 import { useRef } from "react";
+import { ProjectMetadata } from "./project-metadata";
+import { ProjectLinks } from "./project-links";
 import { ProjectGallery } from "./project-gallery";
 import styles from "./project-card.module.scss";
 import { ActionTooltip } from "./action-tooltip";
@@ -90,9 +92,14 @@ export function ProjectCard({
             <DialogDescription className="line-clamp-3">
               {project.summary}
             </DialogDescription>
+            <ProjectMetadata project={project} />
           </DialogHeader>
           <div className="overflow-y-auto overscroll-contain px-6 py-5">
-            <ProjectDetails project={project} labels={labels} />
+            <ProjectDetails
+              project={project}
+              labels={labels}
+              showMetadata={false}
+            />
           </div>
           <DialogFooter className="border-t border-border px-6 py-4">
             <DialogClose asChild>
@@ -101,6 +108,15 @@ export function ProjectCard({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      {project.links.length > 0 && (
+        <div className={styles.cardLinks}>
+          <ProjectLinks
+            links={project.links}
+            labels={labels}
+            className="flex flex-wrap gap-1"
+          />
+        </div>
+      )}
     </article>
   );
 }
