@@ -8,8 +8,12 @@ import styles from "./profile-card.module.scss";
 /** Three scenes share one fixed viewport instead of stacking code and output. */
 export function ProfileSequence({
   profile,
+  cycle,
+  onComplete,
 }: {
   profile: PortfolioContent["profile"];
+  cycle: number;
+  onComplete: () => void;
 }) {
   const { roles } = useRoleAnimation();
   const rolesKey = JSON.stringify(roles);
@@ -20,7 +24,7 @@ export function ProfileSequence({
     let timer: ReturnType<typeof setTimeout>;
     function restart() {
       clearTimeout(timer);
-      let roleIndex = 0;
+      const roleIndex = cycle % Math.max(phrases.length, 1);
       let scene = 0;
       let character = 0;
       function scenes() {
@@ -43,9 +47,11 @@ export function ProfileSequence({
         let delay = scene === 2 ? 28 : 22;
         if (character >= text.length) {
           delay = scene === 2 ? 2400 : 1000;
-          scene = (scene + 1) % 3;
-          if (scene === 0)
-            roleIndex = (roleIndex + 1) % Math.max(phrases.length, 1);
+          if (scene === 2) {
+            timer = setTimeout(onComplete, delay);
+            return;
+          }
+          scene++;
           character = 0;
         }
         timer = setTimeout(tick, delay);
@@ -58,7 +64,14 @@ export function ProfileSequence({
       clearTimeout(timer);
       preference.removeEventListener("change", restart);
     };
-  }, [rolesKey, profile.name, profile.role, profile.location]);
+  }, [
+    cycle,
+    onComplete,
+    rolesKey,
+    profile.name,
+    profile.role,
+    profile.location,
+  ]);
 
   const tokens = frame.text.split(
     /("(?:[^"\\]|\\.)*"|\b(?:const|function|return|console|log|introduce)\b)/g,

@@ -1,11 +1,10 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Button } from "./ui/button";
 import { ProfileLocationIntro } from "./profile-location-intro";
 import { ProfileSequence } from "./profile-sequence";
 import { ActionAnchor } from "./action-link";
-import { Github, Linkedin, Mail, Code2, MapPin, RotateCcw } from "lucide-react";
+import { Github, Linkedin, Mail, Code2, MapPin } from "lucide-react";
 import type { PortfolioContent } from "@/features/content/schema";
 import styles from "./profile-card.module.scss";
 
@@ -17,8 +16,12 @@ export function ProfileCard({
   emailLabel: string;
 }) {
   const [introComplete, setIntroComplete] = useState(false);
-  const [replay, setReplay] = useState(0);
+  const [cycle, setCycle] = useState(0);
   const finishIntro = useCallback(() => setIntroComplete(true), []);
+  const finishSequence = useCallback(() => {
+    setIntroComplete(false);
+    setCycle((value) => value + 1);
+  }, []);
   return (
     <aside className={styles.card} aria-label={profile.name}>
       <div className={styles.toolbar}>
@@ -35,28 +38,17 @@ export function ProfileCard({
           )}{" "}
           {introComplete ? "profile.ts" : "location.svg"}
         </span>
-        <div className={styles.toolbarActions}>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className={styles.replayButton}
-            aria-label="Replay location intro"
-            onClick={() => {
-              setIntroComplete(false);
-              setReplay((value) => value + 1);
-            }}
-          >
-            <RotateCcw size={13} />
-          </Button>
-          <img src="/icon.svg" alt="SDC" width={28} height={28} />
-        </div>
+        <img src="/icon.svg" alt="SDC" width={28} height={28} />
       </div>
       <div className={styles.scene}>
         {introComplete ? (
-          <ProfileSequence profile={profile} />
+          <ProfileSequence
+            profile={profile}
+            cycle={cycle}
+            onComplete={finishSequence}
+          />
         ) : (
-          <ProfileLocationIntro key={replay} onComplete={finishIntro} />
+          <ProfileLocationIntro onComplete={finishIntro} />
         )}
       </div>
       <p className="sr-only">
