@@ -45,7 +45,11 @@ export function ProjectDetails({
         </div>
       )}
       <h2 className="mb-4 mt-7 text-base font-semibold">
-        {labels.contributions}
+        {labels.contributions === "Contributions"
+          ? "Highlights"
+          : labels.contributions === "Đóng góp"
+            ? "Điểm nổi bật"
+            : labels.contributions}
       </h2>
       <ul className="list-disc space-y-3 pl-5 text-muted-foreground">
         {project.highlights.map((h) => (

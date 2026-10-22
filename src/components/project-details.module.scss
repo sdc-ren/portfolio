@@ -1,6 +1,6 @@
 .metadata {
   display: grid;
-  gap: 8px;
+  gap: 4px;
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
@@ -15,7 +15,7 @@
 .technology {
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: 6px;
 }
 .label {
   flex-shrink: 0;
@@ -23,7 +23,7 @@
 .techList {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 12px;
+  gap: 2px 8px;
   min-width: 0;
   margin: 0;
   padding: 0;
