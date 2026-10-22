@@ -1,4 +1,7 @@
 "use client";
+import { coverImage } from "@/features/content/project-assets";
+import { ProjectImage } from "./project-image";
+import galleryStyles from "./project-gallery.module.scss";
 import { ActionTooltip } from "./action-tooltip";
 import type { UiLabels } from "@/features/content/ui";
 import {
@@ -24,6 +27,7 @@ export function ProjectCard({
   labels: UiLabels;
   index?: number;
 }) {
+  const cover = coverImage(project);
   return (
     <Dialog>
       <ActionTooltip label={project.title}>
@@ -33,6 +37,14 @@ export function ProjectCard({
             aria-label={project.title}
             className="focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary group flex w-full text-left flex-col rounded-2xl border border-border bg-card p-7 transition-colors hover:border-primary/40 hover:bg-muted"
           >
+            {cover && (
+              <ProjectImage
+                src={cover.url}
+                alt={cover.alt}
+                unavailable={labels.imageUnavailable}
+                className={galleryStyles.cover}
+              />
+            )}
             <span className="mb-8 flex items-center justify-between text-xs uppercase tracking-widest text-muted-foreground">
               <span>{project.category}</span>
               <span>{String(index + 1).padStart(2, "0")}</span>

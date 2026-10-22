@@ -1,7 +1,8 @@
 import Markdown from "react-markdown";
 import type { PortfolioContent } from "@/features/content/schema";
 import type { UiLabels } from "@/features/content/ui";
-import { Button } from "./ui/button";
+import { ProjectLinks } from "./project-links";
+import { ProjectGallery } from "./project-gallery";
 
 /** Shared content for the project dialog and directly accessed detail page. */
 export function ProjectDetails({
@@ -13,6 +14,11 @@ export function ProjectDetails({
 }) {
   return (
     <>
+      <ProjectGallery
+        images={project.images}
+        title={project.title}
+        labels={labels}
+      />
       <p className="mt-6 text-muted-foreground">{project.role}</p>
       <div className="my-8 flex flex-wrap gap-2">
         {project.tech.map((t) => (
@@ -21,18 +27,7 @@ export function ProjectDetails({
           </span>
         ))}
       </div>
-      <div className="mb-6 flex flex-wrap gap-3">
-        {project.repository && (
-          <Button asChild>
-            <a href={project.repository}>{labels.sourceCode} ↗</a>
-          </Button>
-        )}
-        {project.demo && (
-          <Button asChild variant="outline">
-            <a href={project.demo}>{labels.liveProject} ↗</a>
-          </Button>
-        )}
-      </div>
+      <ProjectLinks links={project.links} labels={labels} />
       {project.description.trim() !==
         project.highlights.join("\n\n").trim() && (
         <div className="prose border-t border-border pt-6 text-muted-foreground">

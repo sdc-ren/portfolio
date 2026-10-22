@@ -25,4 +25,29 @@ Imported from the official shadcn new-york-v4 registry and adapted to the reposi
 - Sheet: https://ui.shadcn.com/r/styles/new-york-v4/sheet.json
 - Card, Badge, Separator, Skeleton and use-mobile: corresponding items in the same registry.
 
-The dashboard's demo data, charts, table and drag-and-drop dependencies are intentionally not installed. Administration styling is in `src/features/admin/studio.module.scss`; shared component tokens are mapped in `globals.css`. Public content, the database schema and authorization rules are unchanged. No database migration is required.
+The dashboard's demo data, charts, table and drag-and-drop dependencies are intentionally not installed. Administration styling is in `src/features/admin/studio.module.scss`; shared component tokens are mapped in `globals.css`. The dashboard layout itself does not change database records. Project links and galleries require the migrations described below.
+
+## Project links and screenshots
+
+Each project has an ordered **Project links** list. Choose Website, Source code, Chrome Web Store, App Store, Google Play, TestFlight or Custom; set its URL and optionally override the button label. Custom links require a label. Toggle **Include in CV** for each link that should appear in the web CV and downloaded PDF. Links open in a new tab on project detail views. Existing repository URLs are imported with Include in CV enabled; existing demo URLs are imported with it disabled. Explicitly empty link lists stay empty.
+
+The **Project gallery** accepts up to 20 JPEG, PNG, WebP or AVIF screenshots, each up to 3 MB and 40 megapixels. Prefer compressed WebP/AVIF screenshots to reduce downloads. Upload multiple files, review their required image descriptions, add optional captions, choose a cover and reorder images. The cover appears on public project cards; the project detail dialog and direct detail page share a thumbnail gallery and full-size viewer. Navigation uses buttons, thumbnails and arrow keys in the viewer. Escape closes the topmost dialog. Galleries do not autoplay. Missing images have a fallback; projects without screenshots keep their text cards.
+
+Screenshots are excluded from the CV markup and PDF renderer. Changing gallery content cannot alter PDF layout or introduce image downloads during PDF generation. Link labels and gallery control labels can be translated under UI labels.
+
+### Deployment
+
+Deploy the new application and run `pnpm db:deploy` against the same Supabase project. This applies:
+
+- `202610220001_project_links_gallery`: upgrades draft/published snapshots in all languages, preserves existing selections and custom links/images, imports legacy URLs, and supplies the Personal Finance website if no links or demo were configured. It is safe to rerun the SQL; unchanged snapshots do not advance revisions.
+- `202610220002_project_image_storage`: creates the public `project-images` bucket with a 3 MB file limit and a raster MIME allowlist. Adds an INSERT policy limited to authenticated `AdminUser` members uploading under their own UUID prefix. The private SQL helper checks the current JWT and does not expose admin table rows.
+
+No extra environment variables or service-role key are required. The existing Supabase URL and publishable key are used. `createImageUpload` checks admin access before generating a signed upload token; the browser sends file bytes directly to Storage, avoiding Vercel request-body limits. Signing never permits upsert. The public bucket contains only shareable portfolio screenshots, including files referenced by drafts; draft/publish controls website visibility, not file secrecy.
+
+Upload changes are isolated in the editing drawer until Apply. The drawer blocks closing/applying while an upload is in progress. A batch keeps successful uploads if a later file fails. Save draft or Publish persists the references through the existing revision check. A schema error (for example, an empty image description or invalid link) prevents applying the record.
+
+Removing a screenshot detaches its reference; it does not delete the object. This avoids breaking the current published snapshot, copied languages or an open editor. Canceling a drawer may leave unused uploads. For storage cleanup, remove only objects unreferenced by **both draft and published snapshots across every locale**, after allowing open editing sessions to finish. This release does not automatically delete files or grant client DELETE/UPDATE policies.
+
+Legacy fields remain in migration-updated snapshots during rollout; the new application reads them only when `links` is absent and writes canonical links on save. After publishing with the new schema, rolling back to an older application requires restoring compatible content snapshots as well. Keep normal database backups before production migration.
+
+Storage references: [access control](https://supabase.com/docs/guides/storage/security/access-control), [signed upload URLs](https://supabase.com/docs/reference/javascript/storage-from-createsigneduploadurl), [upload to a signed URL](https://supabase.com/docs/reference/javascript/storage-from-uploadtosignedurl).

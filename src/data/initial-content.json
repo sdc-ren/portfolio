@@ -206,9 +206,10 @@
         "Worked with PDF documents typically containing 10–20 pages, with file sizes of 15–20 MB.",
         "Integrated PDF.js with Konva.js to build a custom document interaction layer; developed a PDF-processing core and investigated rendering bottlenecks."
       ],
-      "repository": "",
-      "demo": "",
-      "featured": true
+      "featured": true,
+      "links": [],
+      "images": [],
+      "coverImageId": ""
     },
     {
       "id": "twinci",
@@ -222,9 +223,10 @@
         "Contributed across Vue.js frontend development, Java services, and smart contract development for NFT creation and publishing workflows.",
         "Integrated application functionality across frontend, backend, and blockchain-related components."
       ],
-      "repository": "",
-      "demo": "",
-      "featured": true
+      "featured": true,
+      "links": [],
+      "images": [],
+      "coverImageId": ""
     },
     {
       "id": "personal-finance-management",
@@ -247,9 +249,25 @@
         "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.",
         "Implemented authentication, transaction tracking, category budgets, and spending reports with Next.js, Prisma, and PostgreSQL."
       ],
-      "repository": "https://github.com/sdc-ren/personal-finance-management",
-      "demo": "",
-      "featured": true
+      "featured": true,
+      "links": [
+        {
+          "id": "source",
+          "type": "github",
+          "url": "https://github.com/sdc-ren/personal-finance-management",
+          "label": "",
+          "showInCv": true
+        },
+        {
+          "id": "website",
+          "type": "website",
+          "url": "https://personal-finance-dusky-five.vercel.app/",
+          "label": "",
+          "showInCv": false
+        }
+      ],
+      "images": [],
+      "coverImageId": ""
     },
     {
       "id": "gdrive-cli",
@@ -268,9 +286,18 @@
         "Automated document retrieval and data entry within designated Google Drive folders, using service-account permissions to scope access.",
         "Implemented filtered and paginated document access, retry handling, and automated verification; refined tool schemas and response formats to limit unnecessary agent context."
       ],
-      "repository": "https://github.com/sdc-ren/gdrive-cli",
-      "demo": "",
-      "featured": true
+      "featured": true,
+      "links": [
+        {
+          "id": "source",
+          "type": "github",
+          "url": "https://github.com/sdc-ren/gdrive-cli",
+          "label": "",
+          "showInCv": true
+        }
+      ],
+      "images": [],
+      "coverImageId": ""
     },
     {
       "id": "cc-notify-telegram",
@@ -291,9 +318,18 @@
         "Mapped each session request to a Telegram message so replies are routed back to the originating session.",
         "Implemented authorization checks, timeouts, and fallback to local prompts; reviewed AI-assisted changes and verified behavior through automated and end-to-end tests."
       ],
-      "repository": "https://github.com/sdc-ren/cc-notify-telegram",
-      "demo": "",
-      "featured": true
+      "featured": true,
+      "links": [
+        {
+          "id": "source",
+          "type": "github",
+          "url": "https://github.com/sdc-ren/cc-notify-telegram",
+          "label": "",
+          "showInCv": true
+        }
+      ],
+      "images": [],
+      "coverImageId": ""
     },
     {
       "id": "altfins",
@@ -317,9 +353,18 @@
         "Added same-source and cross-source deduplication, database retries, and source-specific Telegram notifications.",
         "Automated execution through GitHub Actions and an external scheduler; operated the service 24/7 for ongoing cryptocurrency updates."
       ],
-      "repository": "https://github.com/sdc-ren/altfins",
-      "demo": "",
-      "featured": true
+      "featured": true,
+      "links": [
+        {
+          "id": "source",
+          "type": "github",
+          "url": "https://github.com/sdc-ren/altfins",
+          "label": "",
+          "showInCv": true
+        }
+      ],
+      "images": [],
+      "coverImageId": ""
     }
   ],
   "education": [
