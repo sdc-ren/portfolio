@@ -13,6 +13,11 @@ test("CV template preserves source structure, contact display and separate educa
   assert.ok(html.includes('class="cv-entry-head"'));
   assert.ok(html.includes('class="cv-skill-item"'));
   assert.ok(html.includes("linkedin.com/in/sondangc</a>"));
+  assert.ok(
+    html.includes(
+      'href="https://sondc-portfolio.vercel.app/">sondc-portfolio.vercel.app</a>',
+    ),
+  );
   assert.ok(html.includes("<h2>Education</h2>"));
   assert.ok(html.includes("<h2>Languages</h2>"));
   assert.ok(html.includes("Duy Tan University</b>, Da Nang"));
