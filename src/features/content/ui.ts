@@ -45,6 +45,7 @@ export const englishUi = {
   liveProject: "Live project",
   contributions: "Project details",
   downloadPdf: "Download PDF",
+  downloadMarkdown: "Download Markdown",
   cvVersions: "CV versions",
   cvSummary: "Professional Summary",
   cvSkills: "Technical Skills",
@@ -101,6 +102,7 @@ export const vietnameseUi: UiLabels = {
   liveProject: "Xem sản phẩm",
   contributions: "Chi tiết dự án",
   downloadPdf: "Tải PDF",
+  downloadMarkdown: "Tải Markdown",
   cvVersions: "Phiên bản CV",
   cvSummary: "Giới thiệu",
   cvSkills: "Kỹ năng chuyên môn",
@@ -321,6 +323,12 @@ export const uiSchema = z
       .min(1)
       .max(1000)
       .default(englishUi.contributions),
+    downloadMarkdown: z
+      .string()
+      .trim()
+      .min(1)
+      .max(1000)
+      .default(englishUi.downloadMarkdown),
     downloadPdf: z
       .string()
       .trim()

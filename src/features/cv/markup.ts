@@ -1,3 +1,4 @@
+import { PORTFOLIO_URL } from "./contact";
 import type { PortfolioContent } from "@/features/content/schema";
 import { projectLinkLabel } from "@/features/content/project-link-label";
 import { selectByIds } from "@/features/content/schema";
@@ -31,7 +32,7 @@ export function cvMarkup(data: PortfolioContent, variant: string) {
 <div class="cv-job-title">${e(cv.title)}</div>
 <p class="cv-specialties">${e(cv.specialties)}</p>
 <div class="cv-contact"><span>${e(data.profile.location)}</span><span>${link(`mailto:${data.profile.email}`, data.profile.email)}</span><span>${link(`tel:${data.profile.phone.replace(/[^\d+]/g, "")}`, data.profile.phone)}</span>${[
-    "https://sondc-portfolio.vercel.app/",
+    PORTFOLIO_URL,
     data.profile.linkedin,
     data.profile.github,
   ]
