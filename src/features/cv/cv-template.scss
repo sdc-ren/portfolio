@@ -41,6 +41,10 @@
     Arial,
     Helvetica,
     sans-serif;
+  font-variant-ligatures: none;
+  font-feature-settings:
+    "liga" 0,
+    "clig" 0;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
   * {
@@ -102,6 +106,8 @@
     break-after: avoid-page;
   }
   p {
+    orphans: 2;
+    widows: 2;
     margin: 0 0 7px;
   }
   ul {
@@ -112,6 +118,9 @@
   li {
     margin: 0 0 4px;
     padding-left: 1px;
+    break-inside: avoid-page;
+    orphans: 2;
+    widows: 2;
   }
   .cv-skill-item {
     font-size: 12.5px;
@@ -122,12 +131,13 @@
   }
   .cv-entry {
     margin: 0 0 17px;
-    break-inside: avoid-page;
+    break-inside: auto;
     &:last-child {
       margin-bottom: 0;
     }
   }
   .cv-entry-head {
+    break-after: avoid-page;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -149,6 +159,7 @@
     font-size: 11.5px;
   }
   .cv-subhead {
+    break-after: avoid-page;
     color: var(--cv-muted);
     font-size: 12px;
     margin: 1px 0 5px;
@@ -216,11 +227,8 @@
     .cv-project-tech,
     .cv-project-link,
     .cv-subhead {
+      break-after: avoid-page;
       font-size: 11px;
-    }
-    .cv-page-start {
-      break-before: page;
-      margin-top: 0;
     }
   }
 }

@@ -5,7 +5,7 @@
     "location": "Da Nang, Vietnam",
     "email": "dangchison@gmail.com",
     "phone": "+84 966 019 009",
-    "summary": "I'm Dang Chi Son, a software engineer based in Da Nang with 12 years of experience in web development, including around six years of frontend technical leadership. I build web applications with TypeScript, Vue, React, and Angular. My recent independent work focuses on AI agent tools, hooks, and workflow automation around coding assistants.",
+    "summary": "I'm Dang Chi Son, a software engineer based in Da Nang with 12 years of web development experience, including around six years of frontend technical leadership. My main focus is Vue.js, Nuxt.js, TypeScript, and frontend architecture. I also build AI agent tools, hooks, and workflow automation around coding assistants.",
     "tagline": "Frontend engineering and developer tools",
     "github": "https://github.com/sdc-ren",
     "linkedin": "https://www.linkedin.com/in/sondangc/"
@@ -41,26 +41,17 @@
     "Supabase",
     "GitHub Actions"
   ],
-  "roles": [
-    "Software Engineer",
-    "Frontend Team Lead",
-    "Creator / Maintainer"
-  ],
+  "roles": ["Software Engineer", "Frontend Team Lead", "Creator / Maintainer"],
   "skills": [
     {
       "id": "frontend",
-      "name": "Frontend",
-      "items": [
-        "Vue.js",
-        "Nuxt.js",
-        "React",
-        "Next.js",
-        "Angular",
-        "JavaScript",
-        "TypeScript",
-        "HTML",
-        "CSS"
-      ]
+      "name": "Core Frontend",
+      "items": ["Vue.js", "Nuxt.js", "TypeScript", "JavaScript", "HTML", "CSS"]
+    },
+    {
+      "id": "additional-frontend",
+      "name": "Additional Frontend",
+      "items": ["React", "Next.js", "Angular"]
     },
     {
       "id": "architecture",
@@ -76,13 +67,7 @@
     {
       "id": "state-data",
       "name": "State Management",
-      "items": [
-        "Pinia",
-        "Vuex",
-        "Redux Toolkit",
-        "RxJS",
-        "NgRx"
-      ]
+      "items": ["Pinia", "Vuex", "Redux Toolkit", "RxJS", "NgRx"]
     },
     {
       "id": "quality",
@@ -106,7 +91,9 @@
         "Google Workspace APIs",
         "Telegram Bot API",
         "PostgreSQL",
-        "MySQL"
+        "MySQL",
+        "Firebase",
+        "Google Analytics"
       ]
     },
     {
@@ -147,9 +134,7 @@
     {
       "id": "additional-mobile",
       "name": "Additional Mobile",
-      "items": [
-        "Flutter (internal applications)"
-      ]
+      "items": ["Flutter (internal applications)"]
     }
   ],
   "experience": [
@@ -160,13 +145,12 @@
       "period": "2020 – Sep 2026",
       "location": "Da Nang, Vietnam · NeoLab acquired by DGWAsian in 2023",
       "highlights": [
-        "Led frontend teams of 6-10 engineers, combining hands-on development with technical guidance, code reviews, and mentoring.",
-        "Researched frontend technologies and proposed project structures; helped initiate projects by aligning implementation responsibilities with team members' strengths.",
-        "Built and maintained PDF processing and canvas-based interaction features using PDF.js and Konva.js, including annotation, highlighting, and drawing.",
-        "Contributed to requirements discussions and documented technical designs through UML, activity, and sequence diagrams.",
-        "Coordinated sprint work through Jira, tracked implementation progress, and presented completed features during sprint demos.",
-        "Built reusable UI components and shared packages, established coding conventions, and introduced automated testing into development workflows.",
-        "Participated in candidate interviews and integrated Firebase and Google Analytics into web applications."
+        "Led frontend teams of 6-10 engineers through hands-on development, code reviews, mentoring, and candidate interviews.",
+        "Evaluated frontend technologies and designed project structures, assigning implementation work around team members' strengths.",
+        "Built PDF processing and canvas interactions with PDF.js and Konva.js, including annotation, highlighting, and drawing.",
+        "Clarified requirements and documented technical designs using UML, activity, and sequence diagrams.",
+        "Built reusable components and shared packages; established coding conventions and introduced automated testing.",
+        "Coordinated sprint work in Jira, tracked progress, and demonstrated completed features at sprint reviews."
       ]
     },
     {
@@ -176,8 +160,8 @@
       "period": "2016 – 2020",
       "location": "Da Nang, Vietnam",
       "highlights": [
-        "Developed and maintained frontend features, integrated backend APIs, and resolved application issues in collaboration with backend developers and project stakeholders.",
-        "Contributed to technical research and requirements discussions to clarify implementation approaches."
+        "Developed frontend features, integrated backend APIs, and resolved application issues with backend engineers and project stakeholders.",
+        "Researched implementation approaches and clarified technical requirements."
       ]
     },
     {
@@ -187,9 +171,8 @@
       "period": "2015 – 2016",
       "location": "Da Nang, Vietnam",
       "highlights": [
-        "Researched and evaluated technologies against project requirements, and proposed implementation approaches.",
-        "Developed application features and worked directly with customers to clarify requirements, resolve issues, and agree on implementation priorities.",
-        "Deployed application releases to staging and production environments."
+        "Evaluated technologies and developed application features in collaboration with customers to clarify requirements and priorities.",
+        "Deployed releases to staging and production environments."
       ]
     },
     {
@@ -199,10 +182,8 @@
       "period": "2014 – 2015",
       "location": "Da Nang, Vietnam",
       "highlights": [
-        "Independently developed a full-stack application, covering database schema design, backend services, frontend implementation, and project structure.",
-        "Evaluated and learned frameworks required for implementation, applying them throughout application development.",
-        "Worked directly with customers to gather, clarify, and finalize requirements.",
-        "Deployed the application to servers and managed releases."
+        "Independently developed a full-stack application, covering database design, backend services, frontend implementation, and deployment.",
+        "Worked directly with customers to clarify requirements and managed application releases."
       ]
     }
   ],
@@ -213,7 +194,7 @@
       "role": "Frontend Team Lead",
       "category": "Product engineering",
       "summary": "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.",
-      "description": "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.\n\nWorked with PDF documents typically containing 10–20 pages, with file sizes of 15–20 MB.\n\nIntegrated PDF.js with Konva.js to build a custom document interaction layer; developed a PDF-processing core and investigated rendering bottlenecks.",
+      "description": "Led six frontend engineers building PDF rendering, annotation, highlighting, and drawing features.\n\nWorked with PDF documents of 10-20 pages and 15-20 MB; built a PDF.js/Konva.js interaction layer and investigated rendering bottlenecks.",
       "tech": [
         "Vue 3",
         "TypeScript",
@@ -223,9 +204,8 @@
         "PDF libraries"
       ],
       "highlights": [
-        "Led a frontend team of six engineers building PDF rendering, annotation, highlighting, and drawing features for a document management product.",
-        "Worked with PDF documents typically containing 10–20 pages, with file sizes of 15–20 MB.",
-        "Integrated PDF.js with Konva.js to build a custom document interaction layer; developed a PDF-processing core and investigated rendering bottlenecks."
+        "Led six frontend engineers building PDF rendering, annotation, highlighting, and drawing features.",
+        "Worked with PDF documents of 10-20 pages and 15-20 MB; built a PDF.js/Konva.js interaction layer and investigated rendering bottlenecks."
       ],
       "featured": true,
       "links": [],
@@ -239,12 +219,7 @@
       "category": "Product engineering",
       "summary": "Contributed across Vue.js frontend development, Java services, and smart contract development for NFT creation and publishing workflows.",
       "description": "Contributed across Vue.js frontend development, Java services, and smart contract development for NFT creation and publishing workflows.\n\nIntegrated application functionality across frontend, backend, and blockchain-related components.",
-      "tech": [
-        "Vue.js",
-        "Java",
-        "Smart Contracts",
-        "Web3"
-      ],
+      "tech": ["Vue.js", "Java", "Smart Contracts", "Web3"],
       "highlights": [
         "Contributed across Vue.js frontend development, Java services, and smart contract development for NFT creation and publishing workflows.",
         "Integrated application functionality across frontend, backend, and blockchain-related components."
@@ -259,8 +234,8 @@
       "title": "Personal Finance Management",
       "role": "Independent Project",
       "category": "Product engineering",
-      "summary": "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.",
-      "description": "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.\n\nImplemented authentication, transaction tracking, category budgets, and spending reports with Next.js, Prisma, and PostgreSQL.",
+      "summary": "Built and used a personal finance application for over six months to record expenses and review monthly spending.",
+      "description": "Built and used a personal finance application for over six months to record expenses and review monthly spending.\n\nImplemented authentication, transaction tracking, category budgets, and spending reports.",
       "tech": [
         "Next.js 16",
         "React 19",
@@ -272,8 +247,8 @@
         "Vitest"
       ],
       "highlights": [
-        "Built and used a personal finance application for over six months to record expenses quickly and review monthly spending for personal use.",
-        "Implemented authentication, transaction tracking, category budgets, and spending reports with Next.js, Prisma, and PostgreSQL."
+        "Built and used a personal finance application for over six months to record expenses and review monthly spending.",
+        "Implemented authentication, transaction tracking, category budgets, and spending reports."
       ],
       "featured": true,
       "links": [
@@ -301,16 +276,16 @@
       "role": "Creator / Maintainer",
       "category": "Open source",
       "summary": "Built CLI, MCP, and Node.js tooling for scoped Google Workspace access, supporting document retrieval and data-entry workflows for coding agents.",
-      "description": "Built CLI, MCP, and Node.js tooling for scoped Google Workspace access, supporting document retrieval and data-entry workflows for coding agents. Used the tooling in personal workflows and a remote project.\n\nAutomated document retrieval and data entry within designated Google Drive folders, using service-account permissions to scope access.\n\nImplemented filtered and paginated document access, retry handling, and automated verification; refined tool schemas and response formats to limit unnecessary agent context.",
+      "description": "Built CLI, MCP, and Node.js tooling for Google Workspace, used in personal workflows and a remote project.\n\nScoped document retrieval and data-entry workflows to designated Drive folders using service-account permissions.\n\nAdded filtering, pagination, retries, and automated verification; refined tool schemas to limit unnecessary agent context.",
       "tech": [
         "Node.js",
         "Model Context Protocol (MCP)",
         "Google Drive / Docs / Sheets / Slides APIs"
       ],
       "highlights": [
-        "Built CLI, MCP, and Node.js tooling for scoped Google Workspace access, supporting document retrieval and data-entry workflows for coding agents. Used the tooling in personal workflows and a remote project.",
-        "Automated document retrieval and data entry within designated Google Drive folders, using service-account permissions to scope access.",
-        "Implemented filtered and paginated document access, retry handling, and automated verification; refined tool schemas and response formats to limit unnecessary agent context."
+        "Built CLI, MCP, and Node.js tooling for Google Workspace, used in personal workflows and a remote project.",
+        "Scoped document retrieval and data-entry workflows to designated Drive folders using service-account permissions.",
+        "Added filtering, pagination, retries, and automated verification; refined tool schemas to limit unnecessary agent context."
       ],
       "featured": true,
       "links": [
@@ -331,7 +306,7 @@
       "role": "Creator / Maintainer",
       "category": "Open source",
       "summary": "Built hooks for AI coding assistants to send completion alerts, questions, and approval requests through Telegram, routing replies back to the originating session.",
-      "description": "Built hooks for AI coding assistants to send completion alerts, questions, and approval requests through Telegram, routing replies back to the originating session.\n\nMapped each session request to a Telegram message so replies are routed back to the originating session.\n\nImplemented authorization checks, timeouts, and a fallback to local prompts; reviewed AI-assisted changes and verified behavior through automated and end-to-end tests.",
+      "description": "Built coding-assistant hooks for Telegram completion alerts, questions, and remote approval requests.\n\nRouted replies to the originating session and added authorization checks, timeouts, and a fallback to local prompts.\n\nUsed the tool with Claude Code and verified behavior through automated and end-to-end tests.",
       "tech": [
         "Node.js",
         "Telegram Bot API",
@@ -340,9 +315,9 @@
         "Google Antigravity"
       ],
       "highlights": [
-        "Built hooks for AI coding assistants to send completion alerts, questions, and approval requests through Telegram, routing replies back to the originating session.",
-        "Mapped each session request to a Telegram message so replies are routed back to the originating session.",
-        "Implemented authorization checks, timeouts, and a fallback to local prompts; reviewed AI-assisted changes and verified behavior through automated and end-to-end tests."
+        "Built coding-assistant hooks for Telegram completion alerts, questions, and remote approval requests.",
+        "Routed replies to the originating session and added authorization checks, timeouts, and a fallback to local prompts.",
+        "Used the tool with Claude Code and verified behavior through automated and end-to-end tests."
       ],
       "featured": true,
       "links": [
@@ -413,14 +388,14 @@
     {
       "id": "english",
       "name": "English",
-      "proficiency": "Basic conversational proficiency; able to read technical documentation."
+      "proficiency": "Technical documentation reading; basic conversational communication."
     }
   ],
   "cvs": [
     {
       "id": "senior-software-engineer",
       "title": "SENIOR SOFTWARE ENGINEER",
-      "summary": "Senior Software Engineer with 12 years of experience in web development, including around six years of frontend technical leadership. Experienced in leading teams of 6-10 engineers, frontend architecture, interactive PDF editing, code review, and mentoring. Recent independent work includes building AI agent tools, hooks, and workflow automation around coding assistants.",
+      "summary": "Software engineer with 12 years of web development experience, including around six years of frontend technical leadership. Focused on Vue.js, Nuxt.js, TypeScript, frontend architecture, and interactive PDF editing. Recent independent work includes AI agent tools, hooks, and workflow automation.",
       "specialties": "Frontend Architecture · Vue.js / React / Angular · TypeScript · Technical Leadership · AI Agent Tooling",
       "projectIds": [
         "jinjer",
@@ -430,6 +405,7 @@
       ],
       "skillIds": [
         "frontend",
+        "additional-frontend",
         "architecture",
         "state-data",
         "quality",
@@ -450,10 +426,7 @@
     "description": "Senior Software Engineer in Da Nang, Vietnam, with 12 years of experience in frontend architecture, technical leadership, and practical AI agent tooling.",
     "footer": "Software engineering portfolio",
     "languageLabel": "English",
-    "headerRoles": [
-      "SOFTWARE ENGINEER",
-      "AI AGENT ENGINEERING"
-    ]
+    "headerRoles": ["SOFTWARE ENGINEER", "AI AGENT ENGINEERING"]
   },
   "ui": {
     "navProjects": "Projects",
