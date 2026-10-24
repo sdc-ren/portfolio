@@ -123,7 +123,7 @@ export default async function Page({
               </h3>
               <p className="mb-4 text-sm text-primary">{e.company}</p>
               <ul className="list-disc space-y-2 pl-4 text-sm text-muted-foreground">
-                {e.highlights.slice(0, 3).map((h) => (
+                {e.highlights.map((h) => (
                   <li key={h}>{h}</li>
                 ))}
               </ul>
