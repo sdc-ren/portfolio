@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { registerHooks } from "node:module";
 import initial from "../src/data/initial-content.json";
 import { contentSchema } from "../src/features/content/schema";
-import { cvMarkdown } from "../src/features/cv/markdown";
+import { markdownText, cvMarkdown } from "../src/features/cv/markdown";
 import { defaultUiForLocale } from "../src/features/content/ui";
 import { cvMarkup } from "../src/features/cv/markup";
 
@@ -130,4 +130,13 @@ test("Markdown endpoint returns an attachment and handles invalid/missing/error 
     hooks.deregister();
     delete fixture.__cvMarkdownPublished;
   }
+});
+
+test("Markdown keeps plain ampersands without activating CMS entities", () => {
+  assert.equal(markdownText("Quality & Performance"), "Quality & Performance");
+  assert.equal(markdownText("literal &copy; and &#60;"), "literal &amp;copy; and &amp;\\#60;");
+  const data = contentSchema.parse(initial);
+  const md = cvMarkdown(data, data.cvs[0].id);
+  assert.ok(md.includes("Quality & Performance"));
+  assert.ok(!md.includes("Quality &amp; Performance"));
 });
