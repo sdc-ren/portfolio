@@ -8,6 +8,22 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
+  display: flex;
+  gap: 4px;
+}
+.downloadButton {
+  min-height: 44px;
+  padding: 0 8px;
+  font-size: 11px;
+}
+@media (max-width: 650px) {
+  .actions {
+    position: relative;
+    top: auto;
+    right: auto;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+  }
 }
 @media print {
   .page {
