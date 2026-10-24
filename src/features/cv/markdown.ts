@@ -6,7 +6,7 @@ import { PORTFOLIO_URL } from "./contact";
 /** CMS text is literal text, not executable Markdown/HTML. */
 export function markdownText(value: string): string {
   return value
-    .replace(/&/g, "&amp;")
+    .replace(/&(?=#\d+;|#x[\da-f]+;|[a-z][\da-z]+;)/gi, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/([\\`*_[\]{}()#+.!|~-])/g, "\\$1");
