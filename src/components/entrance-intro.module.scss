@@ -89,8 +89,15 @@
   font-weight: 400;
   line-height: 1.8;
   letter-spacing: -0.025em;
+  text-align: center;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+.name {
+  font-weight: 600;
+}
+.role {
+  color: #52636b;
 }
 .reserve,
 .typed {

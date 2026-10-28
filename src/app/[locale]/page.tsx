@@ -49,7 +49,7 @@ export default async function Page({
     <main id="main" className="mx-auto max-w-[1440px] px-6">
       <EntranceIntro
         name={d.profile.name}
-        role={d.profile.role}
+        role="Senior Frontend Engineer · AI Agent Engineer"
         locale={locale}
       />
       <section className={styles.hero}>

@@ -31,7 +31,7 @@ export function EntranceIntro({
   role: string;
   locale: string;
 }) {
-  const text = `${name} // ${role}`;
+  const text = `${name}\n${role}`;
   const characters = Array.from(text);
   const [visible, setVisible] = useState(false);
   const [count, setCount] = useState(0);
@@ -98,12 +98,31 @@ export function EntranceIntro({
       <div className={styles.identity} aria-hidden="true">
         <div className={styles.terminal}>
           <span className={styles.reserve}>
-            {text}
+            <span className={styles.name}>{name}</span>
+            {"\n"}
+            <span className={styles.role}>{role}</span>
             <span className={styles.cursor} />
           </span>
           <span className={styles.typed}>
-            {characters.slice(0, count).join("")}
-            <span className={styles.cursor} />
+            <span className={styles.name}>
+              {characters
+                .slice(0, Math.min(count, Array.from(name).length))
+                .join("")}
+            </span>
+            {count <= Array.from(name).length ? (
+              <span className={styles.cursor} />
+            ) : null}
+            {count > Array.from(name).length ? (
+              <>
+                {"\n"}
+                <span className={styles.role}>
+                  {characters
+                    .slice(Array.from(name).length + 1, count)
+                    .join("")}
+                </span>
+                <span className={styles.cursor} />
+              </>
+            ) : null}
           </span>
         </div>
       </div>
