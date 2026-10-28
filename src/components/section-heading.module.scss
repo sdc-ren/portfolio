@@ -1,0 +1,18 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+}
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--foreground);
+}

@@ -111,10 +111,16 @@
       "sectionOrder": "projects-first",
       "projectsHeading": "Independent AI Engineering Projects",
       "experienceSelections": {
-        "experience-1": ["bullet-1", "bullet-2", "bullet-5"],
-        "experience-2": ["bullet-1"],
+        "experience-1": [
+          "bullet-1",
+          "bullet-2",
+          "bullet-3",
+          "bullet-5",
+          "bullet-6"
+        ],
+        "experience-2": ["bullet-1", "bullet-2"],
         "experience-3": ["bullet-1"],
-        "experience-4": ["bullet-1"]
+        "experience-4": ["bullet-1", "bullet-2"]
       }
     }
   },
@@ -230,10 +236,16 @@
       "sectionOrder": "projects-first",
       "projectsHeading": "Dự án AI Engineering độc lập",
       "experienceSelections": {
-        "experience-1": ["bullet-1", "bullet-2", "bullet-5"],
-        "experience-2": ["bullet-1"],
+        "experience-1": [
+          "bullet-1",
+          "bullet-2",
+          "bullet-3",
+          "bullet-5",
+          "bullet-6"
+        ],
+        "experience-2": ["bullet-1", "bullet-2"],
         "experience-3": ["bullet-1"],
-        "experience-4": ["bullet-1"]
+        "experience-4": ["bullet-1", "bullet-2"]
       }
     }
   }
