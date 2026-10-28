@@ -1,3 +1,4 @@
+import { FloatingActions } from "@/components/floating-actions";
 import { SiteHeader } from "@/components/site-header";
 import { PublicNavigation } from "@/components/public-navigation";
 import { RoleAnimationProvider } from "@/components/role-animation";
@@ -97,6 +98,7 @@ export default async function Layout({
           </nav>
         </SiteHeader>
         {children}
+        <FloatingActions profile={data.profile} locale={locale} />
         <footer className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-4 border-t border-border px-6 py-8 text-sm text-muted-foreground">
           <span>
             © {new Date().getFullYear()} {data.profile.name}.{" "}

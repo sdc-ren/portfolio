@@ -1,0 +1,102 @@
+.actions {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.connect {
+  position: relative;
+}
+.button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 4px 18px rgb(20 40 50 / 12%);
+  cursor: pointer;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+  }
+}
+.fab {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+.panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  width: min(280px, calc(100vw - 48px));
+  max-height: 65dvh;
+  overflow: auto;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow: var(--shadow-card-hover);
+  animation: surface-in var(--motion-fast) var(--ease-out) both;
+  a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 48px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: var(--foreground);
+    font-size: 14px;
+    &:hover {
+      background: var(--muted);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: -2px;
+    }
+  }
+  svg {
+    flex-shrink: 0;
+    color: var(--primary);
+  }
+  span {
+    min-width: 0;
+  }
+  small {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted-foreground);
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+}
+@media (max-width: 640px) {
+  .actions {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button:hover {
+    transform: none;
+  }
+}
+@media print {
+  .actions {
+    display: none;
+  }
+}
