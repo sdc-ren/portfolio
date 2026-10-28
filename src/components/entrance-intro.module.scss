@@ -1,13 +1,21 @@
 .intro {
-  --intro-bg: #0a141e;
-  --intro-ink: #e4edf3;
-  --intro-accent: #72ddc3;
+  --intro-bg: #e8eef0;
+  --intro-ink: #29373e;
+  --intro-accent: var(--primary);
   position: fixed;
   inset: 0;
   z-index: 100;
   overflow: hidden;
   color: var(--intro-ink);
   isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgb(150 172 180 / 16%);
+    pointer-events: none;
+  }
 }
 .top,
 .bottom {
@@ -16,12 +24,13 @@
   height: 50%;
   background: var(--intro-bg);
   will-change: transform;
+  box-shadow: 0 0 24px rgb(35 57 65 / 10%);
 }
 .top {
   top: 0;
   background: radial-gradient(
     ellipse at 50% 100%,
-    #15313a,
+    #dce7e9,
     var(--intro-bg) 75%
   );
   &::after {
@@ -32,15 +41,15 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgb(114 221 195 / 45%),
+      rgb(62 93 102 / 22%),
       transparent
     );
-    box-shadow: 0 0 16px rgb(114 221 195 / 12%);
+    box-shadow: 0 2px 14px rgb(35 57 65 / 10%);
   }
 }
 .bottom {
   bottom: 0;
-  background: radial-gradient(ellipse at 50% 0%, #15313a, var(--intro-bg) 75%);
+  background: radial-gradient(ellipse at 50% 0%, #dce7e9, var(--intro-bg) 75%);
 }
 .rain {
   position: absolute;
@@ -48,7 +57,7 @@
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.24;
+  opacity: 0.18;
   mask-image: radial-gradient(ellipse at center, transparent 12%, black 72%);
   span {
     position: absolute;
@@ -101,6 +110,9 @@
   animation: blink 700ms step-end infinite;
 }
 .intro[data-opening="true"] {
+  &::before {
+    animation: clear 500ms var(--ease-out) forwards;
+  }
   .rain {
     animation: clear 180ms ease forwards;
   }
@@ -121,7 +133,7 @@
   bottom: max(24px, env(safe-area-inset-bottom));
   min-height: 44px;
   padding: 8px 16px;
-  border: 1px solid rgb(228 237 243 / 20%);
+  border: 1px solid rgb(41 55 62 / 22%);
   border-radius: 8px;
   background: var(--intro-bg);
   font-size: 13px;
