@@ -4,7 +4,6 @@ import { SectionHeading } from "@/components/section-heading";
 import { SkillsOverview } from "@/components/skills-overview";
 import { experienceBullets } from "@/features/content/experience";
 import { ContactSection } from "@/components/contact-section";
-import { ActionTooltip } from "@/components/action-tooltip";
 import { pageMetadata } from "@/lib/seo";
 import { ProfileCard } from "@/components/profile-card";
 import { publicPath } from "@/lib/public-path";
@@ -37,6 +36,14 @@ export default async function Page({
   const { locale } = await params;
   const d = await getPublished(locale);
   if (!d) notFound();
+  const featured = d.projects.filter((project) => project.featured);
+  const selectedIds = ["jinjer", "twinci", "localmem", "ivr-studio"];
+  const selectedProjects = [
+    ...selectedIds.flatMap((id) =>
+      featured.filter((project) => project.id === id),
+    ),
+    ...featured.filter((project) => !selectedIds.includes(project.id)),
+  ].slice(0, 4);
   return (
     <main id="main" className="mx-auto max-w-[1440px] px-6">
       <section className={styles.hero}>
@@ -76,23 +83,21 @@ export default async function Page({
               title={d.ui.workHeading}
             />
           </div>
-          <ActionTooltip label={d.ui.allProjects}>
-            <Link
-              href={publicPath(locale, "/projects")}
-              className="text-sm text-muted-foreground"
-            >
-              {d.ui.allProjects} ↗
-            </Link>
-          </ActionTooltip>
         </div>
         <div className="grid gap-5 md:grid-cols-2">
-          {d.projects
-            .filter((p) => p.featured)
-            .map((p, i) => (
-              <Reveal key={p.id} delay={(i % 2) * 60}>
-                <ProjectCard project={p} labels={d.ui} index={i} />
-              </Reveal>
-            ))}
+          {selectedProjects.map((p, i) => (
+            <Reveal key={p.id} delay={(i % 2) * 60}>
+              <ProjectCard project={p} labels={d.ui} index={i} />
+            </Reveal>
+          ))}
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Button asChild variant="outline">
+            <Link href={publicPath(locale, "/projects")}>
+              {d.ui.allProjects}{" "}
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
+          </Button>
         </div>
       </section>
       <section
