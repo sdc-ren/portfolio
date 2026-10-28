@@ -65,7 +65,7 @@
     top: -55%;
     writing-mode: vertical-rl;
     text-orientation: upright;
-    font: 13px/1.8 monospace;
+    font: clamp(16px, 1.4vw, 20px) / 1.8 monospace;
     letter-spacing: 0.7em;
     color: var(--intro-accent);
     animation: fall var(--fall-duration) linear var(--delay) infinite;
