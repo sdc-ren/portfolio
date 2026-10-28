@@ -82,7 +82,9 @@ export function ProjectCard({
           onInteractOutside={(event) => event.preventDefault()}
           className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-3xl grid-rows-[auto_minmax(0,1fr)_auto] gap-0 overflow-hidden rounded-xl bg-card p-0"
         >
-          <DialogHeader className="border-b border-border px-6 py-5 pr-14 text-left">
+          <DialogHeader
+            className={`${styles.dialogHeader} border-b border-border px-6 py-5 pr-14 text-left`}
+          >
             <p className="text-xs uppercase tracking-widest text-primary">
               {project.category}
             </p>
@@ -97,7 +99,7 @@ export function ProjectCard({
             <DialogDescription className="line-clamp-3">
               {project.summary}
             </DialogDescription>
-            <div className="!mt-2">
+            <div>
               <ProjectMetadata project={project} />
             </div>
           </DialogHeader>

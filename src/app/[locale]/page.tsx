@@ -1,3 +1,4 @@
+import { SectionHeading } from "@/components/section-heading";
 import { SkillsOverview } from "@/components/skills-overview";
 import { experienceBullets } from "@/features/content/experience";
 import { ContactSection } from "@/components/contact-section";
@@ -78,12 +79,10 @@ export default async function Page({
       >
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <p className="mb-3 text-xs uppercase tracking-widest text-primary">
-              {d.ui.selectedWork}
-            </p>
-            <h2 className="text-2xl font-semibold text-foreground">
-              {d.ui.workHeading}
-            </h2>
+            <SectionHeading
+              subtitle={d.ui.selectedWork}
+              title={d.ui.workHeading}
+            />
           </div>
           <ActionTooltip label={d.ui.allProjects}>
             <Link
@@ -107,12 +106,10 @@ export default async function Page({
         className="grid gap-10 border-t border-border py-12 md:grid-cols-[1fr_2fr]"
       >
         <div>
-          <p className="mb-3 text-xs uppercase tracking-widest text-primary">
-            {d.ui.navExperience}
-          </p>
-          <h2 className="text-2xl font-semibold text-foreground">
-            {d.ui.experienceHeading}
-          </h2>
+          <SectionHeading
+            subtitle={d.ui.navExperience}
+            title={d.ui.experienceHeading}
+          />
           {d.settings.experienceNote && (
             <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
               {d.settings.experienceNote}
@@ -139,12 +136,11 @@ export default async function Page({
         </div>
       </section>
       <section className="border-t border-border py-12">
-        <p className="mb-3 text-xs uppercase tracking-widest text-primary">
-          {d.ui.toolkit}
-        </p>
-        <h2 className="mb-8 text-2xl font-semibold text-foreground">
-          {d.ui.toolkitHeading}
-        </h2>
+        <SectionHeading
+          subtitle={d.ui.toolkit}
+          title={d.ui.toolkitHeading}
+          className="mb-8"
+        />
         <SkillsOverview data={d} locale={locale} />
       </section>
       <ContactSection profile={d.profile} labels={d.ui} />

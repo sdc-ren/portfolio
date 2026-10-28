@@ -14,19 +14,15 @@ import {
   validateCollectionItem,
 } from "../src/features/admin/collections";
 
-test("Website keeps shared facts; CVs select different evidence and section order", () => {
+test("Website keeps shared facts; CVs share professional evidence with different section order", () => {
   const data = initialContent();
   const lead = data.experience[0];
   assert.equal(experienceBullets(lead).length, 6);
   const ai = data.cvs.find((c) => c.id === "ai-engineer")!;
   const senior = data.cvs.find((c) => c.id === "senior-software-engineer")!;
-  assert.equal(cvExperience(data, ai)[0].highlights.length, 3);
+  assert.equal(cvExperience(data, ai)[0].highlights.length, 5);
   assert.equal(cvExperience(data, senior)[0].highlights.length, 5);
-  assert.deepEqual(cvExperience(data, ai)[0].highlights, [
-    lead.highlights[0],
-    lead.highlights[1],
-    lead.highlights[4],
-  ]);
+  assert.deepEqual(cvExperience(data, ai), cvExperience(data, senior));
   for (const render of [cvMarkup, cvMarkdown]) {
     const aiText = render(data, ai.id),
       seniorText = render(data, senior.id);

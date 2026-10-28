@@ -1,5 +1,7 @@
 .badge {
   display: inline-flex;
+  width: fit-content;
+  align-self: flex-start;
   align-items: center;
   gap: 5px;
   max-width: 100%;

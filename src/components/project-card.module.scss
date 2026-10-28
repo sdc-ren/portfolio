@@ -158,3 +158,10 @@
 .titleGroup .titleText {
   min-width: 0;
 }
+
+.dialogHeader {
+  gap: 5px;
+  > * {
+    margin-block: 0;
+  }
+}
