@@ -1,9 +1,12 @@
 .intro {
+  --intro-bg: #0a141e;
+  --intro-ink: #e4edf3;
+  --intro-accent: #72ddc3;
   position: fixed;
   inset: 0;
   z-index: 100;
   overflow: hidden;
-  color: var(--foreground);
+  color: var(--intro-ink);
   isolation: isolate;
 }
 .top,
@@ -11,14 +14,33 @@
   position: absolute;
   inset-inline: 0;
   height: 50%;
-  background: var(--background);
+  background: var(--intro-bg);
   will-change: transform;
 }
 .top {
   top: 0;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    #15313a,
+    var(--intro-bg) 75%
+  );
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(114 221 195 / 45%),
+      transparent
+    );
+    box-shadow: 0 0 16px rgb(114 221 195 / 12%);
+  }
 }
 .bottom {
   bottom: 0;
+  background: radial-gradient(ellipse at 50% 0%, #15313a, var(--intro-bg) 75%);
 }
 .rain {
   position: absolute;
@@ -36,7 +58,7 @@
     text-orientation: upright;
     font: 13px/1.8 monospace;
     letter-spacing: 0.7em;
-    color: var(--primary);
+    color: var(--intro-accent);
     animation: fall var(--fall-duration) linear var(--delay) infinite;
   }
 }
@@ -75,7 +97,7 @@
   height: 1.15em;
   margin-left: 0.15em;
   vertical-align: -0.2em;
-  background: var(--primary);
+  background: var(--intro-accent);
   animation: blink 700ms step-end infinite;
 }
 .intro[data-opening="true"] {
@@ -99,17 +121,17 @@
   bottom: max(24px, env(safe-area-inset-bottom));
   min-height: 44px;
   padding: 8px 16px;
-  border: 1px solid var(--border);
+  border: 1px solid rgb(228 237 243 / 20%);
   border-radius: 8px;
-  background: var(--background);
+  background: var(--intro-bg);
   font-size: 13px;
   cursor: pointer;
   &:hover {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--intro-accent);
+    color: var(--intro-accent);
   }
   &:focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--intro-accent);
     outline-offset: 4px;
   }
 }
