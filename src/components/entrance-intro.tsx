@@ -1,7 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import styles from "./entrance-intro.module.scss";
+
+const streams = [
+  "01<>TS{}AI",
+  "FN/0101=>",
+  "AGENT{}01",
+  "UI<0101/>",
+  "REACT=>01",
+  "0101VUE{}",
+  "BUILD<>01",
+  "TS{}0101",
+  "01<>NODE",
+  "FLOW=>01",
+  "0101CSS{}",
+  "WEB<>0101",
+  "API{}0101",
+  "01<CODE>",
+  "SHIP=>01",
+  "0101AI{}",
+];
 
 export function EntranceIntro({
   name,
@@ -60,6 +79,22 @@ export function EntranceIntro({
     <div className={styles.intro} data-opening={opening}>
       <div className={styles.top} aria-hidden="true" />
       <div className={styles.bottom} aria-hidden="true" />
+      <div className={styles.rain} aria-hidden="true">
+        {streams.map((text, index) => (
+          <span
+            key={index}
+            style={
+              {
+                "--column": index,
+                "--delay": `${(index % 5) * -310}ms`,
+                "--fall-duration": `${1800 + (index % 4) * 270}ms`,
+              } as CSSProperties
+            }
+          >
+            {text}
+          </span>
+        ))}
+      </div>
       <div className={styles.identity} aria-hidden="true">
         <div className={styles.terminal}>
           <span className={styles.reserve}>

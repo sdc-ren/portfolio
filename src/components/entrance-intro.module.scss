@@ -20,9 +20,30 @@
 .bottom {
   bottom: 0;
 }
+.rain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.24;
+  mask-image: radial-gradient(ellipse at center, transparent 12%, black 72%);
+  span {
+    position: absolute;
+    left: calc((var(--column) + 0.5) * 6.25%);
+    top: -55%;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font: 13px/1.8 monospace;
+    letter-spacing: 0.7em;
+    color: var(--primary);
+    animation: fall var(--fall-duration) linear var(--delay) infinite;
+  }
+}
 .identity {
   position: absolute;
   inset: 0;
+  z-index: 2;
   display: grid;
   place-items: center;
   padding: 28px;
@@ -58,6 +79,9 @@
   animation: blink 700ms step-end infinite;
 }
 .intro[data-opening="true"] {
+  .rain {
+    animation: clear 180ms ease forwards;
+  }
   .top {
     animation: open-top 500ms var(--ease-in-out) forwards;
   }
@@ -69,6 +93,7 @@
   }
 }
 .skip {
+  z-index: 3;
   position: absolute;
   right: max(24px, env(safe-area-inset-right));
   bottom: max(24px, env(safe-area-inset-bottom));
@@ -86,6 +111,11 @@
   &:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 4px;
+  }
+}
+@keyframes fall {
+  to {
+    transform: translateY(155vh);
   }
 }
 @keyframes blink {
@@ -109,6 +139,9 @@
   }
 }
 @media (max-width: 640px) {
+  .rain span:nth-child(even) {
+    display: none;
+  }
   .identity {
     padding: 24px;
   }
