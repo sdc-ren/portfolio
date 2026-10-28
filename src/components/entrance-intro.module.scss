@@ -1,0 +1,153 @@
+.intro {
+  --intro-hold: 1300ms;
+  --intro-open: 500ms;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  color: var(--foreground);
+  isolation: isolate;
+}
+.top,
+.bottom {
+  position: absolute;
+  inset-inline: 0;
+  height: 50%;
+  background: var(--background);
+  animation: open-top var(--intro-open) var(--ease-in-out) var(--intro-hold)
+    forwards;
+  will-change: transform;
+}
+.top {
+  top: 0;
+  border-bottom: 1px solid var(--border);
+}
+.bottom {
+  bottom: 0;
+  animation-name: open-bottom;
+}
+.rain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.3;
+  animation: clear 220ms ease 900ms forwards;
+  mask-image: linear-gradient(transparent, black 20%, black 65%, transparent);
+  span {
+    position: absolute;
+    left: calc((var(--column) + 0.5) * 6.25%);
+    top: -55%;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font: 13px/1.8 monospace;
+    letter-spacing: 0.7em;
+    color: var(--primary);
+    animation: fall 1100ms linear var(--delay) both;
+  }
+}
+.identity {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 28px;
+  text-align: center;
+  animation:
+    identity-in 350ms var(--ease-out) 450ms both,
+    clear 200ms ease var(--intro-hold) forwards;
+}
+.name {
+  font-size: clamp(24px, 3.5vw, 52px);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+.role {
+  font-size: clamp(14px, 1.5vw, 22px);
+  color: var(--muted-foreground);
+  max-width: 32ch;
+}
+.divider {
+  width: 1px;
+  height: 36px;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+.skip {
+  position: absolute;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--background);
+  font-size: 13px;
+  cursor: pointer;
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+  }
+}
+@keyframes fall {
+  to {
+    transform: translateY(135vh);
+  }
+}
+@keyframes clear {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes identity-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+@keyframes open-top {
+  to {
+    transform: translateY(-101%);
+  }
+}
+@keyframes open-bottom {
+  to {
+    transform: translateY(101%);
+  }
+}
+@media (max-width: 640px) {
+  .intro {
+    --intro-hold: 1000ms;
+    --intro-open: 450ms;
+  }
+  .identity {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .divider {
+    width: 32px;
+    height: 1px;
+  }
+  .rain span:nth-child(even) {
+    display: none;
+  }
+  .rain {
+    animation-delay: 700ms;
+  }
+}
+@media (prefers-reduced-motion: reduce), print {
+  .intro {
+    display: none;
+  }
+}

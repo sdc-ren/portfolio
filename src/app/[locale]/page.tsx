@@ -1,3 +1,4 @@
+import { EntranceIntro } from "@/components/entrance-intro";
 import styles from "@/components/home.module.scss";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
@@ -46,6 +47,11 @@ export default async function Page({
   ].slice(0, 4);
   return (
     <main id="main" className="mx-auto max-w-[1440px] px-6">
+      <EntranceIntro
+        name={d.profile.name}
+        role={d.profile.role}
+        locale={locale}
+      />
       <section className={styles.hero}>
         <Reveal>
           <p className={styles.eyebrow}>
