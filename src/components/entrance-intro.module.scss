@@ -81,6 +81,7 @@
 }
 .terminal {
   display: grid;
+  gap: 12px;
   max-width: 100%;
   font-family:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
@@ -92,6 +93,11 @@
   text-align: center;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+.line {
+  display: grid;
+  place-items: center;
+  min-width: 0;
 }
 .name {
   font-weight: 600;
@@ -184,11 +190,14 @@
     display: none;
   }
   .identity {
-    padding: 24px;
+    padding: 16px;
   }
   .terminal {
-    font-size: 16px;
-    line-height: 1.9;
+    gap: 32px;
+    font-size: min(14px, calc((100vw - 32px) / var(--intro-columns) / 0.65));
+    line-height: 1.8;
+    white-space: nowrap;
+    overflow-wrap: normal;
   }
 }
 @media (prefers-reduced-motion: reduce), print {
