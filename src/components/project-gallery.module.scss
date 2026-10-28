@@ -276,3 +276,36 @@
     transition: none;
   }
 }
+
+@keyframes image-enter {
+  from {
+    opacity: 0.25;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fullImage {
+  animation: image-enter var(--motion-base) var(--ease-out) both;
+}
+.thumbnail {
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fullImage {
+    animation: none;
+  }
+  .thumbnail:hover {
+    transform: none;
+  }
+}

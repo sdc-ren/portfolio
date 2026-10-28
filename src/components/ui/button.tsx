@@ -6,13 +6,12 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",
+  "motion-button inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        outline:
-          "border border-border bg-transparent text-foreground hover:bg-muted",
+        default: "border border-primary bg-transparent text-primary",
+        outline: "border border-border bg-transparent text-foreground",
         ghost: "text-muted-foreground hover:bg-muted",
         destructive: "bg-destructive text-white hover:bg-destructive/90",
       },
@@ -46,6 +45,7 @@ export function Button({
     <ActionTooltip label={label}>
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
+        data-variant={variant ?? "default"}
         {...props}
       />
     </ActionTooltip>

@@ -1,0 +1,20 @@
+{
+  "hero": {
+    "tagline": "Frontend engineer. Thoughtful interfaces. AI tools.",
+    "summary": "I build maintainable web interfaces and complex PDF/canvas interactions. With 12 years in software engineering and around six years of frontend technical leadership, I’m extending that foundation into AI agent tools and model integration."
+  },
+  "projects": [
+    {
+      "id": "jinjer",
+      "description": "### Problem\nDocument management workflows needed PDF rendering and interactive annotation, highlighting, and drawing within a web interface. Typical documents contained 10-20 pages and were 15-20 MB.\n\n### My contribution\nLed six frontend engineers while developing complex PDF/canvas interactions hands-on with Vue 3 and TypeScript.\n\n### Technical decisions\nCombined PDF.js document rendering with Konva.js for an editable interaction layer. Built a PDF-processing core and investigated rendering bottlenecks around the document sizes used by the product.\n\n### Trade-offs\nThe custom interaction layer gave control over editing behavior while adding coordination work between PDF rendering and canvas overlays.\n\n### Outcome\nDelivered PDF rendering, annotation, highlighting, and drawing features for a document management product."
+    },
+    {
+      "id": "localmem",
+      "description": "### Problem\nCoding agents lose context between sessions. Large instruction files consume context even when most of their content is irrelevant to the current task.\n\n### My contribution\nBuilt a Python CLI and shared stdio MCP server for persistent, workspace-scoped notes, traces, and lessons across coding assistants.\n\n### Technical decisions\nCombined SQLite FTS5/BM25 full-text search, agent-supplied keywords, entity-based ranking, and evidence links. Implemented normalized-content deduplication, import/export, and agent configuration support. Storage and retrieval run locally, with no LLM or network call on the recall path.\n\n### Trade-offs\nRetrieval is lexical, not embedding-based semantic search. Keyword quality and fallback behavior affect results. A bilingual query fixture evaluates recall@k, mean reciprocal rank (MRR), and off-corpus behavior; these are fixture-based evaluations, not production adoption metrics.\n\n### Outcome\nDelivered one local memory interface shared by Claude Code, Codex, Antigravity, and Kiro, with inspectable retrieval behavior and documented limits."
+    },
+    {
+      "id": "ivr-studio",
+      "description": "### Problem\nProducing Vietnamese IVR greetings and menus requires script preparation, voice generation, timing controls, and review of missing or mispronounced words.\n\n### My contribution\nBuilt a local web application and CLI integrating edge-tts and a pretrained F5-TTS model for reference-conditioned, zero-shot speech generation. The project performs no model training or fine-tuning.\n\n### Technical decisions\nA Node.js server orchestrates Python inference and FFmpeg processing. A resident worker reuses the loaded F5-TTS checkpoint and releases it after inactivity. The pipeline normalizes Vietnamese numbers, chunks long text, and assembles MP3/WAV output.\n\n### Trade-offs\nSpeech generation remains variable. Optional Whisper transcription checks the output against the script, triggers bounded retries, and retains the best-matching result; users can review and regenerate individual lines. The selected checkpoint is restricted to non-commercial use and reference voices require appropriate rights.\n\n### Outcome\nDelivered a local prototype with per-line preview, regeneration, transcript review, saved jobs, and audio export, demonstrating model integration and audio-workflow engineering."
+    }
+  ]
+}

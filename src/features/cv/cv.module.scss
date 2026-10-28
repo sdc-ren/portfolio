@@ -2,6 +2,7 @@
   padding: 2rem 1rem;
   :global(.cv-sheet) {
     margin: 0 auto;
+    animation: surface-in var(--motion-base) var(--ease-out) both;
   }
 }
 .actions {
@@ -46,12 +47,22 @@
   align-items: center;
   min-height: 32px;
   padding: 6px 2px;
-  border-bottom: 2px solid transparent;
+  position: relative;
+  transition: color var(--motion-base) var(--ease-out);
+  &::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--motion-base) var(--ease-out);
+  }
   font-size: 12px;
   color: var(--muted-foreground);
   &:hover {
     color: var(--primary);
-    border-bottom-color: var(--border);
   }
   &:focus-visible {
     outline: 2px solid var(--primary);
@@ -59,7 +70,9 @@
   }
   &[aria-current="page"] {
     color: var(--primary);
-    border-bottom-color: var(--primary);
+    &::after {
+      transform: scaleX(1);
+    }
     font-weight: 600;
   }
 }

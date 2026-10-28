@@ -1,7 +1,7 @@
 .section {
   padding: 3rem 0;
   border-top: 1px solid var(--border);
-  scroll-margin-top: 1.5rem;
+  scroll-margin-top: var(--header-offset);
 }
 .card {
   display: grid;
@@ -67,7 +67,7 @@
   color: var(--muted-foreground);
   font-size: 0.875rem;
   text-underline-offset: 4px;
-  transition: color 150ms;
+  transition: color var(--motion-fast) var(--ease-out);
   &:hover {
     color: var(--primary);
     text-decoration: underline;
