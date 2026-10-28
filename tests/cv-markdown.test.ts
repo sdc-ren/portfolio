@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { registerHooks } from "node:module";
+import { initialContent } from "../src/features/content/seed-content";
 import initial from "../src/data/initial-content.json";
 import { contentSchema } from "../src/features/content/schema";
 import { markdownText, cvMarkdown } from "../src/features/cv/markdown";
@@ -77,7 +78,7 @@ test("new download label defaults work for old content and Vietnamese defaults",
 test("Markdown endpoint returns an attachment and handles invalid/missing/error cases", async () => {
   let calls = 0;
   let mode: "ok" | "missing" | "error" = "ok";
-  const data = contentSchema.parse(initial);
+  const data = initialContent();
   const fixture = globalThis as typeof globalThis & {
     __cvMarkdownPublished?: () => Promise<typeof data | null>;
   };
@@ -114,6 +115,14 @@ test("Markdown endpoint returns an attachment and handles invalid/missing/error 
     assert.equal(response.headers.get("cache-control"), "no-store");
     assert.equal(response.headers.get("x-content-type-options"), "nosniff");
     assert.equal(await response.text(), cvMarkdown(data, data.cvs[0].id));
+    const aiResponse = await invoke("en", "ai-engineer");
+    assert.equal(aiResponse.status, 200);
+    assert.ok(
+      aiResponse.headers
+        .get("content-disposition")
+        ?.includes("ai-engineer-en.md"),
+    );
+    assert.equal(await aiResponse.text(), cvMarkdown(data, "ai-engineer"));
     const previousCalls = calls;
     assert.equal((await invoke("../../bad")).status, 404);
     assert.equal((await invoke("en", "bad\r\nheader")).status, 404);
@@ -134,7 +143,10 @@ test("Markdown endpoint returns an attachment and handles invalid/missing/error 
 
 test("Markdown keeps plain ampersands without activating CMS entities", () => {
   assert.equal(markdownText("Quality & Performance"), "Quality & Performance");
-  assert.equal(markdownText("literal &copy; and &#60;"), "literal &amp;copy; and &amp;\\#60;");
+  assert.equal(
+    markdownText("literal &copy; and &#60;"),
+    "literal &amp;copy; and &amp;\\#60;",
+  );
   const data = contentSchema.parse(initial);
   const md = cvMarkdown(data, data.cvs[0].id);
   assert.ok(md.includes("Quality & Performance"));

@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { publicPath } from "@/lib/public-path";
 import { pageMetadata } from "@/lib/seo";
 import { DownloadLink } from "@/components/download-link";
 import { Download, FileText } from "lucide-react";
@@ -19,7 +21,7 @@ export async function generateMetadata({
     data: d,
     locale,
     path: `/cv/${cv.id}`,
-    title: `${d.ui.navCv} | ${d.profile.name}`,
+    title: `${cv.title} | ${d.profile.name}`,
     description: cv.summary,
   });
 }
@@ -33,7 +35,22 @@ export default async function Page({
   if (!d || !d.cvs.some((c) => c.id === variant)) notFound();
   return (
     <main id="main" className={styles.page}>
+      {d.cvs.length > 1 && (
+        <nav className={styles.variants} aria-label={d.ui.cvVersions}>
+          {d.cvs.map((cv) => (
+            <Link
+              key={cv.id}
+              href={publicPath(locale, `/cv/${cv.id}`)}
+              aria-current={cv.id === variant ? "page" : undefined}
+              className={styles.variant}
+            >
+              {cv.title}
+            </Link>
+          ))}
+        </nav>
+      )}
       <CvDocument
+        key={variant}
         data={d}
         variant={variant}
         actions={
