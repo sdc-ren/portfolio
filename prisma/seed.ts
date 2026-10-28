@@ -1,8 +1,7 @@
 import { config } from "dotenv";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
-import initial from "../src/data/initial-content.json";
-import { contentSchema } from "../src/features/content/schema";
+import { initialContent } from "../src/features/content/seed-content";
 config({ path: ".env.local", quiet: true });
 config({ quiet: true });
 if (!process.env.DIRECT_URL) throw new Error("DIRECT_URL required");
@@ -10,7 +9,7 @@ const db = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DIRECT_URL }),
 });
 try {
-  const data = contentSchema.parse(initial);
+  const data = initialContent();
   await db.content.upsert({
     where: { locale: "en" },
     update: {},
