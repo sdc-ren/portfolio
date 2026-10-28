@@ -1,6 +1,4 @@
 .intro {
-  --intro-hold: 1300ms;
-  --intro-open: 500ms;
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -14,65 +12,61 @@
   inset-inline: 0;
   height: 50%;
   background: var(--background);
-  animation: open-top var(--intro-open) var(--ease-in-out) var(--intro-hold)
-    forwards;
   will-change: transform;
 }
 .top {
   top: 0;
-  border-bottom: 1px solid var(--border);
 }
 .bottom {
   bottom: 0;
-  animation-name: open-bottom;
-}
-.rain {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  opacity: 0.3;
-  animation: clear 220ms ease 900ms forwards;
-  mask-image: linear-gradient(transparent, black 20%, black 65%, transparent);
-  span {
-    position: absolute;
-    left: calc((var(--column) + 0.5) * 6.25%);
-    top: -55%;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    font: 13px/1.8 monospace;
-    letter-spacing: 0.7em;
-    color: var(--primary);
-    animation: fall 1100ms linear var(--delay) both;
-  }
 }
 .identity {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
+  display: grid;
+  place-items: center;
   padding: 28px;
-  text-align: center;
-  animation:
-    identity-in 350ms var(--ease-out) 450ms both,
-    clear 200ms ease var(--intro-hold) forwards;
 }
-.name {
-  font-size: clamp(24px, 3.5vw, 52px);
-  font-weight: 600;
-  letter-spacing: -0.045em;
+.terminal {
+  display: grid;
+  max-width: 100%;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+  font-size: clamp(16px, 2.1vw, 28px);
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: -0.025em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
-.role {
-  font-size: clamp(14px, 1.5vw, 22px);
-  color: var(--muted-foreground);
-  max-width: 32ch;
+.reserve,
+.typed {
+  grid-area: 1 / 1;
+  min-width: 0;
 }
-.divider {
-  width: 1px;
-  height: 36px;
+.reserve {
+  visibility: hidden;
+}
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.15em;
+  margin-left: 0.15em;
+  vertical-align: -0.2em;
   background: var(--primary);
-  flex-shrink: 0;
+  animation: blink 700ms step-end infinite;
+}
+.intro[data-opening="true"] {
+  .top {
+    animation: open-top 500ms var(--ease-in-out) forwards;
+  }
+  .bottom {
+    animation: open-bottom 500ms var(--ease-in-out) forwards;
+  }
+  .identity {
+    animation: clear 180ms ease forwards;
+  }
 }
 .skip {
   position: absolute;
@@ -94,26 +88,14 @@
     outline-offset: 4px;
   }
 }
-@keyframes fall {
-  to {
-    transform: translateY(135vh);
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }
 @keyframes clear {
   to {
     opacity: 0;
-  }
-}
-@keyframes identity-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
   }
 }
 @keyframes open-top {
@@ -127,23 +109,12 @@
   }
 }
 @media (max-width: 640px) {
-  .intro {
-    --intro-hold: 1000ms;
-    --intro-open: 450ms;
-  }
   .identity {
-    flex-direction: column;
-    gap: 12px;
+    padding: 24px;
   }
-  .divider {
-    width: 32px;
-    height: 1px;
-  }
-  .rain span:nth-child(even) {
-    display: none;
-  }
-  .rain {
-    animation-delay: 700ms;
+  .terminal {
+    font-size: 16px;
+    line-height: 1.9;
   }
 }
 @media (prefers-reduced-motion: reduce), print {
