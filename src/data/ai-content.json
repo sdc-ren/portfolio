@@ -5,8 +5,8 @@
       "title": "localmem - Local Memory for AI Coding Agents",
       "role": "Creator / Maintainer",
       "category": "AI agent tooling",
-      "summary": "Built a local-first memory layer for AI coding agents, with Python, SQLite, and a shared stdio MCP server.",
-      "description": "Persistent, workspace-scoped memory shared by coding assistants through CLI and MCP tools. Retrieval combines SQLite FTS5/BM25 with entity-based ranking, without an LLM call on the recall path.\n\nImplemented deduplication, evidence links, import/export, and agent configuration support. Includes a bilingual retrieval evaluation suite; recall remains lexical rather than embedding-based.",
+      "summary": "Built persistent memory for AI coding agents with Python, SQLite FTS5/BM25, and MCP, enabling local retrieval across sessions without LLM calls on the recall path.",
+      "description": "AI coding assistants lose project context across sessions, while large instruction files consume context even when their contents are irrelevant. localmem stores notes, traces, and lessons in a local SQLite database and exposes workspace-scoped memory through a Python CLI and a shared stdio MCP server.\n\nRetrieval combines FTS5/BM25 full-text search, agent-supplied keywords, entity-based ranking, and evidence links. Storage, indexing, deduplication, and retrieval run locally; no LLM or network call is required on the recall path. This is lexical information retrieval, not embedding-based semantic search.\n\nImplemented deduplication, import/export, and agent configuration support. A bilingual evaluation fixture measures recall@k, mean reciprocal rank (MRR), and off-corpus behavior to assess retrieval quality and fallback limitations.",
       "tech": [
         "Python",
         "SQLite",
@@ -16,9 +16,10 @@
         "pytest"
       ],
       "highlights": [
-        "Built CLI and stdio MCP tools for persistent, workspace-scoped memory shared by Claude Code, Codex, Antigravity, and Kiro.",
-        "Combined FTS5/BM25 search with entity-based ranking and evidence links; kept retrieval local without LLM calls.",
-        "Implemented deduplication, import/export, and bilingual retrieval evaluation with recall and ranking metrics."
+        "Built a Python CLI and Model Context Protocol (MCP) server to preserve coding-agent memory across sessions and workspaces, shared by Claude Code, Codex, Antigravity, and Kiro.",
+        "Designed local information retrieval with SQLite FTS5/BM25 full-text search, keyword indexing, entity-based ranking, and evidence links; the recall path performs no LLM or network calls.",
+        "Implemented normalized-content deduplication, workspace scoping, and import/export so agents can retrieve relevant notes and lessons instead of loading entire instruction files into every session.",
+        "Evaluated retrieval using a bilingual query fixture, recall@k, mean reciprocal rank (MRR), and off-corpus queries; documented lexical-search limitations and fallback behavior."
       ],
       "featured": true,
       "links": [
@@ -38,12 +39,12 @@
         "id": "ai-engineering",
         "name": "AI Agent Engineering",
         "items": [
-          "MCP servers and tools",
-          "agent hooks",
-          "workflow automation",
-          "tool schemas",
-          "scoped document retrieval",
-          "context optimization"
+          "Model Context Protocol (MCP)",
+          "AI agent tools and hooks",
+          "Human-in-the-loop workflows",
+          "Tool schemas",
+          "Context management",
+          "Information retrieval"
         ]
       },
       {
@@ -89,7 +90,7 @@
     "cv": {
       "id": "ai-engineer",
       "title": "AI ENGINEER",
-      "summary": "Software Engineer with 12 years of web development experience, including around six years of frontend technical leadership, focused on AI agent tooling and workflow automation. Built local-first memory retrieval, Google Workspace CLI/MCP tools, and coding-assistant hooks for Telegram notifications and approvals. Combines Python/TypeScript, API integration, and automated testing with ongoing research into prompt engineering and multi-agent workflows.",
+      "summary": "Software Engineer with 12 years of web development experience, including around six years of frontend technical leadership, focused on AI agent engineering and workflow automation. Built Model Context Protocol (MCP) servers, local memory retrieval, Google Workspace tools, and human-in-the-loop coding-assistant integrations using Python and Node.js. Hands-on work covers tool schemas, context management, retrieval evaluation, API integration, and automated testing; current research includes prompt engineering and multi-agent workflows.",
       "specialties": "AI Agent Tooling · MCP · Memory Retrieval · Python / TypeScript · Workflow Automation",
       "projectIds": ["localmem", "gdrive-cli", "cc-notify-telegram", "altfins"],
       "skillIds": [
@@ -114,8 +115,8 @@
       "title": "localmem - Local Memory for AI Coding Agents",
       "role": "Creator / Maintainer",
       "category": "AI agent tooling",
-      "summary": "Xây dựng bộ nhớ cục bộ cho AI coding agents bằng Python, SQLite và MCP server dùng chung.",
-      "description": "Bộ nhớ lâu dài theo workspace, truy cập qua CLI và MCP. Kết hợp SQLite FTS5/BM25 với xếp hạng theo thực thể, không gọi LLM trong luồng truy hồi.\n\nCó khử trùng lặp, liên kết bằng chứng, import/export và bộ đánh giá truy hồi song ngữ; phương pháp truy hồi dựa trên từ khóa, không dùng embeddings.",
+      "summary": "Xây dựng bộ nhớ lâu dài cho AI coding agents bằng Python, SQLite FTS5/BM25 và MCP, truy hồi cục bộ giữa các phiên mà không gọi LLM.",
+      "description": "AI coding assistants dễ mất ngữ cảnh giữa các phiên, trong khi instruction files lớn chiếm context cả khi không liên quan. localmem lưu ghi chú, traces và bài học trong SQLite, truy cập theo workspace qua Python CLI và MCP stdio.\n\nKết hợp full-text search FTS5/BM25, keywords do agent cung cấp, xếp hạng theo thực thể và liên kết bằng chứng. Luồng lưu trữ, lập chỉ mục, khử trùng lặp và truy hồi chạy cục bộ; truy hồi không gọi LLM hoặc mạng. Đây là truy hồi theo từ khóa, không phải semantic search dựa trên embeddings.\n\nCó import/export, cấu hình agent và bộ đánh giá song ngữ với recall@k, MRR và truy vấn ngoài dữ liệu để đánh giá chất lượng và giới hạn fallback.",
       "tech": [
         "Python",
         "SQLite",
@@ -125,9 +126,10 @@
         "pytest"
       ],
       "highlights": [
-        "Xây dựng CLI và MCP stdio cho bộ nhớ theo workspace, dùng chung giữa Claude Code, Codex, Antigravity và Kiro.",
-        "Kết hợp FTS5/BM25 với xếp hạng theo thực thể và liên kết bằng chứng; truy hồi cục bộ không gọi LLM.",
-        "Triển khai khử trùng lặp, import/export và đánh giá truy hồi song ngữ bằng các chỉ số recall và ranking."
+        "Xây dựng Python CLI và MCP server lưu bộ nhớ giữa các phiên/workspace, dùng chung cho Claude Code, Codex, Antigravity và Kiro.",
+        "Thiết kế truy hồi cục bộ bằng SQLite FTS5/BM25, keyword indexing, xếp hạng theo thực thể và liên kết bằng chứng; không gọi LLM hoặc mạng trong luồng recall.",
+        "Triển khai khử trùng lặp nội dung chuẩn hóa, phân vùng workspace và import/export để agent lấy ghi chú, bài học liên quan thay vì nạp toàn bộ instruction files.",
+        "Đánh giá bằng bộ truy vấn song ngữ, recall@k, MRR và truy vấn ngoài dữ liệu; ghi rõ giới hạn lexical search và hành vi fallback."
       ],
       "featured": true,
       "links": [
@@ -147,12 +149,12 @@
         "id": "ai-engineering",
         "name": "AI Agent Engineering",
         "items": [
-          "MCP servers and tools",
-          "agent hooks",
-          "workflow automation",
-          "tool schemas",
-          "scoped document retrieval",
-          "context optimization"
+          "Model Context Protocol (MCP)",
+          "AI agent tools and hooks",
+          "Human-in-the-loop workflows",
+          "Tool schemas",
+          "Context management",
+          "Information retrieval"
         ]
       },
       {

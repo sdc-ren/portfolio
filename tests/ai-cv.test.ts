@@ -28,3 +28,37 @@ test("AI CV and localmem seed preserve the software CV and resolve selections", 
     assert.ok(!render(data, "senior-software-engineer").includes("localmem"));
   }
 });
+
+test("AI project summaries, details and CV exports share evidence-based technical copy", () => {
+  const data = initialContent();
+  const md = cvMarkdown(data, "ai-engineer");
+  const html = cvMarkup(data, "ai-engineer");
+  const memory = data.projects.find((p) => p.id === "localmem")!;
+  assert.equal(memory.highlights.length, 4);
+  assert.ok(memory.summary.includes("FTS5/BM25"));
+  assert.ok(memory.description.includes("not embedding-based semantic search"));
+  for (const keyword of [
+    "Model Context Protocol",
+    "human-in-the-loop",
+    "session-aware",
+    "recall@k",
+    "MRR",
+    "service-account",
+  ]) {
+    assert.ok(md.replaceAll("\\", "").includes(keyword), keyword);
+    assert.ok(html.includes(keyword), keyword);
+  }
+  for (const id of ["gdrive-cli", "cc-notify-telegram", "altfins"]) {
+    const project = data.projects.find((p) => p.id === id)!;
+    assert.ok(project.description.length > project.summary.length);
+    assert.ok(
+      project.highlights.every((h) =>
+        html.includes(h.replaceAll("&", "&amp;")),
+      ),
+    );
+  }
+  assert.equal(
+    data.projects.find((p) => p.id === "altfins")!.highlights.length,
+    2,
+  );
+});
