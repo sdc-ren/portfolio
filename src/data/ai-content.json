@@ -5,7 +5,7 @@
       "title": "localmem - Local Memory for AI Coding Agents",
       "role": "Creator / Maintainer",
       "category": "AI agent tooling",
-      "summary": "Built persistent memory for AI coding agents with Python, SQLite FTS5/BM25, and MCP, enabling local retrieval across sessions without LLM calls on the recall path.",
+      "summary": "Persistent memory for AI coding agents across sessions and projects. Local SQLite/FTS5 retrieval through MCP recalls relevant context without LLM calls on the retrieval path.",
       "description": "AI coding assistants lose project context across sessions, while large instruction files consume context even when their contents are irrelevant. localmem stores notes, traces, and lessons in a local SQLite database and exposes workspace-scoped memory through a Python CLI and a shared stdio MCP server.\n\nRetrieval combines FTS5/BM25 full-text search, agent-supplied keywords, entity-based ranking, and evidence links. Storage, indexing, deduplication, and retrieval run locally; no LLM or network call is required on the recall path. This is lexical information retrieval, not embedding-based semantic search.\n\nImplemented deduplication, import/export, and agent configuration support. A bilingual evaluation fixture measures recall@k, mean reciprocal rank (MRR), and off-corpus behavior to assess retrieval quality and fallback limitations.",
       "tech": [
         "Python",
@@ -32,7 +32,8 @@
         }
       ],
       "images": [],
-      "coverImageId": ""
+      "coverImageId": "",
+      "focus": "ai-agent-memory"
     },
     "skills": [
       {
@@ -90,15 +91,20 @@
     "cv": {
       "id": "ai-engineer",
       "title": "AI ENGINEER",
-      "summary": "Software Engineer with 12 years of web development experience, including around six years of frontend technical leadership, focused on AI agent engineering and workflow automation. Built Model Context Protocol (MCP) servers, local memory retrieval, Google Workspace tools, and human-in-the-loop coding-assistant integrations using Python and Node.js. Hands-on work covers tool schemas, context management, retrieval evaluation, API integration, and automated testing; current research includes prompt engineering and multi-agent workflows.",
+      "summary": "Software Engineer with 12 years of web development experience, including around six years of frontend technical leadership, focused on AI agent engineering and applied model integration. Built MCP servers, local memory retrieval, human-in-the-loop coding workflows, and Vietnamese speech synthesis using pretrained F5-TTS, Python, and Node.js. Hands-on work covers context management, retrieval evaluation, inference-worker orchestration, API integration, and automated testing; current research includes prompt engineering and multi-agent workflows.",
       "specialties": "AI Agent Tooling · MCP · Memory Retrieval · Python / TypeScript · Workflow Automation",
-      "projectIds": ["localmem", "gdrive-cli", "cc-notify-telegram", "altfins"],
+      "projectIds": [
+        "localmem",
+        "ivr-studio",
+        "gdrive-cli",
+        "cc-notify-telegram"
+      ],
       "skillIds": [
         "ai-engineering",
         "ai-programming",
         "ai-reliability",
+        "speech-ai",
         "ai-development-tools",
-        "architecture",
         "devops-delivery"
       ],
       "experienceIds": [
@@ -142,7 +148,8 @@
         }
       ],
       "images": [],
-      "coverImageId": ""
+      "coverImageId": "",
+      "focus": "ai-agent-memory"
     },
     "skills": [
       {
@@ -200,15 +207,20 @@
     "cv": {
       "id": "ai-engineer",
       "title": "AI ENGINEER",
-      "summary": "Kỹ sư phần mềm với 12 năm phát triển web, trong đó khoảng 6 năm dẫn dắt kỹ thuật frontend, tập trung vào AI agent tooling và tự động hóa workflow. Xây dựng bộ nhớ truy hồi cục bộ, công cụ CLI/MCP cho Google Workspace và hooks gửi thông báo, yêu cầu phê duyệt qua Telegram. Kết hợp Python/TypeScript, tích hợp API và kiểm thử tự động với nghiên cứu prompt engineering và workflow đa agent.",
+      "summary": "Kỹ sư phần mềm với 12 năm phát triển web, trong đó khoảng 6 năm dẫn dắt kỹ thuật frontend, tập trung vào AI agent engineering và tích hợp model. Xây dựng MCP servers, bộ nhớ truy hồi cục bộ, workflow có người phê duyệt và tổng hợp giọng tiếng Việt bằng F5-TTS có sẵn, Python và Node.js. Kinh nghiệm thực tế gồm context management, đánh giá truy hồi, điều phối inference worker, tích hợp API và kiểm thử; đang nghiên cứu prompt engineering và workflow đa agent.",
       "specialties": "AI Agent Tooling · MCP · Memory Retrieval · Python / TypeScript · Workflow Automation",
-      "projectIds": ["localmem", "gdrive-cli", "cc-notify-telegram", "altfins"],
+      "projectIds": [
+        "localmem",
+        "ivr-studio",
+        "gdrive-cli",
+        "cc-notify-telegram"
+      ],
       "skillIds": [
         "ai-engineering",
         "ai-programming",
         "ai-reliability",
+        "speech-ai",
         "ai-development-tools",
-        "architecture",
         "devops-delivery"
       ],
       "experienceIds": [

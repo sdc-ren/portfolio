@@ -13,9 +13,9 @@ test("AI CV and localmem seed preserve the software CV and resolve selections", 
   assert.equal(ai.projectIds[0], "localmem");
   assert.deepEqual(ai.projectIds, [
     "localmem",
+    "ivr-studio",
     "gdrive-cli",
     "cc-notify-telegram",
-    "altfins",
   ]);
   const project = data.projects.find((p) => p.id === "localmem")!;
   assert.equal(project.links[0].url, "https://github.com/sdc-ren/localmem");
@@ -35,7 +35,7 @@ test("AI project summaries, details and CV exports share evidence-based technica
   const html = cvMarkup(data, "ai-engineer");
   const memory = data.projects.find((p) => p.id === "localmem")!;
   assert.equal(memory.highlights.length, 4);
-  assert.ok(memory.summary.includes("FTS5/BM25"));
+  assert.ok(memory.summary.includes("SQLite/FTS5"));
   assert.ok(memory.description.includes("not embedding-based semantic search"));
   for (const keyword of [
     "Model Context Protocol",
@@ -48,7 +48,7 @@ test("AI project summaries, details and CV exports share evidence-based technica
     assert.ok(md.replaceAll("\\", "").includes(keyword), keyword);
     assert.ok(html.includes(keyword), keyword);
   }
-  for (const id of ["gdrive-cli", "cc-notify-telegram", "altfins"]) {
+  for (const id of ["gdrive-cli", "cc-notify-telegram", "ivr-studio"]) {
     const project = data.projects.find((p) => p.id === id)!;
     assert.ok(project.description.length > project.summary.length);
     assert.ok(
@@ -61,4 +61,22 @@ test("AI project summaries, details and CV exports share evidence-based technica
     data.projects.find((p) => p.id === "altfins")!.highlights.length,
     2,
   );
+});
+
+test("Speech AI showcases pretrained inference and preserves the software CV selection", () => {
+  const data = initialContent();
+  const speech = data.projects.find((p) => p.id === "ivr-studio")!;
+  assert.equal(speech.focus, "speech-ai");
+  assert.ok(speech.description.includes("no model training or fine-tuning"));
+  assert.ok(speech.description.includes("non-commercial"));
+  const html = cvMarkup(data, "ai-engineer");
+  for (const term of [
+    "F5-TTS",
+    "Whisper",
+    "FFmpeg",
+    "resident Python model worker",
+  ])
+    assert.ok(html.includes(term), term);
+  assert.ok(!html.includes("altfins"));
+  assert.ok(!cvMarkup(data, "senior-software-engineer").includes("ivr-studio"));
 });

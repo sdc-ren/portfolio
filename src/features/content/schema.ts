@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { projectFocusValues } from "./project-focus";
 import { uiSchema } from "./ui";
 import {
   legacyProjectLinks,
@@ -25,6 +26,7 @@ export const projectSchema = z
     title: short,
     role: short,
     category: short,
+    focus: z.enum(projectFocusValues).default(""),
     summary: text,
     description: text,
     tech: list,

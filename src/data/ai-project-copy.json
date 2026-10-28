@@ -1,31 +1,34 @@
 [
   {
     "id": "gdrive-cli",
-    "summary": "Built Google Workspace CLI/MCP tools that let AI coding agents read scoped test cases and documents, update data, and automate workflows using service-account permissions.",
+    "summary": "Connect AI coding agents to Google Drive, Sheets, Docs, and Slides for test-case retrieval and data-entry workflows. Service-account scope and filtered reads keep access and context focused.",
     "description": "Built a Node.js CLI, library, and Model Context Protocol (MCP) server connecting AI coding agents to Google Drive, Sheets, Docs, and Slides. Used it in personal workflows and a remote project to retrieve QC test cases, read project documents, and perform data-entry workflows.\n\nService-account authentication restricts access to explicitly shared files and folders. Column selection, row filtering, and pagination return only the data needed for a task; compact tool schemas and structured TSV/Markdown responses limit unnecessary context.\n\nImplemented request timeouts, retry handling, and automated verification. Requests with uncertain write outcomes are not automatically replayed, avoiding duplicate writes.",
     "highlights": [
       "Built a Node.js CLI, library, and MCP server integrating Google Drive, Sheets, Docs, and Slides APIs; used it to retrieve QC test cases and project documents in personal workflows and a remote project.",
       "Implemented service-account authentication and scoped file/folder access, plus column selection, row filtering, and pagination to retrieve task-relevant data.",
       "Designed compact tool schemas and TSV/Markdown responses for agent context management; added timeouts, retry handling, and automated verification without replaying writes with uncertain outcomes."
-    ]
+    ],
+    "focus": "ai-agent-tooling"
   },
   {
     "id": "cc-notify-telegram",
-    "summary": "Built a Telegram bridge for AI coding assistants so users can receive alerts, answer questions, and approve pending requests without continuously monitoring their computer.",
+    "summary": "Step away while AI coding assistants work: receive completion alerts, answer questions, and approve pending requests through Telegram. Replies return to the originating session.",
     "description": "Built a Node.js integration between AI coding-assistant hooks and the Telegram Bot API for completion notifications, questions, and remote approval requests. Users can step away from their computer while remaining available for human-in-the-loop decisions.\n\nSession-aware routing returns each reply to the originating agent session. Allowlisted Telegram user IDs control remote permissions; authorization checks, timeouts, and local-prompt fallbacks handle unavailable or untrusted responses without automatically approving requests.\n\nThe integration supports Claude Code, Codex, and Antigravity hooks. Used it with Claude Code and verified behavior through automated and end-to-end tests.",
     "highlights": [
       "Built Node.js hooks and Telegram Bot API integration for completion alerts, questions, and remote approval requests, enabling human-in-the-loop coding workflows away from the computer.",
       "Implemented session-aware request/reply routing, allowlisted Telegram user IDs, authorization checks, and timeouts; failures fall back to local prompts without automatically approving requests.",
       "Integrated hook systems for Claude Code, Codex, and Antigravity; used the tool with Claude Code and verified behavior through automated and end-to-end tests."
-    ]
+    ],
+    "focus": "ai-workflow"
   },
   {
     "id": "altfins",
-    "summary": "Built a Python/Playwright data pipeline that runs 24/7, normalizes cryptocurrency analysis with Pydantic, stores records in Supabase, and sends deduplicated Telegram alerts.",
+    "summary": "Monitor cryptocurrency analysis without repeatedly visiting source pages. A scheduled Python pipeline stores structured data and sends deduplicated Telegram alerts.",
     "description": "Built a Python data-collection and notification pipeline to monitor cryptocurrency analysis without repeatedly visiting altFINS pages. Playwright retrieves Technical Analysis, Chart Patterns, and Market Highlights; Pydantic models normalize the extracted records.\n\nPersisted data in Supabase/PostgreSQL and reused authenticated browser sessions across scheduled runs. Added same-source and cross-source deduplication, database retries, and Telegram alerts to handle repeated data and transient failures.\n\nOperated scheduled execution through GitHub Actions and an external scheduler. This project demonstrates browser automation, data processing, persistence, and reliable notification delivery.",
     "highlights": [
       "Built a Python/Playwright pipeline for cryptocurrency analysis, using Pydantic validation, Supabase/PostgreSQL persistence, and authenticated browser-session reuse.",
       "Added same-source and cross-source deduplication, database retries, and Telegram Bot API alerts; operated scheduled workflows 24/7 through GitHub Actions and an external scheduler."
-    ]
+    ],
+    "focus": "workflow-automation"
   }
 ]

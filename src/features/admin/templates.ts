@@ -5,6 +5,7 @@ export const templates: Record<string, Json> = {
     title: "New project",
     role: "Developer",
     category: "Product engineering",
+    focus: "",
     summary: "Describe the project.",
     description: "Describe the problem, approach and outcomes.",
     tech: [],
