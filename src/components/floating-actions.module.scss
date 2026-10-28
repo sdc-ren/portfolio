@@ -3,13 +3,46 @@
   right: max(24px, env(safe-area-inset-right));
   bottom: max(24px, env(safe-area-inset-bottom));
   z-index: 40;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+}
+.connect,
+.top {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    opacity var(--motion-base) var(--ease-out),
+    visibility 0s var(--motion-base);
+  &[data-visible="true"] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
 }
 .connect {
-  position: relative;
+  transform: translateY(10px);
+}
+.connect[data-visible="true"] {
+  transform: translateY(0);
+}
+.actions[data-scrolled="true"] .connect {
+  transform: translateY(-48px);
+}
+.actions[data-scrolled="true"] .connect[data-visible="true"] {
+  transform: translateY(-58px);
+}
+.top {
+  transform: translateY(12px);
+}
+.top[data-visible="true"] {
+  transform: translateY(0);
 }
 .button {
   display: grid;
@@ -51,7 +84,21 @@
   border-radius: 16px;
   background: var(--card);
   box-shadow: var(--shadow-card-hover);
-  animation: surface-in var(--motion-fast) var(--ease-out) both;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out),
+    visibility 0s var(--motion-fast);
+  &[data-open="true"] {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
   a {
     display: flex;
     align-items: center;
@@ -91,6 +138,11 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .connect,
+  .top,
+  .panel {
+    transition: none;
+  }
   .button:hover {
     transform: none;
   }

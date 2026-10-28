@@ -52,7 +52,8 @@ export function FloatingActions({
   useEffect(() => {
     setOpen(false);
     setContactVisible(false);
-    const onScroll = () => setScrolled(window.scrollY > 480);
+    const onScroll = () =>
+      setScrolled((previous) => window.scrollY > (previous ? 400 : 480));
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     const observer =
@@ -122,12 +123,18 @@ export function FloatingActions({
     <div
       ref={root}
       className={styles.actions}
+      data-scrolled={scrolled}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
       }}
     >
-      {!contactVisible && channels.length > 0 && (
-        <div className={styles.connect}>
+      {channels.length > 0 && (
+        <div
+          className={styles.connect}
+          data-visible={!contactVisible}
+          aria-hidden={contactVisible}
+          inert={contactVisible}
+        >
           <button
             ref={trigger}
             type="button"
@@ -142,7 +149,7 @@ export function FloatingActions({
                   : "Open quick connect"
             }
             aria-expanded={open}
-            aria-controls={open ? panelId : undefined}
+            aria-controls={panelId}
             onClick={() => setOpen((value) => !value)}
           >
             {open ? (
@@ -151,37 +158,43 @@ export function FloatingActions({
               <MessageCircle size={21} aria-hidden="true" />
             )}
           </button>
-          {open && (
-            <nav
-              id={panelId}
-              className={styles.panel}
-              aria-label={vi ? "Kết nối nhanh" : "Quick connect"}
-            >
-              {channels.map(({ href, label, detail, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={
-                    href.startsWith("http") ? "noopener noreferrer" : undefined
-                  }
-                  onClick={() => {
-                    setOpen(false);
-                    trigger.current?.focus();
-                  }}
-                >
-                  <Icon size={18} aria-hidden="true" />
-                  <span>
-                    {label}
-                    {detail && <small>{detail}</small>}
-                  </span>
-                </a>
-              ))}
-            </nav>
-          )}
+          <nav
+            id={panelId}
+            className={styles.panel}
+            data-open={open}
+            aria-hidden={!open}
+            inert={!open}
+            aria-label={vi ? "Kết nối nhanh" : "Quick connect"}
+          >
+            {channels.map(({ href, label, detail, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  href.startsWith("http") ? "noopener noreferrer" : undefined
+                }
+                onClick={() => {
+                  setOpen(false);
+                  trigger.current?.focus();
+                }}
+              >
+                <Icon size={18} aria-hidden="true" />
+                <span>
+                  {label}
+                  {detail && <small>{detail}</small>}
+                </span>
+              </a>
+            ))}
+          </nav>
         </div>
       )}
-      {scrolled && (
+      <div
+        className={styles.top}
+        data-visible={scrolled}
+        aria-hidden={!scrolled}
+        inert={!scrolled}
+      >
         <button
           data-top
           type="button"
@@ -199,7 +212,7 @@ export function FloatingActions({
         >
           <ArrowUp size={20} aria-hidden="true" />
         </button>
-      )}
+      </div>
     </div>
   );
 }
