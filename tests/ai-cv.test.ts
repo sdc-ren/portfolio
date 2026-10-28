@@ -8,14 +8,16 @@ import { cvMarkdown } from "../src/features/cv/markdown";
 test("AI CV and localmem seed preserve the software CV and resolve selections", () => {
   const data = initialContent();
   assert.equal(data.cvs.length, 2);
-  assert.deepEqual(data.cvs[0], initial.cvs[0]);
+  assert.deepEqual(data.cvs[0].projectIds, initial.cvs[0].projectIds);
+  assert.deepEqual(data.cvs[0].experienceIds, initial.cvs[0].experienceIds);
+  assert.equal(data.cvs[0].title, initial.cvs[0].title);
   const ai = data.cvs.find((cv) => cv.id === "ai-engineer")!;
   assert.equal(ai.projectIds[0], "localmem");
   assert.deepEqual(ai.projectIds, [
     "localmem",
+    "ivr-studio",
     "gdrive-cli",
     "cc-notify-telegram",
-    "altfins",
   ]);
   const project = data.projects.find((p) => p.id === "localmem")!;
   assert.equal(project.links[0].url, "https://github.com/sdc-ren/localmem");
@@ -27,4 +29,56 @@ test("AI CV and localmem seed preserve the software CV and resolve selections", 
     assert.ok(aiOutput.includes("SQLite"));
     assert.ok(!render(data, "senior-software-engineer").includes("localmem"));
   }
+});
+
+test("AI project summaries, details and CV exports share evidence-based technical copy", () => {
+  const data = initialContent();
+  const md = cvMarkdown(data, "ai-engineer");
+  const html = cvMarkup(data, "ai-engineer");
+  const memory = data.projects.find((p) => p.id === "localmem")!;
+  assert.equal(memory.highlights.length, 4);
+  assert.ok(memory.summary.includes("SQLite/FTS5"));
+  assert.ok(memory.description.includes("not embedding-based semantic search"));
+  for (const keyword of [
+    "Model Context Protocol",
+    "human-in-the-loop",
+    "session-aware",
+    "recall@k",
+    "MRR",
+    "service-account",
+  ]) {
+    assert.ok(md.replaceAll("\\", "").includes(keyword), keyword);
+    assert.ok(html.includes(keyword), keyword);
+  }
+  for (const id of ["gdrive-cli", "cc-notify-telegram", "ivr-studio"]) {
+    const project = data.projects.find((p) => p.id === id)!;
+    assert.ok(project.description.length > project.summary.length);
+    assert.ok(
+      project.highlights.every((h) =>
+        html.includes(h.replaceAll("&", "&amp;")),
+      ),
+    );
+  }
+  assert.equal(
+    data.projects.find((p) => p.id === "altfins")!.highlights.length,
+    2,
+  );
+});
+
+test("Speech AI showcases pretrained inference and preserves the software CV selection", () => {
+  const data = initialContent();
+  const speech = data.projects.find((p) => p.id === "ivr-studio")!;
+  assert.equal(speech.focus, "speech-ai");
+  assert.ok(speech.description.includes("no model training or fine-tuning"));
+  assert.ok(speech.description.includes("non-commercial"));
+  const html = cvMarkup(data, "ai-engineer");
+  for (const term of [
+    "F5-TTS",
+    "Whisper",
+    "FFmpeg",
+    "resident Python model worker",
+  ])
+    assert.ok(html.includes(term), term);
+  assert.ok(!html.includes("altfins"));
+  assert.ok(!cvMarkup(data, "senior-software-engineer").includes("ivr-studio"));
 });

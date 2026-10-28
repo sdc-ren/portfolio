@@ -1,3 +1,5 @@
+import { SkillsOverview } from "@/components/skills-overview";
+import { experienceBullets } from "@/features/content/experience";
 import { ContactSection } from "@/components/contact-section";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { pageMetadata } from "@/lib/seo";
@@ -111,6 +113,11 @@ export default async function Page({
           <h2 className="text-2xl font-semibold text-foreground">
             {d.ui.experienceHeading}
           </h2>
+          {d.settings.experienceNote && (
+            <p className="mt-4 max-w-sm text-sm leading-6 text-muted-foreground">
+              {d.settings.experienceNote}
+            </p>
+          )}
         </div>
         <div className="space-y-10">
           {d.experience.map((e) => (
@@ -123,8 +130,8 @@ export default async function Page({
               </h3>
               <p className="mb-4 text-sm text-primary">{e.company}</p>
               <ul className="list-disc space-y-2 pl-4 text-sm text-muted-foreground">
-                {e.highlights.map((h) => (
-                  <li key={h}>{h}</li>
+                {experienceBullets(e).map(({ id, text }) => (
+                  <li key={id}>{text}</li>
                 ))}
               </ul>
             </article>
@@ -138,16 +145,7 @@ export default async function Page({
         <h2 className="mb-8 text-2xl font-semibold text-foreground">
           {d.ui.toolkitHeading}
         </h2>
-        <div className="grid gap-6 md:grid-cols-3">
-          {d.skills.map((s) => (
-            <div key={s.id}>
-              <h3 className="mb-3 font-semibold text-foreground">{s.name}</h3>
-              <p className="text-sm leading-7 text-muted-foreground">
-                {s.items.join(" · ")}
-              </p>
-            </div>
-          ))}
-        </div>
+        <SkillsOverview data={d} locale={locale} />
       </section>
       <ContactSection profile={d.profile} labels={d.ui} />
     </main>

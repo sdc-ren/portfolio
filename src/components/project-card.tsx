@@ -1,4 +1,5 @@
 "use client";
+import { ProjectFocusBadge } from "./project-focus-badge";
 import { useRef } from "react";
 import { ProjectMetadata } from "./project-metadata";
 import { ProjectLinks } from "./project-links";
@@ -53,8 +54,11 @@ export function ProjectCard({
               className={styles.openCard}
             >
               <span className={styles.title}>
-                <span className={styles.titleText}>
-                  {project.title.split(/ (?:-|\u2014) /)[0]}
+                <span className={styles.titleGroup}>
+                  <span className={styles.titleText}>
+                    {project.title.split(/ (?:-|\u2014) /)[0]}
+                  </span>
+                  <ProjectFocusBadge focus={project.focus} />
                 </span>
                 <Expand size={18} aria-hidden="true" />
               </span>
@@ -82,6 +86,7 @@ export function ProjectCard({
             <p className="text-xs uppercase tracking-widest text-primary">
               {project.category}
             </p>
+            {project.focus && <ProjectFocusBadge focus={project.focus} />}
             <DialogTitle
               ref={titleRef}
               tabIndex={-1}

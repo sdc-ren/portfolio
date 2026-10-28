@@ -1,3 +1,4 @@
+import { ProjectFocusBadge } from "@/components/project-focus-badge";
 import { pageMetadata } from "@/lib/seo";
 import { publicPath } from "@/lib/public-path";
 import Link from "next/link";
@@ -44,6 +45,9 @@ export default async function Page({
       <h1 className="text-2xl font-semibold leading-snug text-foreground sm:text-3xl">
         {p.title}
       </h1>
+      <div className="mb-5 mt-3">
+        <ProjectFocusBadge focus={p.focus} />
+      </div>
       <ProjectDetails project={p} labels={d.ui} />
     </main>
   );

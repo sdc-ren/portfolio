@@ -1,3 +1,4 @@
+import { cvExperience, cvSectionOrder } from "./selection";
 import { PORTFOLIO_URL } from "./contact";
 import type { PortfolioContent } from "@/features/content/schema";
 import { projectLinkLabel } from "@/features/content/project-link-label";
@@ -50,33 +51,36 @@ ${section(
     )
     .join(""),
 )}
-${section(
-  data.ui.cvExperience,
-  selectByIds(data.experience, cv.experienceIds)
-    .map(
-      (item) =>
-        `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.company)} - ${e(item.role)}</h3><span class="cv-date">${e(item.period)}</span></div><div class="cv-subhead">${e(item.location)}</div>${bullets(item.highlights)}</article>`,
-    )
-    .join(""),
-)}
-${section(
-  data.ui.cvProjects,
-  selectByIds(data.projects, cv.projectIds)
-    .map(
-      (item) =>
-        `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.title)}</h3><span class="cv-date">${e(item.role)}</span></div>${item.links
-          .filter((item) => item.showInCv)
-          .map(
-            (item) =>
-              `<p class="cv-project-link">${link(item.url, `${projectLinkLabel(item, data.ui)}: ${displayUrl(item.url)}`)}</p>`,
-          )
-          .join(
-            "",
-          )}<p class="cv-project-tech">${e(item.tech.join(" · "))}</p>${bullets(item.highlights)}</article>`,
-    )
-    .join(""),
-  "cv-page-start",
-)}
+${cvSectionOrder(
+  cv,
+  section(
+    data.ui.cvExperience,
+    cvExperience(data, cv)
+      .map(
+        (item) =>
+          `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.company)} - ${e(item.role)}</h3><span class="cv-date">${e(item.period)}</span></div><div class="cv-subhead">${e(item.location)}</div>${bullets(item.highlights)}</article>`,
+      )
+      .join(""),
+  ),
+  section(
+    cv.projectsHeading || data.ui.cvProjects,
+    selectByIds(data.projects, cv.projectIds)
+      .map(
+        (item) =>
+          `<article class="cv-entry"><div class="cv-entry-head"><h3>${e(item.title)}</h3><span class="cv-date">${e(item.role)}</span></div>${item.links
+            .filter((item) => item.showInCv)
+            .map(
+              (item) =>
+                `<p class="cv-project-link">${link(item.url, `${projectLinkLabel(item, data.ui)}: ${displayUrl(item.url)}`)}</p>`,
+            )
+            .join(
+              "",
+            )}<p class="cv-project-tech">${e(item.tech.join(" · "))}</p>${bullets(item.highlights)}</article>`,
+      )
+      .join(""),
+    "cv-page-start",
+  ),
+).join("\n")}
 ${section(data.ui.cvEducation, data.education.map((item) => `<p><b>${e(item.institution)}</b>${item.location ? `, ${e(item.location)}` : ""} - ${e(item.qualification)}, ${e(item.year)}</p>`).join(""))}
 ${section(data.ui.cvLanguages, data.languages.map((item) => `<p><b>${e(item.name)}:</b> ${e(item.proficiency)}</p>`).join(""))}`;
 }

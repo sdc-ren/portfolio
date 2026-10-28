@@ -1,0 +1,311 @@
+{
+  "en": {
+    "skills": [
+      {
+        "id": "expertise-agents",
+        "name": "AI Agents & Retrieval",
+        "description": "Build tools that give coding agents scoped access to memory, documents, and human decisions.",
+        "items": [
+          "MCP servers/tools",
+          "Agent hooks",
+          "SQLite FTS5/BM25",
+          "Context management",
+          "Retrieval evaluation"
+        ],
+        "projectIds": ["localmem", "gdrive-cli", "cc-notify-telegram"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-speech",
+        "name": "Speech AI & Model Integration",
+        "description": "Integrate pretrained speech models into a usable local audio-generation workflow.",
+        "items": [
+          "F5-TTS inference",
+          "Whisper verification",
+          "FFmpeg",
+          "Python workers",
+          "Text-to-speech"
+        ],
+        "projectIds": ["ivr-studio"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-frontend",
+        "name": "Frontend Engineering",
+        "description": "Develop maintainable web interfaces and complex PDF/canvas interactions.",
+        "items": [
+          "Vue / Nuxt",
+          "TypeScript",
+          "React / Next.js",
+          "Angular",
+          "PDF.js / Konva.js",
+          "Component architecture"
+        ],
+        "projectIds": ["jinjer", "personal-finance-management"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-backend",
+        "name": "Backend & Integrations",
+        "description": "Deliver features across frontend interfaces, backend APIs, and realtime integrations.",
+        "items": [
+          "Node.js",
+          "PHP / Laravel",
+          "REST APIs",
+          "WebSocket",
+          "Google Workspace APIs",
+          "Telegram Bot API"
+        ],
+        "projectIds": ["gdrive-cli", "cc-notify-telegram"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-quality",
+        "name": "Quality & Delivery",
+        "description": "Verify application behavior and automate repeatable delivery and data workflows.",
+        "items": [
+          "Jest / Vitest",
+          "Playwright / Cypress",
+          "CI/CD",
+          "Docker",
+          "PostgreSQL / Supabase"
+        ],
+        "projectIds": ["altfins", "personal-finance-management"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-leadership",
+        "name": "Technical Leadership",
+        "description": "Combine hands-on engineering with team guidance and shared technical standards.",
+        "items": [
+          "Frontend architecture",
+          "Code review",
+          "Mentoring",
+          "Shared packages",
+          "Technical documentation",
+          "Delivery coordination"
+        ],
+        "projectIds": ["jinjer"],
+        "stage": "applied"
+      },
+      {
+        "id": "research-exploration",
+        "name": "Research / Exploration",
+        "description": "Current learning areas, separate from implemented project experience.",
+        "items": ["Prompt engineering", "Multi-agent workflow design"],
+        "projectIds": [],
+        "stage": "research"
+      }
+    ],
+    "senior": {
+      "skillIds": [
+        "frontend",
+        "additional-frontend",
+        "expertise-leadership",
+        "expertise-backend",
+        "expertise-quality",
+        "expertise-agents"
+      ],
+      "sectionOrder": "experience-first",
+      "projectsHeading": "",
+      "experienceSelections": {
+        "experience-1": [
+          "bullet-1",
+          "bullet-2",
+          "bullet-3",
+          "bullet-5",
+          "bullet-6"
+        ],
+        "experience-2": ["bullet-1", "bullet-2"],
+        "experience-3": ["bullet-1"],
+        "experience-4": ["bullet-1", "bullet-2"]
+      },
+      "summary": "Senior Software Engineer with 12 years of web development experience, including around six years of frontend technical leadership. Led teams of 6-10 engineers while building Vue/Nuxt and TypeScript applications, interactive PDF/canvas features, shared components, and automated tests. Additional hands-on experience includes PHP/Laravel APIs, realtime integrations, and end-to-end feature delivery; recent independent work covers AI agent tooling."
+    },
+    "websiteSkillIds": [
+      "expertise-agents",
+      "expertise-speech",
+      "expertise-frontend",
+      "expertise-backend",
+      "expertise-quality",
+      "expertise-leadership",
+      "research-exploration"
+    ],
+    "experienceNote": "Across NeoLab projects, delivered frontend features and PHP/Laravel APIs, including realtime integrations. Recent AI tooling and model-integration work is independent work, documented in Projects.",
+    "oldSeniorSkillIds": [
+      "frontend",
+      "additional-frontend",
+      "architecture",
+      "state-data",
+      "quality",
+      "backend-integration",
+      "ai-agent-tooling",
+      "devops-delivery"
+    ],
+    "oldAiSkillIds": [
+      "ai-engineering",
+      "ai-programming",
+      "ai-reliability",
+      "speech-ai",
+      "ai-development-tools",
+      "devops-delivery"
+    ],
+    "oldSeniorSummaries": [
+      "Software engineer with 12 years of web development experience, including around six years of frontend technical leadership. Focused on Vue.js, Nuxt.js, TypeScript, frontend architecture, and interactive PDF editing. Recent independent work includes AI agent tools, hooks, and workflow automation.",
+      "Senior Software Engineer with 12 years of web development experience, including around six years of frontend technical leadership. Focused on Vue.js, Nuxt.js, TypeScript, frontend architecture, and interactive PDF editing. Recent independent work includes AI agent tools, hooks, and workflow automation, alongside research into prompt engineering and multi-agent workflows."
+    ]
+  },
+  "vi": {
+    "skills": [
+      {
+        "id": "expertise-agents",
+        "name": "AI Agents & Retrieval",
+        "description": "Xây dựng công cụ cho coding agents truy cập bộ nhớ, tài liệu và quyết định của người dùng theo phạm vi.",
+        "items": [
+          "MCP servers/tools",
+          "Agent hooks",
+          "SQLite FTS5/BM25",
+          "Context management",
+          "Retrieval evaluation"
+        ],
+        "projectIds": ["localmem", "gdrive-cli", "cc-notify-telegram"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-speech",
+        "name": "Speech AI & Model Integration",
+        "description": "Tích hợp mô hình giọng nói có sẵn vào workflow tạo audio cục bộ.",
+        "items": [
+          "F5-TTS inference",
+          "Whisper verification",
+          "FFmpeg",
+          "Python workers",
+          "Text-to-speech"
+        ],
+        "projectIds": ["ivr-studio"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-frontend",
+        "name": "Frontend Engineering",
+        "description": "Phát triển giao diện web dễ bảo trì và tương tác PDF/canvas phức tạp.",
+        "items": [
+          "Vue / Nuxt",
+          "TypeScript",
+          "React / Next.js",
+          "Angular",
+          "PDF.js / Konva.js",
+          "Component architecture"
+        ],
+        "projectIds": ["jinjer", "personal-finance-management"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-backend",
+        "name": "Backend & Integrations",
+        "description": "Phát triển tính năng xuyên frontend, backend API và tích hợp realtime.",
+        "items": [
+          "Node.js",
+          "PHP / Laravel",
+          "REST APIs",
+          "WebSocket",
+          "Google Workspace APIs",
+          "Telegram Bot API"
+        ],
+        "projectIds": ["gdrive-cli", "cc-notify-telegram"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-quality",
+        "name": "Quality & Delivery",
+        "description": "Kiểm chứng hành vi ứng dụng và tự động hóa delivery, workflow dữ liệu.",
+        "items": [
+          "Jest / Vitest",
+          "Playwright / Cypress",
+          "CI/CD",
+          "Docker",
+          "PostgreSQL / Supabase"
+        ],
+        "projectIds": ["altfins", "personal-finance-management"],
+        "stage": "applied"
+      },
+      {
+        "id": "expertise-leadership",
+        "name": "Technical Leadership",
+        "description": "Kết hợp hands-on engineering với hướng dẫn team và tiêu chuẩn kỹ thuật chung.",
+        "items": [
+          "Frontend architecture",
+          "Code review",
+          "Mentoring",
+          "Shared packages",
+          "Technical documentation",
+          "Delivery coordination"
+        ],
+        "projectIds": ["jinjer"],
+        "stage": "applied"
+      },
+      {
+        "id": "research-exploration",
+        "name": "Research / Exploration",
+        "description": "Các hướng đang học, tách biệt với kinh nghiệm đã triển khai.",
+        "items": ["Prompt engineering", "Multi-agent workflow design"],
+        "projectIds": [],
+        "stage": "research"
+      }
+    ],
+    "senior": {
+      "skillIds": [
+        "frontend",
+        "additional-frontend",
+        "expertise-leadership",
+        "expertise-backend",
+        "expertise-quality",
+        "expertise-agents"
+      ],
+      "sectionOrder": "experience-first",
+      "projectsHeading": "",
+      "experienceSelections": {
+        "experience-1": [
+          "bullet-1",
+          "bullet-2",
+          "bullet-3",
+          "bullet-5",
+          "bullet-6"
+        ],
+        "experience-2": ["bullet-1", "bullet-2"],
+        "experience-3": ["bullet-1"],
+        "experience-4": ["bullet-1", "bullet-2"]
+      },
+      "summary": "Senior Software Engineer với 12 năm phát triển web, trong đó khoảng 6 năm dẫn dắt kỹ thuật frontend. Dẫn dắt team 6-10 kỹ sư, phát triển Vue/Nuxt, TypeScript, PDF/canvas, shared components và kiểm thử tự động. Có kinh nghiệm PHP/Laravel APIs, tích hợp realtime và phát triển tính năng xuyên frontend/backend; công việc độc lập gần đây tập trung vào AI agent tooling."
+    },
+    "websiteSkillIds": [
+      "expertise-agents",
+      "expertise-speech",
+      "expertise-frontend",
+      "expertise-backend",
+      "expertise-quality",
+      "expertise-leadership",
+      "research-exploration"
+    ],
+    "experienceNote": "Trong các dự án NeoLab, phát triển frontend và PHP/Laravel APIs, gồm tích hợp realtime. Các công cụ AI và tích hợp model gần đây là dự án độc lập, trình bày trong Projects.",
+    "oldSeniorSkillIds": [
+      "frontend",
+      "additional-frontend",
+      "architecture",
+      "state-data",
+      "quality",
+      "backend-integration",
+      "ai-agent-tooling",
+      "devops-delivery"
+    ],
+    "oldAiSkillIds": [
+      "ai-engineering",
+      "ai-programming",
+      "ai-reliability",
+      "speech-ai",
+      "ai-development-tools",
+      "devops-delivery"
+    ],
+    "oldSeniorSummaries": []
+  }
+}

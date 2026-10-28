@@ -1,5 +1,18 @@
 "use client";
 
+import {
+  projectFocusLabels,
+  projectFocusValues,
+} from "@/features/content/project-focus";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useId } from "react";
 import { Field, type Json } from "./editor-fields";
 import type {
   ProjectImage,
@@ -23,7 +36,8 @@ export function ProjectEditor({
   onBusyChange: (busy: boolean) => void;
   onChange: (value: Json) => void;
 }) {
-  const { images, coverImageId, links, ...fields } = value;
+  const { images, coverImageId, links, focus, ...fields } = value;
+  const focusId = useId();
   return (
     <div className="grid gap-6">
       <Field
@@ -33,6 +47,27 @@ export function ProjectEditor({
         lockId={lockId}
         onChange={(next) => onChange({ ...value, ...(next as typeof fields) })}
       />
+      <div className="space-y-2">
+        <Label htmlFor={focusId}>Project focus badge</Label>
+        <Select
+          value={typeof focus === "string" && focus ? focus : "none"}
+          disabled={disabled || uploading}
+          onValueChange={(next) =>
+            onChange({ ...value, focus: next === "none" ? "" : next })
+          }
+        >
+          <SelectTrigger id={focusId}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {projectFocusValues.map((option) => (
+              <SelectItem key={option || "none"} value={option || "none"}>
+                {projectFocusLabels[option]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       <ProjectLinksEditor
         value={(links ?? []) as ProjectLink[]}
         disabled={disabled || uploading}

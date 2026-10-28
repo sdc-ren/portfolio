@@ -29,9 +29,24 @@ export function referencedBy(
         : collection === "experience"
           ? "experienceIds"
           : null;
-  return field
-    ? data.cvs.filter((cv) => cv[field].includes(id)).map((cv) => cv.title)
+  const references = field
+    ? data.cvs
+        .filter(
+          (cv) =>
+            cv[field].includes(id) ||
+            (collection === "experience" && id in cv.experienceSelections),
+        )
+        .map((cv) => cv.title)
     : [];
+  if (collection === "projects")
+    references.push(
+      ...data.skills
+        .filter((skill) => skill.projectIds.includes(id))
+        .map((skill) => `Skill evidence: ${skill.name}`),
+    );
+  if (collection === "skills" && data.settings.websiteSkillIds.includes(id))
+    references.push("Website skill groups");
+  return references;
 }
 export function validateCollectionItem(
   data: PortfolioContent,
@@ -77,22 +92,14 @@ export function validateCollectionItem(
         .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
         .join("; "),
     };
-  // Check CV references against the current, possibly unsaved, content.
-  if (collection === "cvs") {
-    const candidate = {
-      ...data,
-      cvs: originalId
-        ? data.cvs.map((item) => (item.id === originalId ? result.data : item))
-        : [...data.cvs, result.data],
+  // Validate shared evidence and bullet references for every collection edit.
+  const checked = contentSchema.safeParse({ ...data, [collection]: nextItems });
+  if (!checked.success)
+    return {
+      ok: false as const,
+      error: checked.error.issues
+        .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
+        .join("; "),
     };
-    const checked = contentSchema.safeParse(candidate);
-    if (!checked.success)
-      return {
-        ok: false as const,
-        error: checked.error.issues
-          .map((issue) => `${issue.path.join(".")}: ${issue.message}`)
-          .join("; "),
-      };
-  }
   return { ok: true as const, value: result.data };
 }

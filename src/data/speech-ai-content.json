@@ -1,0 +1,114 @@
+{
+  "en": {
+    "project": {
+      "id": "ivr-studio",
+      "title": "ivr-studio - Vietnamese Speech Synthesis",
+      "role": "Creator / Maintainer",
+      "category": "Applied AI",
+      "focus": "speech-ai",
+      "summary": "Turn Vietnamese scripts into IVR audio with text-to-speech and reference-conditioned voice generation. Includes per-line preview, regeneration, and MP3/WAV export.",
+      "description": "Built a local web application and CLI for producing Vietnamese interactive voice response (IVR) greetings and menus from text. Integrated edge-tts for standard voices and a pretrained F5-TTS model for reference-conditioned, zero-shot speech generation; no model training or fine-tuning is performed by this project.\n\nA Node.js server orchestrates Python inference and FFmpeg audio processing. A resident Python worker reuses the loaded F5-TTS checkpoint across requests and releases it after inactivity. The pipeline normalizes Vietnamese numbers, splits long text into model-safe chunks, controls timing, and assembles MP3/WAV output.\n\nOptional Whisper transcription checks generated speech against the script, triggering bounded retries and retaining the best-matching result. Users can preview and regenerate individual lines, review reference transcripts, and reopen saved jobs through the web interface.\n\nThis is a local prototype for model integration and audio workflow engineering. The selected Vietnamese F5-TTS checkpoint has non-commercial restrictions; reference voices require appropriate usage rights. It is not presented as a commercially cleared voice service.",
+      "tech": [
+        "Node.js",
+        "Python",
+        "F5-TTS",
+        "edge-tts",
+        "Whisper.cpp",
+        "FFmpeg",
+        "PyTorch / MPS",
+        "Server-Sent Events"
+      ],
+      "highlights": [
+        "Built a Node.js web application integrating edge-tts and pretrained F5-TTS for Vietnamese text-to-speech and reference-conditioned voice generation; orchestrated Python inference without training a new model.",
+        "Implemented a resident Python model worker, Vietnamese number normalization, text chunking, and FFmpeg audio assembly with per-line preview and MP3/WAV export.",
+        "Added optional Whisper-based transcript verification, bounded regeneration retries, and manual per-line review to address missing words and speech-generation variability."
+      ],
+      "featured": true,
+      "links": [
+        {
+          "id": "source",
+          "type": "github",
+          "url": "https://github.com/sdc-ren/ivr-studio",
+          "label": "",
+          "showInCv": true
+        }
+      ],
+      "images": [],
+      "coverImageId": ""
+    },
+    "skill": {
+      "id": "speech-ai",
+      "name": "Speech AI & Model Integration",
+      "items": [
+        "Text-to-speech (TTS)",
+        "Pretrained F5-TTS inference",
+        "Reference-conditioned generation",
+        "Whisper transcription verification",
+        "FFmpeg audio pipelines",
+        "Resident model workers"
+      ]
+    },
+    "focus": {
+      "localmem": "ai-agent-memory",
+      "gdrive-cli": "ai-agent-tooling",
+      "cc-notify-telegram": "ai-workflow",
+      "altfins": "workflow-automation"
+    }
+  },
+  "vi": {
+    "project": {
+      "id": "ivr-studio",
+      "title": "ivr-studio - Vietnamese Speech Synthesis",
+      "role": "Creator / Maintainer",
+      "category": "Applied AI",
+      "focus": "speech-ai",
+      "summary": "Chuyển kịch bản tiếng Việt thành audio IVR bằng text-to-speech và sinh giọng theo mẫu tham chiếu. Có nghe thử, sinh lại từng dòng và xuất MP3/WAV.",
+      "description": "Ứng dụng web cục bộ và CLI tạo lời chào/menu IVR tiếng Việt. Tích hợp edge-tts và mô hình F5-TTS có sẵn để sinh giọng zero-shot theo clip tham chiếu; dự án không huấn luyện hoặc fine-tune model.\n\nNode.js điều phối Python inference và FFmpeg. Worker Python thường trực giữ model giữa các yêu cầu và giải phóng khi rảnh; pipeline chuẩn hóa số tiếng Việt, chia đoạn văn bản và ghép MP3/WAV.\n\nTùy chọn dùng Whisper kiểm tra lời đọc, thử sinh lại có giới hạn và giữ bản khớp nhất. Người dùng nghe thử, sinh lại từng dòng, duyệt transcript và mở lại job đã lưu.\n\nĐây là prototype cục bộ về tích hợp model và workflow âm thanh. Checkpoint F5-TTS tiếng Việt có giới hạn phi thương mại; giọng tham chiếu cần quyền sử dụng phù hợp, không được mô tả là dịch vụ giọng nói đã sẵn sàng thương mại.",
+      "tech": [
+        "Node.js",
+        "Python",
+        "F5-TTS",
+        "edge-tts",
+        "Whisper.cpp",
+        "FFmpeg",
+        "PyTorch / MPS",
+        "Server-Sent Events"
+      ],
+      "highlights": [
+        "Xây dựng web app Node.js tích hợp edge-tts và F5-TTS có sẵn cho TTS tiếng Việt/sinh giọng theo mẫu; điều phối Python inference, không huấn luyện model mới.",
+        "Triển khai worker Python thường trực, chuẩn hóa số, chia văn bản và ghép audio bằng FFmpeg; hỗ trợ nghe từng dòng và xuất MP3/WAV.",
+        "Tùy chọn kiểm tra transcript bằng Whisper, thử sinh lại có giới hạn và duyệt từng dòng để xử lý nuốt chữ và tính ngẫu nhiên của model."
+      ],
+      "featured": true,
+      "links": [
+        {
+          "id": "source",
+          "type": "github",
+          "url": "https://github.com/sdc-ren/ivr-studio",
+          "label": "",
+          "showInCv": true
+        }
+      ],
+      "images": [],
+      "coverImageId": ""
+    },
+    "skill": {
+      "id": "speech-ai",
+      "name": "Speech AI & Model Integration",
+      "items": [
+        "Text-to-speech (TTS)",
+        "Pretrained F5-TTS inference",
+        "Reference-conditioned generation",
+        "Whisper transcription verification",
+        "FFmpeg audio pipelines",
+        "Resident model workers"
+      ]
+    },
+    "focus": {
+      "localmem": "ai-agent-memory",
+      "gdrive-cli": "ai-agent-tooling",
+      "cc-notify-telegram": "ai-workflow",
+      "altfins": "workflow-automation"
+    }
+  }
+}
