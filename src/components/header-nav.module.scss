@@ -6,8 +6,8 @@
   border-radius: 7px;
   color: var(--muted-foreground);
   transition:
-    color 160ms ease,
-    background-color 160ms ease;
+    color var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) var(--ease-out);
   &::after {
     content: "";
     position: absolute;
@@ -19,11 +19,12 @@
     background: var(--primary);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 160ms ease;
+    transition: transform var(--motion-base) var(--ease-out);
   }
   &:hover,
   &:focus-visible,
-  &[aria-current="page"] {
+  &[aria-current="page"],
+  &[aria-current="location"] {
     color: var(--primary);
     background: color-mix(in srgb, var(--primary) 7%, transparent);
     &::after {
@@ -36,4 +37,11 @@
   .link::after {
     transition: none;
   }
+}
+
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
 }

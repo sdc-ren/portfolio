@@ -49,6 +49,13 @@ export function ProjectDetails({
         </div>
       )}
 
+      {project.description.includes("### ") && (
+        <h3 className="mb-3 mt-6 text-sm font-semibold">
+          {labels.contributions === "Chi tiết dự án"
+            ? "Điểm kỹ thuật chính"
+            : "Implementation highlights"}
+        </h3>
+      )}
       <ul className="list-disc space-y-3 pl-5 text-muted-foreground">
         {project.highlights.map((h) => (
           <li key={h}>{h}</li>

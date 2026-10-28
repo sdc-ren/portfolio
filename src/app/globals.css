@@ -1,6 +1,15 @@
 @import "tailwindcss";
 :root {
   color-scheme: light;
+  --motion-fast: 160ms;
+  --motion-base: 260ms;
+  --motion-slow: 440ms;
+  --motion-reveal: 560ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --shadow-card: 0 12px 34px -24px #153c4840;
+  --shadow-raised: 0 20px 44px -24px #153c4855;
+  --header-offset: 128px;
   --background: #f3f4f6;
   --foreground: #1f2937;
   --card: #ffffff;
@@ -67,7 +76,13 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   line-height: 1.65;
 }
 a {
@@ -99,8 +114,10 @@ h3 {
   line-height: 1.3;
   overflow-wrap: break-word;
 }
-p {
-  margin: 0;
+@layer base {
+  p {
+    margin: 0;
+  }
 }
 .prose p {
   margin-bottom: 1rem;
@@ -128,8 +145,12 @@ p {
   html {
     scroll-behavior: auto;
   }
-  * {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 @media print {
@@ -142,5 +163,119 @@ p {
   body > div > header,
   body > div > footer {
     display: none !important;
+  }
+}
+
+section[id] {
+  scroll-margin-top: var(--header-offset);
+}
+.motion-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    color var(--motion-base) var(--ease-out),
+    border-color var(--motion-base) var(--ease-out),
+    box-shadow var(--motion-base) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+.motion-button[data-variant="default"],
+.motion-button[data-variant="outline"] {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px -15% -65%;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 0 0 48% 48%;
+    background: var(--primary);
+    transform: translateY(-105%);
+    transition: transform var(--motion-slow) var(--ease-out);
+  }
+  &:hover::before,
+  &:focus-visible::before {
+    transform: translateY(0);
+  }
+  &:hover,
+  &:focus-visible {
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+    box-shadow: 0 6px 18px -12px var(--primary);
+  }
+}
+.motion-button:active:not(:disabled):not([aria-disabled="true"]) {
+  transform: translateY(1px);
+}
+.motion-button:disabled,
+.motion-button[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.55;
+}
+@keyframes surface-in {
+  from {
+    opacity: 0;
+    scale: 0.98;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes surface-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.98;
+  }
+}
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.surface-dialog[data-state="open"] {
+  animation: surface-in var(--motion-base) var(--ease-out) both;
+}
+.surface-dialog[data-state="closed"] {
+  animation: surface-out var(--motion-fast) var(--ease-in-out) both;
+}
+.surface-overlay[data-state="open"] {
+  animation: overlay-in var(--motion-base) var(--ease-out) both;
+}
+.surface-overlay[data-state="closed"] {
+  animation: overlay-out var(--motion-fast) var(--ease-in-out) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-button::before {
+    transform: none !important;
+    transition: none !important;
+    opacity: 0;
+  }
+  .motion-button:hover::before,
+  .motion-button:focus-visible::before {
+    opacity: 1;
+  }
+}
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
   }
 }

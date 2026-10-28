@@ -1,3 +1,6 @@
+import { FloatingActions } from "@/components/floating-actions";
+import { SiteHeader } from "@/components/site-header";
+import { PublicNavigation } from "@/components/public-navigation";
 import { RoleAnimationProvider } from "@/components/role-animation";
 import { Typewriter } from "@/components/typewriter";
 import { publicPath } from "@/lib/public-path";
@@ -23,7 +26,7 @@ export default async function Layout({
   return (
     <RoleAnimationProvider roles={data.settings.headerRoles}>
       <div lang={locale}>
-        <header className="border-b border-border">
+        <SiteHeader>
           <nav
             aria-label={data.ui.navLabel}
             className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-5 px-4 py-6 sm:px-6"
@@ -57,24 +60,29 @@ export default async function Layout({
               </span>
             </Link>
             <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-              <Link
-                className={navStyles.link}
-                href={`${publicPath(locale)}#projects`}
-              >
-                {data.ui.navProjects}
-              </Link>
-              <Link
-                className={navStyles.link}
-                href={`${publicPath(locale)}#experience`}
-              >
-                {data.ui.navExperience}
-              </Link>
-              <Link
-                className={navStyles.link}
-                href={publicPath(locale, `/cv/${data.cvs[0].id}`)}
-              >
-                {data.ui.navCv}
-              </Link>
+              <PublicNavigation
+                items={[
+                  {
+                    href: `${publicPath(locale)}#projects`,
+                    label: data.ui.navProjects,
+                    section: "projects",
+                  },
+                  {
+                    href: `${publicPath(locale)}#experience`,
+                    label: data.ui.navExperience,
+                    section: "experience",
+                  },
+                  {
+                    href: `${publicPath(locale)}#skills`,
+                    label: locale.startsWith("vi") ? "Kỹ năng" : "Skills",
+                    section: "skills",
+                  },
+                  {
+                    href: publicPath(locale, `/cv/${data.cvs[0].id}`),
+                    label: data.ui.navCv,
+                  },
+                ]}
+              />
               {locales.length > 1 &&
                 locales.map((l) => (
                   <Link
@@ -88,8 +96,9 @@ export default async function Layout({
                 ))}
             </div>
           </nav>
-        </header>
+        </SiteHeader>
         {children}
+        <FloatingActions profile={data.profile} locale={locale} />
         <footer className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-4 border-t border-border px-6 py-8 text-sm text-muted-foreground">
           <span>
             © {new Date().getFullYear()} {data.profile.name}.{" "}

@@ -1,3 +1,4 @@
+import visual from "@/data/visual-copy.json";
 import presentation from "@/data/role-presentation.json";
 import initial from "@/data/initial-content.json";
 import projectCopy from "@/data/ai-project-copy.json";
@@ -55,5 +56,10 @@ export function initialContent() {
   );
   data.settings.websiteSkillIds = role.websiteSkillIds;
   data.settings.experienceNote = role.experienceNote;
+  data.profile = { ...data.profile, ...visual.hero };
+  data.projects = data.projects.map((project) => {
+    const copy = visual.projects.find((p) => p.id === project.id);
+    return copy ? { ...project, ...copy } : project;
+  });
   return contentSchema.parse(data);
 }

@@ -1,0 +1,25 @@
+.reveal {
+  min-width: 0;
+  &[data-motion="ready"] {
+    transition:
+      opacity var(--motion-reveal) var(--ease-out) var(--reveal-delay),
+      transform var(--motion-reveal) var(--ease-out) var(--reveal-delay);
+  }
+  &[data-motion="ready"]:not([data-visible="true"]) {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

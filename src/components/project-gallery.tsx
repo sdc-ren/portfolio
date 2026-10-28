@@ -91,6 +91,7 @@ export function ProjectGallery({
 }) {
   const [selectedId, setSelectedId] = useState(coverImageId || images[0]?.id);
   const [open, setOpen] = useState(false);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const thumbnailTrigger = useRef<HTMLButtonElement | null>(null);
   if (!images.length) return null;
   const index = Math.max(
@@ -157,8 +158,40 @@ export function ProjectGallery({
         <DialogDescription className="sr-only">
           {labels.previousImage} / {labels.nextImage}
         </DialogDescription>
-        <div className={styles.stage}>
+        <div
+          className={styles.stage}
+          onTouchStart={(event) => {
+            if (event.touches.length !== 1) {
+              touchStart.current = null;
+              return;
+            }
+            if (event.touches.length === 1)
+              touchStart.current = {
+                x: event.touches[0].clientX,
+                y: event.touches[0].clientY,
+              };
+          }}
+          onTouchEnd={(event) => {
+            const start = touchStart.current;
+            touchStart.current = null;
+            if (
+              !start ||
+              event.changedTouches.length !== 1 ||
+              event.touches.length !== 0 ||
+              images.length < 2
+            )
+              return;
+            const dx = event.changedTouches[0].clientX - start.x,
+              dy = event.changedTouches[0].clientY - start.y;
+            if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5)
+              move(dx < 0 ? 1 : -1);
+          }}
+          onTouchCancel={() => {
+            touchStart.current = null;
+          }}
+        >
           <ProjectImage
+            key={selected.id}
             src={selected.url}
             alt={selected.alt}
             unavailable={labels.imageUnavailable}
