@@ -33,6 +33,7 @@ export function EntranceIntro({
 }) {
   const text = `${name}\n${role}`;
   const characters = Array.from(text);
+  const nameLength = Array.from(name).length;
   const [visible, setVisible] = useState(false);
   const [count, setCount] = useState(0);
   const [opening, setOpening] = useState(false);
@@ -96,34 +97,37 @@ export function EntranceIntro({
         ))}
       </div>
       <div className={styles.identity} aria-hidden="true">
-        <div className={styles.terminal}>
-          <span className={styles.reserve}>
-            <span className={styles.name}>{name}</span>
-            {"\n"}
-            <span className={styles.role}>{role}</span>
-            <span className={styles.cursor} />
-          </span>
-          <span className={styles.typed}>
-            <span className={styles.name}>
-              {characters
-                .slice(0, Math.min(count, Array.from(name).length))
-                .join("")}
-            </span>
-            {count <= Array.from(name).length ? (
+        <div
+          className={styles.terminal}
+          style={
+            {
+              "--intro-columns":
+                Math.max(nameLength, Array.from(role).length) + 2,
+            } as CSSProperties
+          }
+        >
+          <div className={`${styles.line} ${styles.name}`}>
+            <span className={styles.reserve}>
+              {name}
               <span className={styles.cursor} />
-            ) : null}
-            {count > Array.from(name).length ? (
-              <>
-                {"\n"}
-                <span className={styles.role}>
-                  {characters
-                    .slice(Array.from(name).length + 1, count)
-                    .join("")}
-                </span>
-                <span className={styles.cursor} />
-              </>
-            ) : null}
-          </span>
+            </span>
+            <span className={styles.typed}>
+              {characters.slice(0, Math.min(count, nameLength)).join("")}
+              {count <= nameLength && <span className={styles.cursor} />}
+            </span>
+          </div>
+          <div className={`${styles.line} ${styles.role}`}>
+            <span className={styles.reserve}>
+              {role}
+              <span className={styles.cursor} />
+            </span>
+            <span className={styles.typed}>
+              {characters
+                .slice(nameLength + 1, Math.max(nameLength + 1, count))
+                .join("")}
+              {count > nameLength && <span className={styles.cursor} />}
+            </span>
+          </div>
         </div>
       </div>
       <button
