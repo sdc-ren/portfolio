@@ -22,8 +22,16 @@ export const templates: Record<string, Json> = {
     period: "2026 – Present",
     location: "Location",
     highlights: [],
+    bullets: [],
   },
-  skills: { id: "new-skill", name: "Skill group", items: [] },
+  skills: {
+    id: "new-skill",
+    name: "Skill group",
+    items: [],
+    description: "",
+    projectIds: [],
+    stage: "applied",
+  },
   education: {
     id: "new-education",
     institution: "Institution",
@@ -43,5 +51,8 @@ export const templates: Record<string, Json> = {
     projectIds: [],
     skillIds: [],
     experienceIds: [],
+    sectionOrder: "experience-first",
+    projectsHeading: "",
+    experienceSelections: {},
   },
 };

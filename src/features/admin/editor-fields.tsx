@@ -1,4 +1,14 @@
 "use client";
+import { ExperienceBulletsEditor } from "./experience-bullets-editor";
+import { ExperienceSelectionEditor } from "./experience-selection-editor";
+import { experienceBullets } from "@/features/content/experience";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { createContext, useContext, useId } from "react";
 import { ReferencePicker } from "./reference-picker";
 import { ChipPicker } from "./chip-picker";
@@ -10,7 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 export type Json = string | boolean | Json[] | { [key: string]: Json };
 const labels: Record<string, string> = {
-  projectIds: "Projects in this CV (IDs, in order)",
+  projectIds: "Projects (IDs, in order)",
   skillIds: "Skill groups in this CV (IDs, in order)",
   experienceIds: "Experience in this CV (IDs, in order)",
   description: "Description (Markdown)",
@@ -46,6 +56,77 @@ export function Field({
   const label =
     labels[name] ??
     name.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase());
+  if (name === "bullets" && Array.isArray(value)) {
+    const bullets = value.flatMap((v) =>
+      v &&
+      typeof v === "object" &&
+      !Array.isArray(v) &&
+      typeof v.id === "string" &&
+      typeof v.text === "string"
+        ? [{ id: v.id, text: v.text }]
+        : [],
+    );
+    return (
+      <ExperienceBulletsEditor
+        value={bullets}
+        disabled={disabled}
+        onChange={onChange}
+      />
+    );
+  }
+  if (
+    name === "experienceSelections" &&
+    content &&
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  ) {
+    const selected = Object.fromEntries(
+      Object.entries(value).map(([id, ids]) => [
+        id,
+        Array.isArray(ids)
+          ? ids.filter((v): v is string => typeof v === "string")
+          : [],
+      ]),
+    );
+    return (
+      <ExperienceSelectionEditor
+        value={selected}
+        experience={content.experience}
+        disabled={disabled}
+        onChange={onChange}
+      />
+    );
+  }
+  if (["sectionOrder", "stage"].includes(name) && typeof value === "string") {
+    const options =
+      name === "sectionOrder"
+        ? [
+            ["experience-first", "Experience before projects"],
+            ["projects-first", "Projects before experience"],
+          ]
+        : [
+            ["applied", "Applied / implemented"],
+            ["research", "Research / exploration"],
+          ];
+    return (
+      <div className="space-y-2">
+        <Label htmlFor={fieldId}>{label}</Label>
+        <Select value={value} disabled={disabled} onValueChange={onChange}>
+          <SelectTrigger id={fieldId}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {options.map(([id, label]) => (
+              <SelectItem key={id} value={id}>
+                {label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  }
   if (name === "role" && typeof value === "string")
     return (
       <ChipPicker
@@ -132,7 +213,7 @@ export function Field({
     const references =
       name === "projectIds"
         ? content?.projects
-        : name === "skillIds"
+        : ["skillIds", "websiteSkillIds"].includes(name)
           ? content?.skills
           : name === "experienceIds"
             ? content?.experience
@@ -173,13 +254,39 @@ export function Field({
     );
   }
 
+  const fields =
+    "company" in value &&
+    "highlights" in value &&
+    Array.isArray(value.highlights)
+      ? Object.fromEntries(
+          Object.entries({
+            ...value,
+            bullets: experienceBullets({
+              highlights: value.highlights.filter(
+                (v): v is string => typeof v === "string",
+              ),
+              bullets: Array.isArray(value.bullets)
+                ? value.bullets.flatMap((v) =>
+                    v &&
+                    typeof v === "object" &&
+                    !Array.isArray(v) &&
+                    typeof v.id === "string" &&
+                    typeof v.text === "string"
+                      ? [{ id: v.id, text: v.text }]
+                      : [],
+                  )
+                : [],
+            }),
+          }).filter(([key]) => key !== "highlights"),
+        )
+      : value;
   return (
     <div
       className={
         name.endsWith("-item") ? "grid gap-6" : "grid gap-6 xl:grid-cols-2"
       }
     >
-      {Object.entries(value).map(([key, v]) => (
+      {Object.entries(fields).map(([key, v]) => (
         <div
           key={key}
           className={
@@ -194,7 +301,24 @@ export function Field({
             value={v}
             disabled={disabled}
             lockId={lockId}
-            onChange={(next) => onChange({ ...value, [key]: next })}
+            onChange={(next) =>
+              onChange({
+                ...value,
+                [key]: next,
+                ...(key === "bullets" && Array.isArray(next)
+                  ? {
+                      highlights: next.flatMap((v) =>
+                        v &&
+                        typeof v === "object" &&
+                        !Array.isArray(v) &&
+                        typeof v.text === "string"
+                          ? [v.text]
+                          : [],
+                      ),
+                    }
+                  : {}),
+              })
+            }
           />
         </div>
       ))}

@@ -8,7 +8,9 @@ import { cvMarkdown } from "../src/features/cv/markdown";
 test("AI CV and localmem seed preserve the software CV and resolve selections", () => {
   const data = initialContent();
   assert.equal(data.cvs.length, 2);
-  assert.deepEqual(data.cvs[0], initial.cvs[0]);
+  assert.deepEqual(data.cvs[0].projectIds, initial.cvs[0].projectIds);
+  assert.deepEqual(data.cvs[0].experienceIds, initial.cvs[0].experienceIds);
+  assert.equal(data.cvs[0].title, initial.cvs[0].title);
   const ai = data.cvs.find((cv) => cv.id === "ai-engineer")!;
   assert.equal(ai.projectIds[0], "localmem");
   assert.deepEqual(ai.projectIds, [

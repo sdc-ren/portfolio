@@ -79,13 +79,7 @@
       {
         "id": "ai-development-tools",
         "name": "AI Development Tools",
-        "items": [
-          "Claude Code",
-          "Codex",
-          "Google Antigravity",
-          "Prompt engineering research",
-          "Multi-agent workflow research"
-        ]
+        "items": ["Claude Code", "Codex", "Google Antigravity"]
       }
     ],
     "cv": {
@@ -101,18 +95,27 @@
       ],
       "skillIds": [
         "ai-engineering",
+        "speech-ai",
         "ai-programming",
         "ai-reliability",
-        "speech-ai",
         "ai-development-tools",
-        "devops-delivery"
+        "devops-delivery",
+        "research-exploration"
       ],
       "experienceIds": [
         "experience-1",
         "experience-2",
         "experience-3",
         "experience-4"
-      ]
+      ],
+      "sectionOrder": "projects-first",
+      "projectsHeading": "Independent AI Engineering Projects",
+      "experienceSelections": {
+        "experience-1": ["bullet-1", "bullet-2", "bullet-5"],
+        "experience-2": ["bullet-1"],
+        "experience-3": ["bullet-1"],
+        "experience-4": ["bullet-1"]
+      }
     }
   },
   "vi": {
@@ -195,13 +198,7 @@
       {
         "id": "ai-development-tools",
         "name": "AI Development Tools",
-        "items": [
-          "Claude Code",
-          "Codex",
-          "Google Antigravity",
-          "Prompt engineering research",
-          "Multi-agent workflow research"
-        ]
+        "items": ["Claude Code", "Codex", "Google Antigravity"]
       }
     ],
     "cv": {
@@ -217,18 +214,27 @@
       ],
       "skillIds": [
         "ai-engineering",
+        "speech-ai",
         "ai-programming",
         "ai-reliability",
-        "speech-ai",
         "ai-development-tools",
-        "devops-delivery"
+        "devops-delivery",
+        "research-exploration"
       ],
       "experienceIds": [
         "experience-1",
         "experience-2",
         "experience-3",
         "experience-4"
-      ]
+      ],
+      "sectionOrder": "projects-first",
+      "projectsHeading": "Dự án AI Engineering độc lập",
+      "experienceSelections": {
+        "experience-1": ["bullet-1", "bullet-2", "bullet-5"],
+        "experience-2": ["bullet-1"],
+        "experience-3": ["bullet-1"],
+        "experience-4": ["bullet-1"]
+      }
     }
   }
 }

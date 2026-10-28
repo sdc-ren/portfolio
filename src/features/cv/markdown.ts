@@ -1,3 +1,4 @@
+import { cvExperience, cvSectionOrder } from "./selection";
 import type { PortfolioContent } from "@/features/content/schema";
 import { selectByIds } from "@/features/content/schema";
 import { projectLinkLabel } from "@/features/content/project-link-label";
@@ -62,35 +63,38 @@ export function cvMarkdown(data: PortfolioContent, variant: string): string {
           )
           .join("\n"),
       ),
-      section(
-        ui.cvExperience,
-        selectByIds(data.experience, cv.experienceIds)
-          .map((item) =>
-            [
-              "### " + inline(item.company) + " - " + inline(item.role),
-              inline(item.period) + " · " + inline(item.location),
-              bullets(item.highlights),
-            ].join("\n\n"),
-          )
-          .join("\n\n"),
-      ),
-      section(
-        ui.cvProjects,
-        selectByIds(data.projects, cv.projectIds)
-          .map((item) =>
-            [
-              "### " + inline(item.title),
-              inline(item.role),
-              ...item.links
-                .filter((entry) => entry.showInCv)
-                .map((entry) => link(projectLinkLabel(entry, ui), entry.url)),
-              item.tech.map(inline).join(" · "),
-              bullets(item.highlights),
-            ]
-              .filter(Boolean)
-              .join("\n\n"),
-          )
-          .join("\n\n"),
+      ...cvSectionOrder(
+        cv,
+        section(
+          ui.cvExperience,
+          cvExperience(data, cv)
+            .map((item) =>
+              [
+                "### " + inline(item.company) + " - " + inline(item.role),
+                inline(item.period) + " · " + inline(item.location),
+                bullets(item.highlights),
+              ].join("\n\n"),
+            )
+            .join("\n\n"),
+        ),
+        section(
+          cv.projectsHeading || ui.cvProjects,
+          selectByIds(data.projects, cv.projectIds)
+            .map((item) =>
+              [
+                "### " + inline(item.title),
+                inline(item.role),
+                ...item.links
+                  .filter((entry) => entry.showInCv)
+                  .map((entry) => link(projectLinkLabel(entry, ui), entry.url)),
+                item.tech.map(inline).join(" · "),
+                bullets(item.highlights),
+              ]
+                .filter(Boolean)
+                .join("\n\n"),
+            )
+            .join("\n\n"),
+        ),
       ),
       section(
         ui.cvEducation,

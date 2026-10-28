@@ -1,3 +1,4 @@
+import { experienceBullets } from "./experience";
 import { z } from "zod";
 import { projectFocusValues } from "./project-focus";
 import { uiSchema } from "./ui";
@@ -78,17 +79,50 @@ export const contentSchema = z
     }),
     technologies: list,
     roles: list,
-    skills: z.array(z.object({ id: slug, name: short, items: list })).max(30),
-    experience: z
+    skills: z
       .array(
         z.object({
           id: slug,
-          company: short,
-          role: short,
-          period: short,
-          location: short,
-          highlights: z.array(text).max(30),
+          name: short,
+          items: list,
+          description: z.string().trim().max(1000).default(""),
+          projectIds: list.default([]),
+          stage: z.enum(["applied", "research"]).default("applied"),
         }),
+      )
+      .max(30),
+    experience: z
+      .array(
+        z
+          .object({
+            id: slug,
+            company: short,
+            role: short,
+            period: short,
+            location: short,
+            highlights: z.array(text).max(30),
+            bullets: z
+              .array(z.object({ id: slug, text }))
+              .max(30)
+              .default([]),
+          })
+          .superRefine((item, ctx) => {
+            if (
+              new Set(item.bullets.map((b) => b.id)).size !==
+              item.bullets.length
+            )
+              ctx.addIssue({
+                code: "custom",
+                path: ["bullets"],
+                message: "Bullet IDs must be unique",
+              });
+          })
+          .transform((item) => ({
+            ...item,
+            highlights: item.bullets.length
+              ? item.bullets.map((b) => b.text)
+              : item.highlights,
+          })),
       )
       .max(30),
     projects: z.array(projectSchema).max(100),
@@ -116,11 +150,18 @@ export const contentSchema = z
           projectIds: list,
           skillIds: list,
           experienceIds: list,
+          sectionOrder: z
+            .enum(["experience-first", "projects-first"])
+            .default("experience-first"),
+          projectsHeading: z.string().trim().max(200).default(""),
+          experienceSelections: z.record(slug, list).default({}),
         }),
       )
       .min(1)
       .max(10),
     settings: z.object({
+      websiteSkillIds: list.default([]),
+      experienceNote: z.string().trim().max(2000).default(""),
       headerRoles: z
         .array(short)
         .min(1)
@@ -148,6 +189,44 @@ export const contentSchema = z
           path: [key],
           message: "IDs must be unique",
         });
+    }
+    for (const [i, skill] of data.skills.entries()) {
+      if (
+        skill.projectIds.some((id) => !data.projects.some((p) => p.id === id))
+      )
+        ctx.addIssue({
+          code: "custom",
+          path: ["skills", i, "projectIds"],
+          message: "Unknown skill evidence project",
+        });
+    }
+    if (
+      data.settings.websiteSkillIds.some(
+        (id) => !data.skills.some((s) => s.id === id),
+      )
+    )
+      ctx.addIssue({
+        code: "custom",
+        path: ["settings", "websiteSkillIds"],
+        message: "Unknown website skill group",
+      });
+    for (const [i, cv] of data.cvs.entries()) {
+      for (const [id, ids] of Object.entries(cv.experienceSelections)) {
+        const experience = data.experience.find((e) => e.id === id);
+        const known = experience
+          ? experienceBullets(experience).map((b) => b.id)
+          : [];
+        if (
+          !experience ||
+          new Set(ids).size !== ids.length ||
+          ids.some((id) => !known.includes(id))
+        )
+          ctx.addIssue({
+            code: "custom",
+            path: ["cvs", i, "experienceSelections", id],
+            message: "Unknown or duplicate experience bullet",
+          });
+      }
     }
     for (const [i, cv] of data.cvs.entries())
       for (const [field, collection] of [
